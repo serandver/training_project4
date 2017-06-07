@@ -13,12 +13,10 @@ public abstract class DaoFactory {
 
     public abstract DaoConnection getConnection();
 
-    public abstract AuthorDao createAuthorDao();
     public abstract BookDao createBookDao();
     public abstract BookOrderDao createBookOrderDao();
     public abstract UserDao createUserDao();
 
-    public abstract AuthorDao createAuthorDao(DaoConnection connection);
     public abstract BookDao createBookDao(DaoConnection connection);
     public abstract BookOrderDao createBookOrderDao(DaoConnection connection);
     public abstract UserDao createUserDao(DaoConnection connection);
