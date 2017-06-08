@@ -1,4 +1,4 @@
-package com.training.library.dao;
+package com.training.library.model.dao;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface GenericDao<E> {
     Optional<E> find(int id);
     List<E> findAll();
-    void create(E e);
-    void update(E e);
-    void delete(int id);
+    int create(E e);
+    int update(E e);
+    int delete(int id);
 }

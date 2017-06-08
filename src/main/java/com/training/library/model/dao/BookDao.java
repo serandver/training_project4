@@ -1,4 +1,4 @@
-package com.training.library.dao;
+package com.training.library.model.dao;
 
 import com.training.library.model.entities.Book;
 

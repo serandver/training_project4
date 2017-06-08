@@ -1,7 +1,7 @@
-package com.training.library.dao.jdbc;
+package com.training.library.model.dao.jdbc;
 
-import com.training.library.dao.BookDao;
 import com.training.library.model.entities.Book;
+import com.training.library.model.dao.BookDao;
 
 import java.sql.Connection;
 import java.util.List;
@@ -40,8 +40,8 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public void create(Book book) {
-
+    public int create(Book book) {
+        return 0;
     }
 
     @Override
@@ -50,13 +50,13 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public void update(Book book) {
-
+    public int update(Book book) {
+        return 0;
     }
 
     @Override
-    public void delete(int id) {
-
+    public int delete(int id) {
+        return 0;
     }
 
     @Override

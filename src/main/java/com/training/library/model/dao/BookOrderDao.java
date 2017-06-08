@@ -1,10 +1,9 @@
-package com.training.library.dao;
+package com.training.library.model.dao;
 
 import com.training.library.model.entities.Book;
 import com.training.library.model.entities.BookOrder;
 import com.training.library.model.entities.User;
 
-import java.util.Date;
 import java.util.List;
 
 public interface BookOrderDao extends GenericDao<BookOrder> {

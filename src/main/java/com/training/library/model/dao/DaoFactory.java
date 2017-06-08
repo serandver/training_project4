@@ -1,4 +1,4 @@
-package com.training.library.dao;
+package com.training.library.model.dao;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,15 +11,9 @@ public abstract class DaoFactory {
 
     private static DaoFactory instance;
 
-    public abstract DaoConnection getConnection();
-
     public abstract BookDao createBookDao();
     public abstract BookOrderDao createBookOrderDao();
     public abstract UserDao createUserDao();
-
-    public abstract BookDao createBookDao(DaoConnection connection);
-    public abstract BookOrderDao createBookOrderDao(DaoConnection connection);
-    public abstract UserDao createUserDao(DaoConnection connection);
 
     public static DaoFactory getInstance(){
         if(instance == null){
