@@ -12,7 +12,6 @@ public class JdbcBookDao implements BookDao {
     private static final String SELECT_FROM_BOOKS_BY_ID = "SELECT * FROM books WHERE id = ?";
     private static final String SELECT_FROM_BOOKS_BY_TITLE = "SELECT * FROM books WHERE title = ?";
     private static final String SELECT_FROM_BOOKS_BY_AUTHOR = "SELECT * FROM books WHERE author = ?";
-
     private static final String BOOK_ID = "book_id";
     private static final String TITLE = "title";
     private static final String AUTHOR = "author";

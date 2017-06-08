@@ -51,12 +51,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
     }
 
     @Override
-    public List<BookOrder> findByStatus(BookOrder.OrderStatus status) {
-        return null;
-    }
-
-    @Override
-    public List<BookOrder> findAllBetweenDates(Date from, Date to) {
+    public List<BookOrder> findByStatus(boolean isReturned) {
         return null;
     }
 }

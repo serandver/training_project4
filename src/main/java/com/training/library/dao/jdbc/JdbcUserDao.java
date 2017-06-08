@@ -24,16 +24,13 @@ public class JdbcUserDao implements UserDao{
 
     @Override
     public void create(User user) {
-
     }
 
     @Override
     public void update(User user) {
-
     }
 
     @Override
     public void delete(int id) {
-
     }
 }
