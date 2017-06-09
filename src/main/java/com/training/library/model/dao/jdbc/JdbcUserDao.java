@@ -124,22 +124,25 @@ public class JdbcUserDao implements UserDao{
     @Override
     public int create(User user) {
         QueryJDBC query = new QueryJDBC();
+        int result = executeQuery(user, query, SQL_INSERT);
+        return result;
+    }
+
+    private int executeQuery(User user, QueryJDBC query, String sql_insert) {
         int result = 0;
         try {
-            query.createPreparedStatement(SQL_INSERT);
+            query.createPreparedStatement(sql_insert);
             query.setInt(1, user.getId());
             query.setString(2, user.getFirstName());
             query.setString(3, user.getLastName());
             query.setString(4, user.getLogin());
             query.setString(5, user.getPassword());
-            query.setInt(6, user.getRole().ordinal()+1);
+            query.setInt(6, user.getRole().ordinal() + 1);
             result = query.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Failed to create prepared statement");
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             query.close();
         }
         return result;
@@ -148,23 +151,7 @@ public class JdbcUserDao implements UserDao{
     @Override
     public int update(User user) {
         QueryJDBC query = new QueryJDBC();
-        int result = 0;
-        try {
-            query.createPreparedStatement(SQL_UPDATE);
-            query.setInt(1, user.getId());
-            query.setString(2, user.getFirstName());
-            query.setString(3, user.getLastName());
-            query.setString(4, user.getLogin());
-            query.setString(5, user.getPassword());
-            query.setInt(6, user.getRole().ordinal()+1);
-            result = query.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Failed to create prepared statement");
-            e.printStackTrace();
-        }
-        finally {
-            query.close();
-        }
+        int result = executeQuery(user, query, SQL_UPDATE);
         return result;
     }
 
