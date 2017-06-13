@@ -21,7 +21,6 @@ public class JdbcUserDao implements UserDao{
     protected final String SQL_SELECT_USER_BY_LOGIN = SQL_SELECT_ALL + " WHERE login = ?";
     protected final String SQL_SELECT_USER_BY_ID = SQL_SELECT_ALL + " WHERE id = ?";
 
-
     private static final int COLUMN_ID = 1;
     private static final int COLUMN_FIRSTNAME = 2;
     private static final int COLUMN_LASTNAME = 3;
@@ -39,7 +38,7 @@ public class JdbcUserDao implements UserDao{
             ResultSet resultSet = query.executeQuery();
             if (resultSet != null) {
                 while (resultSet.next()) {
-                    result = getUser(result, resultSet);
+                    result = getOptionalUserFromResultSet(result, resultSet);
                 }
                 resultSet.close();
             }
@@ -53,17 +52,20 @@ public class JdbcUserDao implements UserDao{
         return result;
     }
 
-    private Optional<User> getUser(Optional<User> result, ResultSet resultSet) throws SQLException {
-        User user;
-        user = new User();
-        user.setId(resultSet.getInt(COLUMN_ID));
-        user.setFirstName(resultSet.getString(COLUMN_FIRSTNAME));
-        user.setLastName(resultSet.getString(COLUMN_LASTNAME));
-        user.setPassword(resultSet.getString(COLUMN_PASSWORD));
-        user.setLogin(resultSet.getString(COLUMN_LOGIN));
-        user.setRole(User.Role.values()[resultSet.getInt(COLUMN_ROLE) - 1]);
+    private Optional<User> getOptionalUserFromResultSet(Optional<User> result, ResultSet resultSet) throws SQLException {
+        User user = buildUser(resultSet);
         result = Optional.of(user);
         return result;
+    }
+
+    private User buildUser(ResultSet resultSet) throws SQLException {
+        return new User.Builder()
+                    .setId(resultSet.getInt(COLUMN_ID))
+                    .setFirstName(resultSet.getString(COLUMN_FIRSTNAME))
+                    .setLastName(resultSet.getString(COLUMN_LASTNAME))
+                    .setLogin(resultSet.getString(COLUMN_LOGIN))
+                    .setPassword(resultSet.getString(COLUMN_PASSWORD))
+                    .setRole(User.Role.values()[(resultSet.getInt(COLUMN_ROLE)) - 1]).build();
     }
 
     @Override
@@ -76,7 +78,7 @@ public class JdbcUserDao implements UserDao{
             ResultSet resultSet = query.executeQuery();
             if (resultSet != null) {
                 while (resultSet.next()) {
-                    result = getUser(result, resultSet);
+                    result = getOptionalUserFromResultSet(result, resultSet);
                 }
                 resultSet.close();
             }
@@ -99,13 +101,7 @@ public class JdbcUserDao implements UserDao{
             ResultSet resultSet = query.executeQuery(SQL_SELECT_ALL);
             User user;
             while (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getInt(COLUMN_ID));
-                user.setFirstName(resultSet.getString(COLUMN_FIRSTNAME));
-                user.setLastName(resultSet.getString(COLUMN_LASTNAME));
-                user.setLogin(resultSet.getString(COLUMN_LOGIN));
-                user.setPassword(resultSet.getString(COLUMN_PASSWORD));
-                user.setRole(User.Role.values()[resultSet.getInt(COLUMN_ROLE) - 1]);
+                user = buildUser(resultSet);
                 users.add(user);
             }
             if (resultSet != null) {
