@@ -2,11 +2,9 @@ package com.training.library.model.dao;
 
 import com.training.library.model.entities.Book;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface BookDao extends GenericDao<Book> {
-
-    public List<Book> findByTitle(String title);
-
-    public List<Book> findByAuthor(String author);
+    Optional<Book> findByTitle(String title);
+    Optional<Book> findByAuthor(String author);
 }
