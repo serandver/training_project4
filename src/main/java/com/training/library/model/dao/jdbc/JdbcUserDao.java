@@ -50,6 +50,7 @@ public class JdbcUserDao implements UserDao{
         if (resultSet != null) {
             while (resultSet.next()) {
                 User user = buildUser(resultSet);
+                System.out.println(user);
                 result = Optional.of(user);            }
             resultSet.close();
         }

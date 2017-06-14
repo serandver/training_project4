@@ -54,4 +54,24 @@ public class Book {
     public void setAuthor(String author) {
         this.author = author;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+
+        Book book = (Book) o;
+
+        if (id != book.id) return false;
+        if (!title.equals(book.title)) return false;
+        return author.equals(book.author);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + title.hashCode();
+        result = 31 * result + author.hashCode();
+        return result;
+    }
 }
