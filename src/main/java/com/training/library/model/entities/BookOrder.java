@@ -138,4 +138,16 @@ public class BookOrder {
         result = 31 * result + (isReturned ? 1 : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "BookOrder{" +
+                "id=" + id +
+                ", user=" + user +
+                ", book=" + book +
+                ", dateFrom=" + dateFrom +
+                ", place=" + place +
+                ", isReturned=" + isReturned +
+                '}';
+    }
 }

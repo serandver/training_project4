@@ -50,7 +50,6 @@ public class JdbcUserDao implements UserDao{
         if (resultSet != null) {
             while (resultSet.next()) {
                 User user = buildUser(resultSet);
-                System.out.println(user);
                 result = Optional.of(user);            }
             resultSet.close();
         }
@@ -77,6 +76,7 @@ public class JdbcUserDao implements UserDao{
             User user;
             while (resultSet.next()) {
                 user = buildUser(resultSet);
+                System.out.println(user);
                 users.add(user);
             }
             if (resultSet != null) {
