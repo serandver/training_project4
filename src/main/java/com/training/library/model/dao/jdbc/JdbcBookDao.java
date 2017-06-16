@@ -136,5 +136,4 @@ public class JdbcBookDao implements BookDao {
         }
         return result;
     }
-
 }
