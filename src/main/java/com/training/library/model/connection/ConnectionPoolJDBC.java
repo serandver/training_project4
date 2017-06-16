@@ -25,9 +25,8 @@ public class ConnectionPoolJDBC {
 		try {
 			Class.forName(jdbcDriver);			
 			System.out.println("=== Driver found ===");
-		} catch (ClassNotFoundException e) {			
-			System.out.println("=== Driver not found ===");
-			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
 		}
 		for (int i = 0; i < connectionPoolSize; i++) {
 			Connection connection = null;

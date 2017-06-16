@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class QueryJDBC {
+public class QueryJDBC implements AutoCloseable{
 
 	private Connection connection = null;
 	private Statement statement = null;
@@ -53,15 +53,15 @@ public class QueryJDBC {
 		return ((PreparedStatement)statement).executeUpdate();
 	}
 	
+	@Override
 	public void close() {
 		try {
 			if (this.statement != null) {
 				this.statement.close();
 			}
 		} catch (SQLException e) {
-			System.out.println("Failed to close statement");
-			e.printStackTrace();
-		}
+            throw new RuntimeException(e);
+        }
 		finally {
 			connectionManager.releaseConnection(connection);
 		}

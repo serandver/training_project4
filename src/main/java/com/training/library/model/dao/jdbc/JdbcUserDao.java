@@ -12,12 +12,12 @@ import java.util.Optional;
 
 public class JdbcUserDao implements UserDao{
 
-    protected final String SQL_INSERT = "INSERT INTO users (id, first_name, last_name, login, password, user_role_id) VALUES (?, ?, ?, ?, ?, ?)";
-    protected final String SQL_SELECT_ALL = "SELECT * FROM users";
-    protected final String SQL_UPDATE = "UPDATE users SET first_name = ?, last_name = ?, login = ?, password = ?, user_role_id = ? WHERE id = ?";
-    protected final String SQL_DELETE = "DELETE FROM users WHERE id = ?";
-    protected final String SQL_SELECT_USER_BY_LOGIN = SQL_SELECT_ALL + " WHERE login = ?";
-    protected final String SQL_SELECT_USER_BY_ID = SQL_SELECT_ALL + " WHERE id = ?";
+    private final String INSERT = "INSERT INTO users (user_id, first_name, last_name, login, password, user_role_id) VALUES (?, ?, ?, ?, ?, ?)";
+    private final String SELECT_ALL = "SELECT * FROM users";
+    private final String UPDATE = "UPDATE users SET first_name = ?, last_name = ?, login = ?, password = ?, user_role_id = ? WHERE user_id = ?";
+    private final String DELETE = "DELETE FROM users WHERE user_id = ?";
+    private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE login = ?";
+    private final String SELECT_USER_BY_ID = SELECT_ALL + " WHERE user_id = ?";
 
     private static final int COLUMN_ID = 1;
     private static final int COLUMN_FIRSTNAME = 2;
@@ -28,19 +28,15 @@ public class JdbcUserDao implements UserDao{
 
     @Override
     public Optional<User> find(int id) {
-        QueryJDBC query = new QueryJDBC();
-        Optional<User> result = Optional.empty();
-        try {
-            query.createPreparedStatement(SQL_SELECT_USER_BY_ID);
+        Optional<User> result;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement(SELECT_USER_BY_ID);
             query.setInt(1, id);
-            ResultSet resultSet = query.executeQuery();
-            result = getOptionalUserFromResultSet(resultSet);
+            try (ResultSet resultSet = query.executeQuery()){
+                result = getOptionalUserFromResultSet(resultSet);
+            }
         } catch (SQLException e) {
-            System.out.println("=== Failed to create prepared statement ===");
-            e.printStackTrace();
-        }
-        finally {
-            query.close();
+            throw new RuntimeException(e);
         }
         return result;
     }
@@ -50,8 +46,8 @@ public class JdbcUserDao implements UserDao{
         if (resultSet != null) {
             while (resultSet.next()) {
                 User user = buildUser(resultSet);
-                result = Optional.of(user);            }
-            resultSet.close();
+                result = Optional.of(user);
+            }
         }
         return result;
     }
@@ -67,41 +63,46 @@ public class JdbcUserDao implements UserDao{
     }
 
     @Override
-    public List<User> findAll() {
-        QueryJDBC query = new QueryJDBC();
-        List<User> users = new ArrayList<>();
-        try {
-            query.createStatement();
-            ResultSet resultSet = query.executeQuery(SQL_SELECT_ALL);
-            User user;
-            while (resultSet.next()) {
-                user = buildUser(resultSet);
-                System.out.println(user);
-                users.add(user);
-            }
-            if (resultSet != null) {
-                resultSet.close();
+    public Optional<User> findByLogin(String login) {
+        Optional<User> result;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement(SELECT_USER_BY_LOGIN);
+            query.setString(1, login);
+            try(ResultSet resultSet = query.executeQuery())  {
+                result = getOptionalUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            System.out.println("Failed to create statement");
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        finally {
-            query.close();
+        return result;
+    }
+
+    @Override
+    public List<User> findAll() {
+        List<User> users = new ArrayList<>();
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createStatement();
+            try(ResultSet  resultSet = query.executeQuery(SELECT_ALL))  {
+                User user;
+                while (resultSet.next()) {
+                    user = buildUser(resultSet);
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return users;
     }
 
     @Override
     public int create(User user) {
-        QueryJDBC query = new QueryJDBC();
-        int result = executeQuery(user, query, SQL_INSERT);
-        return result;
+        return executeQuery(user, INSERT);
     }
 
-    private int executeQuery(User user, QueryJDBC query, String sql) {
-        int result = 0;
-        try {
+    private int executeQuery(User user, String sql) {
+        int result;
+        try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(sql);
             query.setInt(1, user.getId());
             query.setString(2, user.getFirstName());
@@ -111,59 +112,27 @@ public class JdbcUserDao implements UserDao{
             query.setInt(6, user.getRole().ordinal() + 1);
             result = query.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Failed to create prepared statement");
-            e.printStackTrace();
-        } finally {
-            query.close();
+            throw new RuntimeException(e);
         }
         return result;
     }
 
     @Override
     public int update(User user) {
-        QueryJDBC query = new QueryJDBC();
-        int result = executeQuery(user, query, SQL_UPDATE);
-        return result;
+        return executeQuery(user, UPDATE);
     }
 
     @Override
     public int delete(int id) {
-        QueryJDBC query = new QueryJDBC();
-        int result = 0;
-        try {
-            query.createPreparedStatement(SQL_DELETE);
+        int result;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement(DELETE);
             query.setInt(1, id);
             query.executeUpdate();
             result = query.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Failed to create prepared statement");
-            e.printStackTrace();
-        }
-        finally {
-            query.close();
+            throw new RuntimeException(e);
         }
         return result;
     }
-
-
-    @Override
-    public Optional<User> findByLogin(String login) {
-        QueryJDBC query = new QueryJDBC();
-        Optional<User> result = Optional.empty();
-        try {
-            query.createPreparedStatement(SQL_SELECT_USER_BY_LOGIN);
-            query.setString(1, login);
-            ResultSet resultSet = query.executeQuery();
-            result = getOptionalUserFromResultSet(resultSet);
-        } catch (SQLException e) {
-            System.out.println("=== Failed to create prepared statement ===");
-            e.printStackTrace();
-        }
-        finally {
-            query.close();
-        }
-        return result;
-    }
-
-
 }

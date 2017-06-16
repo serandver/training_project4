@@ -7,8 +7,8 @@ import com.training.library.model.entities.User;
 import java.util.List;
 
 public interface BookOrderDao extends GenericDao<BookOrder> {
-    List<BookOrder> findByUser(User user);
-    List<BookOrder> findByBook(Book book);
+    List<BookOrder> findByUserId(int userId);
+    List<BookOrder> findByBookId(int bookId);
     List<BookOrder> findByReadingPlace(BookOrder.ReadingPlace place);
     List<BookOrder> findByStatus(boolean isReturned);
 }
