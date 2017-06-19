@@ -25,14 +25,34 @@ public class JdbcBookDao implements BookDao {
     private static final int COLUMN_AUTHOR = 3;
 
     @Override
+    public List<Book> findAll() {
+        List<Book> books = new ArrayList<>();
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createStatement();
+            ResultSet resultSet = query.executeQuery(SELECT_ALL);
+            getAllBooksFromResultSet(books, resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return books;
+    }
+
+    private void getAllBooksFromResultSet(List<Book> books, ResultSet resultSet) throws SQLException {
+        Book book;
+        while (resultSet.next()) {
+            book = buildBook(resultSet);
+            books.add(book);
+        }
+    }
+
+    @Override
     public Optional<Book> find(int id) {
         Optional<Book> result;
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(SELECT_BOOK_BY_ID);
             query.setInt(1, id);
-            try (ResultSet resultSet = query.executeQuery()) {
-                result = getOptionalBookFromResultSet(resultSet);
-            }
+            ResultSet resultSet = query.executeQuery();
+            result = getOptionalBookFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -67,9 +87,8 @@ public class JdbcBookDao implements BookDao {
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(sql);
             query.setString(1, columnValue);
-            try (ResultSet resultSet = query.executeQuery()) {
-                result = getOptionalBookFromResultSet(resultSet);
-            }
+            ResultSet resultSet = query.executeQuery();
+            result = getOptionalBookFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,24 +98,6 @@ public class JdbcBookDao implements BookDao {
     @Override
     public Optional<Book> findByAuthor(String author) {
         return findByColumnValue(SELECT_BOOK_BY_AUTHOR, author);
-    }
-
-    @Override
-    public List<Book> findAll() {
-        List<Book> books = new ArrayList<>();
-        try (QueryJDBC query = new QueryJDBC()){
-            query.createStatement();
-            try (ResultSet resultSet = query.executeQuery(SELECT_ALL)) {
-                Book book;
-                while (resultSet.next()) {
-                    book = buildBook(resultSet);
-                    books.add(book);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return books;
     }
 
     @Override
@@ -129,7 +130,6 @@ public class JdbcBookDao implements BookDao {
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(DELETE);
             query.setInt(1, id);
-            query.executeUpdate();
             result = query.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

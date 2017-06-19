@@ -4,7 +4,7 @@ public class User {
     private int id;
     private String firstName;
     private String lastName;
-    private String login;
+    private String email;
     private String password;
     private Role role;
 
@@ -17,7 +17,7 @@ public class User {
         private int id;
         private String firstName;
         private String lastName;
-        private String login;
+        private String email;
         private String password;
         private Role role;
 
@@ -33,8 +33,8 @@ public class User {
             this.lastName = lastName;
             return this;
         }
-        public Builder setLogin(String login) {
-            this.login = login;
+        public Builder setEmail(String email) {
+            this.email = email;
             return this;
         }
         public Builder setPassword(String password) {
@@ -51,7 +51,7 @@ public class User {
             user.setId(id);
             user.setFirstName(firstName);
             user.setLastName(lastName);
-            user.setLogin(login);
+            user.setEmail(email);
             user.setPassword(password);
             user.setRole(role);
             return user;
@@ -70,8 +70,8 @@ public class User {
         return lastName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
@@ -94,8 +94,8 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
@@ -116,7 +116,7 @@ public class User {
         if (id != user.id) return false;
         if (!firstName.equals(user.firstName)) return false;
         if (!lastName.equals(user.lastName)) return false;
-        if (!login.equals(user.login)) return false;
+        if (!email.equals(user.email)) return false;
         if (!password.equals(user.password)) return false;
         return role == user.role;
     }
@@ -126,7 +126,7 @@ public class User {
         int result = id;
         result = 31 * result + firstName.hashCode();
         result = 31 * result + lastName.hashCode();
-        result = 31 * result + login.hashCode();
+        result = 31 * result + email.hashCode();
         result = 31 * result + password.hashCode();
         result = 31 * result + role.hashCode();
         return result;
@@ -138,7 +138,7 @@ public class User {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 '}';

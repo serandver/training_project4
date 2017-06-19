@@ -4,11 +4,13 @@ public class Book {
     private int id;
     private String title;
     private String author;
+    private String inventoryNumber;
 
     public static class Builder{
         private int id;
         private String title;
         private String author;
+        private String inventoryNumber;
 
         public Builder setId(int id) {
             this.id = id;
@@ -22,13 +24,26 @@ public class Book {
             this.author = author;
             return this;
         }
+        public Builder setInventoryNumber(String inventoryNumber) {
+            this.inventoryNumber = inventoryNumber;
+            return this;
+        }
         public Book build(){
             Book book = new Book();
             book.setId(id);
             book.setTitle(title);
             book.setAuthor(author);
+            book.setInventoryNumber(inventoryNumber);
             return book;
         }
+    }
+
+    public String getInventoryNumber() {
+        return inventoryNumber;
+    }
+
+    public void setInventoryNumber(String inventoryNumber) {
+        this.inventoryNumber = inventoryNumber;
     }
 
     public int getId() {

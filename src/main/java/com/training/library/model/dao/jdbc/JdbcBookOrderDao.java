@@ -47,9 +47,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(SELECT_ORDER_BY_ID);
             query.setInt(1, id);
-            try (ResultSet resultSet = query.executeQuery()){
-                result = getOptionalBookOrderFromResultSet(resultSet);
-            }
+            ResultSet resultSet = query.executeQuery();
+            result = getOptionalBookOrderFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -68,14 +67,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
     }
 
     private BookOrder buildBookOrder(ResultSet resultSet) throws SQLException {
-        User user = new User.Builder()
-                .setId(resultSet.getInt(COLUMN_USER_ID))
-                .setFirstName(resultSet.getString(COLUMN_FIRSTNAME))
-                .setLastName(resultSet.getString(COLUMN_LASTNAME)).build();
-        Book book = new Book.Builder()
-                .setId(resultSet.getInt(COLUMN_BOOK_ID))
-                .setTitle(resultSet.getString(COLUMN_TITLE))
-                .setAuthor(resultSet.getString(COLUMN_AUTHOR)).build();
+        User user = buildUser(resultSet);
+        Book book = buildBook(resultSet);
 
         return new BookOrder.Builder()
                 .setId(resultSet.getInt(COLUMN_ORDER_ID))
@@ -86,22 +79,39 @@ public class JdbcBookOrderDao implements BookOrderDao{
                 .setReturned(resultSet.getBoolean(COLUMN_STATUS)).build();
     }
 
+    private Book buildBook(ResultSet resultSet) throws SQLException {
+        return new Book.Builder()
+                    .setId(resultSet.getInt(COLUMN_BOOK_ID))
+                    .setTitle(resultSet.getString(COLUMN_TITLE))
+                    .setAuthor(resultSet.getString(COLUMN_AUTHOR)).build();
+    }
+
+    private User buildUser(ResultSet resultSet) throws SQLException {
+        return new User.Builder()
+                    .setId(resultSet.getInt(COLUMN_USER_ID))
+                    .setFirstName(resultSet.getString(COLUMN_FIRSTNAME))
+                    .setLastName(resultSet.getString(COLUMN_LASTNAME)).build();
+    }
+
     @Override
     public List<BookOrder> findAll() {
         List<BookOrder> orders = new ArrayList<>();
         try (QueryJDBC query = new QueryJDBC()){
             query.createStatement();
-            try (ResultSet resultSet = query.executeQuery(SELECT_ALL)) {
-                BookOrder order;
-                while (resultSet.next()) {
-                    order = buildBookOrder(resultSet);
-                    orders.add(order);
-                }
-            }
+            ResultSet resultSet = query.executeQuery(SELECT_ALL);
+            getAllOrdersFromResultSet(orders, resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return orders;
+    }
+
+    private void getAllOrdersFromResultSet(List<BookOrder> orders, ResultSet resultSet) throws SQLException {
+        BookOrder order;
+        while (resultSet.next()) {
+            order = buildBookOrder(resultSet);
+            orders.add(order);
+        }
     }
 
     @Override

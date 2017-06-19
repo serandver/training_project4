@@ -7,16 +7,16 @@ public class BookOrder {
     private User user;
     private Book book;
     private Date dateFrom;
+    private Date dateOfReturn;
     private ReadingPlace place;
-    private boolean isReturned;
 
     public static class Builder{
         private int id;
         private User user;
         private Book book;
         private Date dateFrom;
+        private Date dateOfReturn;
         private ReadingPlace place;
-        private boolean isReturned;
 
         public Builder setId(int id) {
             this.id = id;
@@ -38,13 +38,13 @@ public class BookOrder {
             return this;
         }
 
-        public Builder setPlace(ReadingPlace place) {
-            this.place = place;
+        public Builder setDateOfReturn(Date dateOfReturn) {
+            this.dateOfReturn = dateOfReturn;
             return this;
         }
 
-        public Builder setReturned(boolean returned) {
-            this.isReturned = returned;
+        public Builder setPlace(ReadingPlace place) {
+            this.place = place;
             return this;
         }
 
@@ -54,8 +54,8 @@ public class BookOrder {
             bookOrder.setUser(user);
             bookOrder.setBook(book);
             bookOrder.setDateFrom(dateFrom);
+            bookOrder.setDateOfReturn(dateOfReturn);
             bookOrder.setPlace(place);
-            bookOrder.setReturned(isReturned);
             return bookOrder;
         }
     }
@@ -105,12 +105,12 @@ public class BookOrder {
         this.place = place;
     }
 
-    public boolean isReturned() {
-        return isReturned;
+    public Date getDateOfReturn() {
+        return dateOfReturn;
     }
 
-    public void setReturned(boolean returned) {
-        isReturned = returned;
+    public void setDateOfReturn(Date dateOfReturn) {
+        this.dateOfReturn = dateOfReturn;
     }
 
     @Override
@@ -121,10 +121,11 @@ public class BookOrder {
         BookOrder bookOrder = (BookOrder) o;
 
         if (id != bookOrder.id) return false;
-        if (isReturned != bookOrder.isReturned) return false;
         if (!user.equals(bookOrder.user)) return false;
         if (!book.equals(bookOrder.book)) return false;
         if (!dateFrom.equals(bookOrder.dateFrom)) return false;
+        if (dateOfReturn != null ? !dateOfReturn.equals(bookOrder.dateOfReturn) : bookOrder.dateOfReturn != null)
+            return false;
         return place == bookOrder.place;
     }
 
@@ -134,8 +135,8 @@ public class BookOrder {
         result = 31 * result + user.hashCode();
         result = 31 * result + book.hashCode();
         result = 31 * result + dateFrom.hashCode();
+        result = 31 * result + (dateOfReturn != null ? dateOfReturn.hashCode() : 0);
         result = 31 * result + place.hashCode();
-        result = 31 * result + (isReturned ? 1 : 0);
         return result;
     }
 
@@ -146,8 +147,8 @@ public class BookOrder {
                 ", user=" + user +
                 ", book=" + book +
                 ", dateFrom=" + dateFrom +
+                ", dateOfReturn=" + dateOfReturn +
                 ", place=" + place +
-                ", isReturned=" + isReturned +
                 '}';
     }
 }

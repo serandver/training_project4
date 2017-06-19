@@ -11,8 +11,8 @@ public class ConnectionPoolJDBC {
 	private int connectionCounter = 0;
 	private static volatile ConnectionPoolJDBC connectionPoolInstance;	
 	private Connection [] connectionPoolArray;
-	
-	private DatabaseConfig databaseConfig = DatabaseConfig.getDatabaseConfigInstance();
+    private DatabaseConfig databaseConfig = DatabaseConfig.getDatabaseConfigInstance();
+
 	private String jdbcDriver = databaseConfig.getProperty(DatabaseConfig.DATABASE_DRIVER_NAME);
 	private String jdbcURL = databaseConfig.getProperty(DatabaseConfig.DATABASE_URL);
 	private String user = databaseConfig.getProperty(DatabaseConfig.DATABASE_USER);
@@ -22,20 +22,19 @@ public class ConnectionPoolJDBC {
 	
 	private ConnectionPoolJDBC() {	
 		connectionPoolArray = new Connection[connectionPoolSize];
-		try {
-			Class.forName(jdbcDriver);			
-			System.out.println("=== Driver found ===");
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-		for (int i = 0; i < connectionPoolSize; i++) {
-			Connection connection = null;
+        try {
+            Class.forName(jdbcDriver);
+            System.out.println("=== Driver found ===");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 0; i < connectionPoolSize; i++) {
+            Connection connection = null;
 			try {
 				connection = DriverManager.getConnection(jdbcURL, user, password);
 				System.out.println("=== Connection " + (i + 1) + " established ===");
 			} catch (SQLException e) {
-				System.out.println("=== Connection " + (i + 1) + " failed ===");
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 			connectionPoolArray[i] = connection;
 		}
@@ -58,8 +57,7 @@ public class ConnectionPoolJDBC {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				System.out.println("=== Failed to get connection from pool ===");
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}		
 		connectionCounter++;
@@ -90,12 +88,10 @@ public class ConnectionPoolJDBC {
 				try {
 					connectionPoolArray[i].close();
 				} catch (SQLException e) {
-					System.out.println("=== Failed to close connection " + i + " ===");
-					e.printStackTrace();
+					throw new RuntimeException(e);
 				}
 			}
 		}
 		connectionPoolArray = null;
 	}
-	
 }

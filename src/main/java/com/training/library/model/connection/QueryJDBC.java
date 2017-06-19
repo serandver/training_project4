@@ -1,44 +1,40 @@
 package com.training.library.model.connection;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class QueryJDBC implements AutoCloseable{
 
 	private Connection connection = null;
-	private Statement statement = null;
-	private static ConnectionManagerJDBC connectionManager = ConnectionManagerJDBC.getConnectionManagerInstance();
-	
-	public QueryJDBC() {
-		this.connection = connectionManager.getConnection();
-	}
-	
-	public void createStatement() throws SQLException {
-		this.statement = connection.createStatement();
-	}
-	
-	public void createPreparedStatement(String query) throws SQLException {
-		this.statement = connection.prepareStatement(query);		
-	}
+	private PreparedStatement preparedStatement = null;
+    private Statement statement = null;
+
+    private static ConnectionManagerJDBC connectionManager = ConnectionManagerJDBC.getConnectionManagerInstance();
+
+    public QueryJDBC() {
+        this.connection = connectionManager.getConnection();
+    }
+
+    public void createStatement() throws SQLException {
+        this.statement = connection.createStatement();
+    }
+    public void createPreparedStatement(String query) throws SQLException {
+        this.preparedStatement = connection.prepareStatement(query);
+    }
 	
 	public void setString(int key, String value) throws SQLException {
-		((PreparedStatement) this.statement).setString(key, value);
+        preparedStatement.setString(key, value);
 	}
 	
 	public void setInt(int key, int value) throws SQLException {
-		((PreparedStatement) this.statement).setInt(key, value);
+        preparedStatement.setInt(key, value);
 	}
 	
 	public void setBoolean(int key, boolean value) throws SQLException {
-		((PreparedStatement) this.statement).setBoolean(key, value);
+        preparedStatement.setBoolean(key, value);
 	}
 	
 	public void setDate(int key, Date date) throws SQLException {
-		((PreparedStatement) this.statement).setDate(key, date);
+        preparedStatement.setDate(key, date);
 	}
 	
 	public ResultSet executeQuery(String query) throws SQLException {
@@ -46,19 +42,22 @@ public class QueryJDBC implements AutoCloseable{
 	}	
 	
 	public ResultSet executeQuery() throws SQLException {
-		return ((PreparedStatement)statement).executeQuery();
+		return preparedStatement.executeQuery();
 	}
 	
 	public int executeUpdate() throws SQLException {
-		return ((PreparedStatement)statement).executeUpdate();
+		return preparedStatement.executeUpdate();
 	}
 	
 	@Override
 	public void close() {
 		try {
-			if (this.statement != null) {
-				this.statement.close();
+			if (this.preparedStatement != null) {
+				this.preparedStatement.close();
 			}
+            if (this.statement != null) {
+                this.statement.close();
+            }
 		} catch (SQLException e) {
             throw new RuntimeException(e);
         }

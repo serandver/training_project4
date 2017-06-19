@@ -12,11 +12,24 @@ import java.util.Optional;
 
 public class JdbcUserDao implements UserDao{
 
-    private final String INSERT = "INSERT INTO users (user_id, first_name, last_name, login, password, user_role_id) VALUES (?, ?, ?, ?, ?, ?)";
-    private final String SELECT_ALL = "SELECT * FROM users";
+    private final String INSERT =   "INSERT INTO login_data (email, password, role_name)" +
+            "VALUES('email', 'password', 'LIBRARIAN');" +
+            "SET @login_data_id = LAST_INSERT_ID();" +
+            "INSERT IGNORE INTO personal_data (first_name, last_name)" +
+            "VALUES('test', 'test');" +
+            "SET @personal_data_id = LAST_INSERT_ID();" +
+            "INSERT INTO users (login_data_id, personal_data_id) " +
+            "VALUES(@login_data_id, @personal_data_id);";
+
+    private final String SELECT_ALL =   "SELECT users.user_id, personal_data.first_name, personal_data.last_name, " +
+            "login_data.email, login_data.password, login_data.role_name " +
+            "FROM users" +
+            "JOIN personal_data ON users.personal_data_id = personal_data.personal_data_id" +
+            "JOIN login_data ON users.login_data_id = login_data.login_data_id;";
+    
     private final String UPDATE = "UPDATE users SET first_name = ?, last_name = ?, login = ?, password = ?, user_role_id = ? WHERE user_id = ?";
     private final String DELETE = "DELETE FROM users WHERE user_id = ?";
-    private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE login = ?";
+    private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE email = ?";
     private final String SELECT_USER_BY_ID = SELECT_ALL + " WHERE user_id = ?";
 
     private static final int COLUMN_ID = 1;
@@ -27,14 +40,26 @@ public class JdbcUserDao implements UserDao{
     private static final int COLUMN_ROLE = 6;
 
     @Override
+    public List<User> findAll() {
+        List<User> users = new ArrayList<>();
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createStatement();
+            ResultSet resultSet = query.executeQuery(SELECT_ALL);
+            getAllUsersFromResultSet(users, resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
+    }
+
+    @Override
     public Optional<User> find(int id) {
         Optional<User> result;
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(SELECT_USER_BY_ID);
             query.setInt(1, id);
-            try (ResultSet resultSet = query.executeQuery()){
-                result = getOptionalUserFromResultSet(resultSet);
-            }
+            ResultSet resultSet = query.executeQuery();
+            result = getOptionalUserFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +82,7 @@ public class JdbcUserDao implements UserDao{
                     .setId(resultSet.getInt(COLUMN_ID))
                     .setFirstName(resultSet.getString(COLUMN_FIRSTNAME))
                     .setLastName(resultSet.getString(COLUMN_LASTNAME))
-                    .setLogin(resultSet.getString(COLUMN_LOGIN))
+                    .setEmail(resultSet.getString(COLUMN_LOGIN))
                     .setPassword(resultSet.getString(COLUMN_PASSWORD))
                     .setRole(User.Role.values()[(resultSet.getInt(COLUMN_ROLE)) - 1]).build();
     }
@@ -68,31 +93,20 @@ public class JdbcUserDao implements UserDao{
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(SELECT_USER_BY_LOGIN);
             query.setString(1, login);
-            try(ResultSet resultSet = query.executeQuery())  {
-                result = getOptionalUserFromResultSet(resultSet);
-            }
+            ResultSet resultSet = query.executeQuery();
+            result = getOptionalUserFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return result;
     }
 
-    @Override
-    public List<User> findAll() {
-        List<User> users = new ArrayList<>();
-        try (QueryJDBC query = new QueryJDBC()){
-            query.createStatement();
-            try(ResultSet  resultSet = query.executeQuery(SELECT_ALL))  {
-                User user;
-                while (resultSet.next()) {
-                    user = buildUser(resultSet);
-                    users.add(user);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    private void getAllUsersFromResultSet(List<User> users, ResultSet resultSet) throws SQLException {
+        User user;
+        while (resultSet.next()) {
+            user = buildUser(resultSet);
+            users.add(user);
         }
-        return users;
     }
 
     @Override
@@ -107,7 +121,7 @@ public class JdbcUserDao implements UserDao{
             query.setInt(1, user.getId());
             query.setString(2, user.getFirstName());
             query.setString(3, user.getLastName());
-            query.setString(4, user.getLogin());
+            query.setString(4, user.getEmail());
             query.setString(5, user.getPassword());
             query.setInt(6, user.getRole().ordinal() + 1);
             result = query.executeUpdate();
@@ -128,7 +142,6 @@ public class JdbcUserDao implements UserDao{
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(DELETE);
             query.setInt(1, id);
-            query.executeUpdate();
             result = query.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
