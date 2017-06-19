@@ -14,7 +14,11 @@ import java.util.Optional;
 
 public class JdbcBookOrderDao implements BookOrderDao{
     private final String INSERT = "INSERT INTO orders (order_id, user_id, book_id, date_from, reading_place, is_returned) VALUES (?, ?, ?, ?, ?, ?)";
-    private final String SELECT_ALL = "SELECT orders.order_id, orders.date_from, orders.reading_place, orders.is_returned, users.user_id, users.first_name, users.last_name, books.book_id, books.title, books.author FROM orders" +
+    private final String SELECT_ALL = "SELECT " +
+            "                               orders.order_id, orders.date_from, orders.reading_place," +
+            "                               orders.is_returned, users.user_id, users.first_name," +
+            "                               users.last_name, books.book_id, books.title, books.author " +
+            "                           FROM orders" +
                                         "JOIN users ON orders.user_id = users.user_id" +
                                         "JOIN books ON orders.book_id = books.book_id";
     private final String UPDATE = "UPDATE orders SET user_id = ?, book_id = ?, date_from = ?, reading_place = ?, is_returned = ? WHERE order_id = ?";
@@ -167,16 +171,16 @@ public class JdbcBookOrderDao implements BookOrderDao{
     }
 
     private Optional<BookOrder> findByColumnValue(String sql, String columnValue) {
-        Optional<BookOrder> result;
-        try (QueryJDBC query = new QueryJDBC()){
-            query.createPreparedStatement(sql);
-            query.setString(1, columnValue);
-            try (ResultSet resultSet = query.executeQuery()) {
-                result = getOptionalBookOrderFromResultSet(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    Optional<BookOrder> result;
+    try (QueryJDBC query = new QueryJDBC()){
+        query.createPreparedStatement(sql);
+        query.setString(1, columnValue);
+        try (ResultSet resultSet = query.executeQuery()) {
+            result = getOptionalBookOrderFromResultSet(resultSet);
         }
-        return result;
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
     }
+    return result;
+}
 }
