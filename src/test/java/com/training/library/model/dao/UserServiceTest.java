@@ -1,6 +1,8 @@
 package com.training.library.model.dao;
 
 import com.training.library.model.entities.User;
+import com.training.library.model.services.UserService;
+import com.training.library.model.services.impl.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -9,28 +11,22 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Optional;
 
-public class TestUserService {
+public class UserServiceTest {
+    private UserService userService;
     private DaoFactory daoFactory;
     private UserDao userDao;
-    private User testUser =  new User.Builder()
-            .setId(100500)
-            .setFirstName("Test")
-            .setLastName("Test")
-            .setEmail("test")
-            .setPassword("123")
-            .setRole(User.Role.READER).build();
+    private User testUser;
 
     @Before
     public void getUserDao() {
-        daoFactory = DaoFactory.getInstance();
-        userDao = daoFactory.createUserDao();
+        userService = new UserServiceImpl();
     }
 
     @Test
     public void testGetAllUsers() throws Exception {
-        List<User> list = userDao.findAll();
-        Assert.assertNotNull(list);
-        Assert.assertTrue(list.size() > 0);
+        List<User> users = userService.findAll();
+        Assert.assertNotNull(users);
+        Assert.assertTrue(users.size() > 0);
     }
 
     @Ignore
@@ -87,5 +83,15 @@ public class TestUserService {
         userDao.delete(100500);
         Optional<User> result = userDao.find(100500);
         result.ifPresent(theUser -> Assert.assertNull(theUser));
+    }
+
+    private User initTestUser() {
+        return testUser =  new User.Builder()
+                .setId(100500)
+                .setFirstName("Test")
+                .setLastName("Test")
+                .setEmail("test")
+                .setPassword("123")
+                .setRole(User.Role.READER).build();
     }
 }

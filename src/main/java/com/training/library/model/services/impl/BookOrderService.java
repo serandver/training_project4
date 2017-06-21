@@ -1,4 +1,4 @@
-package com.training.library.model.services;
+package com.training.library.model.services.impl;
 
 import com.training.library.model.dao.DaoFactory;
 import com.training.library.model.entities.BookOrder;

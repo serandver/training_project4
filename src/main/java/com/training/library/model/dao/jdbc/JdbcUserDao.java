@@ -12,6 +12,10 @@ import java.util.Optional;
 
 public class JdbcUserDao implements UserDao{
 
+    private final String SELECT_ALL =   "SELECT users.user_id, personal_data.first_name, personal_data.last_name, login_data.email, login_data.password, login_data.role_name FROM users\n" +
+            "JOIN personal_data ON users.personal_data_id = personal_data.personal_data_id\n" +
+            "JOIN login_data ON users.login_data_id = login_data.login_data_id;";
+
     private final String INSERT =   "INSERT INTO login_data (email, password, role_name)" +
             "VALUES('email', 'password', 'LIBRARIAN');" +
             "SET @login_data_id = LAST_INSERT_ID();" +
@@ -21,12 +25,8 @@ public class JdbcUserDao implements UserDao{
             "INSERT INTO users (login_data_id, personal_data_id) " +
             "VALUES(@login_data_id, @personal_data_id);";
 
-    private final String SELECT_ALL =   "SELECT users.user_id, personal_data.first_name, personal_data.last_name, " +
-            "login_data.email, login_data.password, login_data.role_name " +
-            "FROM users" +
-            "JOIN personal_data ON users.personal_data_id = personal_data.personal_data_id" +
-            "JOIN login_data ON users.login_data_id = login_data.login_data_id;";
-    
+
+
     private final String UPDATE = "UPDATE users SET first_name = ?, last_name = ?, login = ?, password = ?, user_role_id = ? WHERE user_id = ?";
     private final String DELETE = "DELETE FROM users WHERE user_id = ?";
     private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE email = ?";
@@ -50,6 +50,40 @@ public class JdbcUserDao implements UserDao{
             throw new RuntimeException(e);
         }
         return users;
+    }
+
+    private void getAllUsersFromResultSet(List<User> users, ResultSet resultSet) throws SQLException {
+        User user;
+        while (resultSet.next()) {
+            user = buildUser(resultSet);
+            users.add(user);
+        }
+    }
+
+    private User buildUser(ResultSet resultSet) throws SQLException {
+        return new User.Builder()
+                .setId(resultSet.getInt(COLUMN_ID))
+                .setFirstName(resultSet.getString(COLUMN_FIRSTNAME))
+                .setLastName(resultSet.getString(COLUMN_LASTNAME))
+                .setEmail(resultSet.getString(COLUMN_LOGIN))
+                .setPassword(resultSet.getString(COLUMN_PASSWORD))
+                .setRole(User.Role.valueOf(resultSet.getString(COLUMN_ROLE))).build();
+    }
+
+    public List<String> getUserRoleName(){
+        List<String> result = new ArrayList<>();
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement("SELECT login_data.role_name FROM users " +
+                    "JOIN login_data ON users.login_data_id = login_data.login_data_id;");
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                result.add(resultSet.getString(1));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
     @Override
@@ -77,15 +111,7 @@ public class JdbcUserDao implements UserDao{
         return result;
     }
 
-    private User buildUser(ResultSet resultSet) throws SQLException {
-        return new User.Builder()
-                    .setId(resultSet.getInt(COLUMN_ID))
-                    .setFirstName(resultSet.getString(COLUMN_FIRSTNAME))
-                    .setLastName(resultSet.getString(COLUMN_LASTNAME))
-                    .setEmail(resultSet.getString(COLUMN_LOGIN))
-                    .setPassword(resultSet.getString(COLUMN_PASSWORD))
-                    .setRole(User.Role.values()[(resultSet.getInt(COLUMN_ROLE)) - 1]).build();
-    }
+
 
     @Override
     public Optional<User> findByLogin(String login) {
@@ -101,13 +127,7 @@ public class JdbcUserDao implements UserDao{
         return result;
     }
 
-    private void getAllUsersFromResultSet(List<User> users, ResultSet resultSet) throws SQLException {
-        User user;
-        while (resultSet.next()) {
-            user = buildUser(resultSet);
-            users.add(user);
-        }
-    }
+
 
     @Override
     public int create(User user) {

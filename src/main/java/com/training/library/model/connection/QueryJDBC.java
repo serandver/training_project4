@@ -18,7 +18,7 @@ public class QueryJDBC implements AutoCloseable{
         this.statement = connection.createStatement();
     }
     public void createPreparedStatement(String query) throws SQLException {
-        this.preparedStatement = connection.prepareStatement(query);
+        this.preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
     }
 	
 	public void setString(int key, String value) throws SQLException {

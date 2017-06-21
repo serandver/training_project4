@@ -75,8 +75,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
                 .setUser(user)
                 .setBook(book)
                 .setDateFrom(resultSet.getDate(COLUMN_DATE_FROM))
-                .setPlace(BookOrder.ReadingPlace.valueOf(resultSet.getString(COLUMN_READING_PLACE)))
-                .setReturned(resultSet.getBoolean(COLUMN_STATUS)).build();
+                .setPlace(BookOrder.ReadingPlace.valueOf(resultSet.getString(COLUMN_READING_PLACE))).build();
     }
 
     private Book buildBook(ResultSet resultSet) throws SQLException {
@@ -129,7 +128,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
             query.setInt(3, bookOrder.getBook().getId());
             query.setDate(4, new java.sql.Date(bookOrder.getDateFrom().getTime()));
             query.setString(5, bookOrder.getPlace().name());
-            query.setBoolean(6, bookOrder.isReturned());
+//            query.setBoolean(6, bookOrder.isReturned());
             result = query.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
