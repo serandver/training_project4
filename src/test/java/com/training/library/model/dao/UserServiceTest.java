@@ -11,6 +11,10 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 public class UserServiceTest {
     private UserService userService;
     private DaoFactory daoFactory;
@@ -25,20 +29,37 @@ public class UserServiceTest {
     @Test
     public void testGetAllUsers() throws Exception {
         List<User> users = userService.findAll();
-        Assert.assertNotNull(users);
-        Assert.assertTrue(users.size() > 0);
+        assertNotNull(users);
+        assertTrue(users.size() > 0);
     }
+
+    @Test
+    public void testCreateUser() throws Exception {
+        initTestUser();
+        int actualIndex = userService.create(testUser);
+        assertEquals(10, actualIndex);
+
+//        Optional<User> result = userDao.find(100500);
+//        result.ifPresent(theUser -> assertNotNull(theUser));
+//        if(result.isPresent()) {
+//            User addedUser = result.get();
+//            String expected = user.getEmail();
+//            String actual = user.getEmail();
+//            assertEquals(expected, actual);
+//        }
+    }
+
 
     @Ignore
     @Test
     public void testGetUserById() throws Exception {
         int expected = 1;
         Optional<User> result = userDao.find(expected);
-        result.ifPresent(theUser -> Assert.assertNotNull(theUser));
+        result.ifPresent(theUser -> assertNotNull(theUser));
         if(result.isPresent()) {
             User user = result.get();
             int actual = user.getId();
-            Assert.assertEquals(expected, actual);
+            assertEquals(expected, actual);
         }
     }
 
@@ -48,34 +69,15 @@ public class UserServiceTest {
         int expected = 1;
         String userLoginToFind = "ser_pov";
         Optional<User> result = userDao.findByLogin(userLoginToFind);
-        result.ifPresent(theUser -> Assert.assertNotNull(theUser));
+        result.ifPresent(theUser -> assertNotNull(theUser));
         if(result.isPresent()) {
             User user = result.get();
             int actual = user.getId();
-            Assert.assertEquals(expected, actual);
+            assertEquals(expected, actual);
         }
     }
 
-    @Ignore
-    @Test
-    public void testCreateUser() throws Exception {
-        User user = new User.Builder()
-                .setId(100500)
-                .setFirstName("Test")
-                .setLastName("Test")
-                .setEmail("test")
-                .setPassword("123")
-                .setRole(User.Role.READER).build();
-        userDao.create(user);
-        Optional<User> result = userDao.find(100500);
-        result.ifPresent(theUser -> Assert.assertNotNull(theUser));
-        if(result.isPresent()) {
-            User addedUser = result.get();
-            String expected = user.getEmail();
-            String actual = user.getEmail();
-            Assert.assertEquals(expected, actual);
-        }
-    }
+
 
     @Ignore
     @Test
@@ -87,7 +89,7 @@ public class UserServiceTest {
 
     private User initTestUser() {
         return testUser =  new User.Builder()
-                .setId(100500)
+                .setId(5)
                 .setFirstName("Test")
                 .setLastName("Test")
                 .setEmail("test")
