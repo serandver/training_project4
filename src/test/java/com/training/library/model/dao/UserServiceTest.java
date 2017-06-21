@@ -68,17 +68,15 @@ public class UserServiceTest {
         }
     }
 
-    @Ignore
     @Test
     public void testGetUserLogin() throws Exception {
-        int expected = 1;
-        String userLoginToFind = "ser_pov";
-        Optional<User> result = userDao.findByLogin(userLoginToFind);
+        String expectedUserLogin = "test";
+        Optional<User> result = userService.findByLogin(expectedUserLogin);
         result.ifPresent(theUser -> assertNotNull(theUser));
         if(result.isPresent()) {
             User user = result.get();
-            int actual = user.getId();
-            assertEquals(expected, actual);
+            String actualUserLogin = user.getEmail();
+            assertEquals(expectedUserLogin, actualUserLogin);
         }
     }
 
@@ -88,7 +86,7 @@ public class UserServiceTest {
     @Test
     public void testDeleteUser() throws Exception {
         userDao.delete(100500);
-        Optional<User> result = userDao.find(100500);
+        Optional<User> result = userService.find(100500);
         result.ifPresent(theUser -> Assert.assertNull(theUser));
     }
 

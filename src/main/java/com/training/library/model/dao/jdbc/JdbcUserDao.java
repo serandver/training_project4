@@ -21,12 +21,11 @@ public class JdbcUserDao implements UserDao{
     private final String INSERT_USER_LOGIN_DATA = "INSERT INTO login_data (email, password, role_name) VALUES(? , ?, ?);";
     private final String INSERT_USER_PERSONAL_DATA = "INSERT INTO personal_data (first_name, last_name) VALUES(?, ?);";
     private final String INSERT_USER = "INSERT INTO users (login_data_id, personal_data_id) VALUES(?, ?);";
-
     private final String SELECT_USER_BY_ID = SELECT_ALL + " WHERE user_id = ?";
+    private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE email = ?";
 
     private final String UPDATE = "UPDATE users SET first_name = ?, last_name = ?, login = ?, password = ?, user_role_id = ? WHERE user_id = ?";
     private final String DELETE = "DELETE FROM users WHERE user_id = ?";
-    private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE email = ?";
 
     private static final int COLUMN_ID = 1;
     private static final int COLUMN_FIRSTNAME = 2;
@@ -140,8 +139,6 @@ public class JdbcUserDao implements UserDao{
         return result;
     }
 
-
-
     @Override
     public Optional<User> findByLogin(String login) {
         Optional<User> result;
@@ -156,9 +153,10 @@ public class JdbcUserDao implements UserDao{
         return result;
     }
 
-
-
-
+    @Override
+    public int update(User user) {
+        return executeQuery(user, UPDATE);
+    }
 
     private int executeQuery(User user, String sql) {
         int result;
@@ -175,11 +173,6 @@ public class JdbcUserDao implements UserDao{
             throw new RuntimeException(e);
         }
         return result;
-    }
-
-    @Override
-    public int update(User user) {
-        return executeQuery(user, UPDATE);
     }
 
     @Override
