@@ -23,6 +23,10 @@ public class UserServiceImpl implements UserService {
         return daoFactory.createUserDao().findAll();
     }
 
+    public int create(User user) {
+        return daoFactory.createUserDao().create(user);
+    }
+
     public Optional<User> find(int id) {
         return daoFactory.createUserDao().find(id);
     }
@@ -31,9 +35,6 @@ public class UserServiceImpl implements UserService {
         return daoFactory.createUserDao().findByLogin(login);
     }
 
-    public int create(User user) {
-        return daoFactory.createUserDao().create(user);
-    }
 
     public int update(User user) {
         return daoFactory.createUserDao().create(user);

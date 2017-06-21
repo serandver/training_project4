@@ -33,11 +33,13 @@ public class UserServiceTest {
         assertTrue(users.size() > 0);
     }
 
+    @Ignore
     @Test
     public void testCreateUser() throws Exception {
-        initTestUser();
-        int actualIndex = userService.create(testUser);
-        assertEquals(10, actualIndex);
+        testUser = initTestUser();
+        int indexFromUserService = userService.create(testUser);
+        int indexFromUser = testUser.getId();
+        assertEquals(indexFromUserService, indexFromUser);
 
 //        Optional<User> result = userDao.find(100500);
 //        result.ifPresent(theUser -> assertNotNull(theUser));
@@ -49,17 +51,20 @@ public class UserServiceTest {
 //        }
     }
 
-
-    @Ignore
     @Test
     public void testGetUserById() throws Exception {
-        int expected = 1;
-        Optional<User> result = userDao.find(expected);
+        User expectedUser;
+        testUser = initTestUser();
+        int index = 1;
+        Optional<User> result = userService.find(index);
         result.ifPresent(theUser -> assertNotNull(theUser));
         if(result.isPresent()) {
-            User user = result.get();
-            int actual = user.getId();
-            assertEquals(expected, actual);
+            expectedUser = result.get();
+            assertEquals(expectedUser.getFirstName(), testUser.getFirstName());
+            assertEquals(expectedUser.getLastName(), testUser.getLastName());
+            assertEquals(expectedUser.getEmail(), testUser.getEmail());
+            assertEquals(expectedUser.getPassword(), testUser.getPassword());
+            assertEquals(expectedUser.getRole(), testUser.getRole());
         }
     }
 
@@ -89,7 +94,6 @@ public class UserServiceTest {
 
     private User initTestUser() {
         return testUser =  new User.Builder()
-                .setId(5)
                 .setFirstName("Test")
                 .setLastName("Test")
                 .setEmail("test")

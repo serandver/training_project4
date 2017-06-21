@@ -14,18 +14,19 @@ import java.util.Optional;
 
 public class JdbcUserDao implements UserDao{
 
-    private final String SELECT_ALL =   "SELECT users.user_id, personal_data.first_name, personal_data.last_name, login_data.email, login_data.password, login_data.role_name FROM users\n" +
-            "JOIN personal_data ON users.personal_data_id = personal_data.personal_data_id\n" +
-            "JOIN login_data ON users.login_data_id = login_data.login_data_id;";
+    private final String SELECT_ALL =   "SELECT users.user_id, personal_data.first_name, personal_data.last_name, login_data.email, login_data.password, login_data.role_name FROM users " +
+            "JOIN personal_data ON users.personal_data_id = personal_data.personal_data_id " +
+            "JOIN login_data ON users.login_data_id = login_data.login_data_id";
 
     private final String INSERT_USER_LOGIN_DATA = "INSERT INTO login_data (email, password, role_name) VALUES(? , ?, ?);";
     private final String INSERT_USER_PERSONAL_DATA = "INSERT INTO personal_data (first_name, last_name) VALUES(?, ?);";
     private final String INSERT_USER = "INSERT INTO users (login_data_id, personal_data_id) VALUES(?, ?);";
 
+    private final String SELECT_USER_BY_ID = SELECT_ALL + " WHERE user_id = ?";
+
     private final String UPDATE = "UPDATE users SET first_name = ?, last_name = ?, login = ?, password = ?, user_role_id = ? WHERE user_id = ?";
     private final String DELETE = "DELETE FROM users WHERE user_id = ?";
     private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE email = ?";
-    private final String SELECT_USER_BY_ID = SELECT_ALL + " WHERE user_id = ?";
 
     private static final int COLUMN_ID = 1;
     private static final int COLUMN_FIRSTNAME = 2;
@@ -68,7 +69,7 @@ public class JdbcUserDao implements UserDao{
     @Override
     public int create(User user) {
         int userId = -1;
-        ResultSet rs;
+        ResultSet resultSet;
         try (QueryJDBC query = new QueryJDBC()){
             query.getConnection().setAutoCommit(false);
             query.createPreparedStatement(INSERT_USER_LOGIN_DATA, Statement.RETURN_GENERATED_KEYS);
@@ -76,10 +77,10 @@ public class JdbcUserDao implements UserDao{
             query.setString(2, user.getPassword());
             query.setString(3, user.getRole().name());
             query.executeUpdate();
-            rs = query.getGeneratedKeys();
+            resultSet = query.getGeneratedKeys();
             int loginDataId = -1;
-            if (rs != null && rs.next()) {
-                loginDataId = rs.getInt(1);
+            if (resultSet != null && resultSet.next()) {
+                loginDataId = resultSet.getInt(1);
             }
 
             query.createPreparedStatement(INSERT_USER_PERSONAL_DATA, Statement.RETURN_GENERATED_KEYS);
@@ -88,9 +89,9 @@ public class JdbcUserDao implements UserDao{
             query.executeUpdate();
             query.getGeneratedKeys();
             int personalDataId  = -1;
-            rs = query.getGeneratedKeys();
-            if (rs != null && rs.next()) {
-                personalDataId = rs.getInt(1);
+            resultSet = query.getGeneratedKeys();
+            if (resultSet != null && resultSet.next()) {
+                personalDataId = resultSet.getInt(1);
             }
 
             query.createPreparedStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
@@ -98,10 +99,14 @@ public class JdbcUserDao implements UserDao{
                 query.setInt(1, loginDataId);
                 query.setInt(2, personalDataId);
             }
+            else {
+                throw new RuntimeException();
+            }
             query.executeUpdate();
-            rs = query.getGeneratedKeys();
-            if (rs != null && rs.next()) {
-                userId = rs.getInt(1);
+            resultSet = query.getGeneratedKeys();
+            if (resultSet != null && resultSet.next()) {
+                user.setId(resultSet.getInt(1));
+                userId = resultSet.getInt(1);
             }
             query.getConnection().commit();
         } catch (SQLException e) {

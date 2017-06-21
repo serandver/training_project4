@@ -6,19 +6,19 @@ import com.training.library.model.entities.BookOrder;
 import java.util.List;
 import java.util.Optional;
 
-public class BookOrderService {
+public class BookOrderServiceImpl {
 
     private DaoFactory daoFactory;
 
     private static class Holder{
-        static final BookOrderService INSTANCE = new BookOrderService( DaoFactory.getInstance() );
+        static final BookOrderServiceImpl INSTANCE = new BookOrderServiceImpl( DaoFactory.getInstance() );
     }
 
-    BookOrderService(DaoFactory instance) {
+    BookOrderServiceImpl(DaoFactory instance) {
         this.daoFactory = instance;
     }
 
-    public static BookOrderService getInstance(){
+    public static BookOrderServiceImpl getInstance(){
         return Holder.INSTANCE;
     }
 

@@ -2,22 +2,23 @@ package com.training.library.model.services.impl;
 
 import com.training.library.model.dao.DaoFactory;
 import com.training.library.model.entities.Book;
+import com.training.library.model.services.BookService;
 
 import java.util.List;
 import java.util.Optional;
 
-public class BookService {
+public class BookServiceImpl implements BookService {
     private DaoFactory daoFactory;
 
     private static class Holder{
-        static final BookService INSTANCE = new BookService( DaoFactory.getInstance() );
+        static final BookServiceImpl INSTANCE = new BookServiceImpl( DaoFactory.getInstance() );
     }
 
-    BookService(DaoFactory instance) {
+    BookServiceImpl(DaoFactory instance) {
         this.daoFactory = instance;
     }
 
-    public static BookService getInstance(){
+    public static BookServiceImpl getInstance(){
         return Holder.INSTANCE;
     }
 
