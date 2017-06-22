@@ -6,13 +6,17 @@ import com.training.library.model.dao.BookDao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class JdbcBookDao implements BookDao {
 
-    private static final String INSERT = "INSERT INTO books (id, title, author) VALUES (?, ?, ?)";
+    private static final String INSERT_BOOK_NUMBER = "INSERT INTO book_numbers (book_number) VALUES(?)";
+    private static final String INSERT_BOOK = "INSERT INTO books (title, author, book_number_id) VALUES(?, ?, ?)";
+
+
     private static final String UPDATE = "UPDATE books SET title = ?, author = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM books WHERE id = ?";
     private static final String SELECT_ALL = "SELECT * FROM books";
@@ -23,6 +27,55 @@ public class JdbcBookDao implements BookDao {
     private static final int COLUMN_BOOK_ID = 1;
     private static final int COLUMN_TITLE = 2;
     private static final int COLUMN_AUTHOR = 3;
+    private static final int COLUMN_BOOK_NUMBER = 4;
+
+
+    @Override
+    public int create(Book book) {
+        int generatedBookId = -1;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.beginTransaction();
+            int bookNumberId = insertBookNumber(book, query);
+            if (bookNumberId != -1) {
+                generatedBookId = insertBook(query, book, bookNumberId);
+            }
+            else {
+                query.rollbackTransaction();
+            }
+            book.setId(generatedBookId);
+            query.commitTransaction();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return generatedBookId;
+    }
+
+    private int insertBookNumber(Book book, QueryJDBC query) throws SQLException {
+        query.createPreparedStatement(INSERT_BOOK_NUMBER, Statement.RETURN_GENERATED_KEYS);
+        query.setString(1, book.getInventoryNumber());
+        query.executeUpdate();
+        return getGeneratedId(query);
+    }
+
+    private int insertBook(QueryJDBC query, Book book, int bookNumberId) throws SQLException{
+        query.createPreparedStatement(INSERT_BOOK, Statement.RETURN_GENERATED_KEYS);
+        query.setString(1, book.getTitle());
+        query.setString(2, book.getAuthor());
+        query.setInt(3, bookNumberId);
+        query.executeUpdate();
+        return getGeneratedId(query);
+    }
+
+    private int getGeneratedId(QueryJDBC query) throws SQLException {
+        int id = -1;
+        ResultSet resultSet;
+        resultSet = query.getGeneratedKeys();
+        if (resultSet != null && resultSet.next()) {
+            id = resultSet.getInt(1);
+        }
+        return id;
+    }
+
 
     @Override
     public List<Book> findAll() {
@@ -100,10 +153,7 @@ public class JdbcBookDao implements BookDao {
         return findByColumnValue(SELECT_BOOK_BY_AUTHOR, author);
     }
 
-    @Override
-    public int create(Book book) {
-        return executeQuery(book, INSERT);
-    }
+
 
     private int executeQuery(Book book, String sql) {
         int result;

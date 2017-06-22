@@ -46,6 +46,62 @@ public class JdbcUserDao implements UserDao{
     private static final int COLUMN_ROLE = 6;
 
     @Override
+    public int create(User user) {
+        int generatedUserId = -1;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.beginTransaction();
+            int loginDataId = insertLoginData(user, query);
+            int personalDataId = insertPersonalData(user, query);
+            if (loginDataId != -1 || personalDataId != -1) {
+                generatedUserId = insertUser(query, loginDataId, personalDataId);
+            }
+            else {
+                query.rollbackTransaction();
+            }
+            user.setId(generatedUserId);
+            query.commitTransaction();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return generatedUserId;
+    }
+
+    private int insertLoginData(User user, QueryJDBC query) throws SQLException {
+        query.createPreparedStatement(INSERT_USER_LOGIN_DATA, Statement.RETURN_GENERATED_KEYS);
+        query.setString(1, user.getEmail());
+        query.setString(2, user.getPassword());
+        query.setString(3, user.getRole().name());
+        query.executeUpdate();
+        return getGeneratedId(query);
+    }
+
+    private int getGeneratedId(QueryJDBC query) throws SQLException {
+        int id = -1;
+        ResultSet resultSet;
+        resultSet = query.getGeneratedKeys();
+        if (resultSet != null && resultSet.next()) {
+            id = resultSet.getInt(1);
+        }
+        return id;
+    }
+
+    private int insertPersonalData(User user, QueryJDBC query) throws SQLException {
+        query.createPreparedStatement(INSERT_USER_PERSONAL_DATA, Statement.RETURN_GENERATED_KEYS);
+        query.setString(1, user.getFirstName());
+        query.setString(2, user.getLastName());
+        query.executeUpdate();
+        return getGeneratedId(query);
+    }
+
+    private int insertUser(QueryJDBC query, int loginDataId, int personalDataId) throws SQLException {
+        query.createPreparedStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+        query.setInt(1, loginDataId);
+        query.setInt(2, personalDataId);
+        query.executeUpdate();
+        return getGeneratedId(query);
+    }
+
+    @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         try (QueryJDBC query = new QueryJDBC()){
@@ -74,62 +130,6 @@ public class JdbcUserDao implements UserDao{
                 .setEmail(resultSet.getString(COLUMN_LOGIN))
                 .setPassword(resultSet.getString(COLUMN_PASSWORD))
                 .setRole(User.Role.valueOf(resultSet.getString(COLUMN_ROLE))).build();
-    }
-
-    @Override
-    public int create(User user) {
-        int generatedUserId = -1;
-        try (QueryJDBC query = new QueryJDBC()){
-            query.beginTransaction();
-            int loginDataId = insertLoginData(user, query);
-            int personalDataId = insertPersonalData(user, query);
-            if (loginDataId != -1 || personalDataId != -1) {
-                generatedUserId = insertUser(query, loginDataId, personalDataId);
-            }
-            else {
-                query.rollbackTransaction();
-            }
-            user.setId(generatedUserId);
-            query.commitTransaction();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return generatedUserId;
-    }
-
-    private int insertUser(QueryJDBC query, int loginDataId, int personalDataId) throws SQLException {
-        query.createPreparedStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
-        query.setInt(1, loginDataId);
-        query.setInt(2, personalDataId);
-        query.executeUpdate();
-        return getGeneratedId(query);
-    }
-
-    private int getGeneratedId(QueryJDBC query) throws SQLException {
-        int id = -1;
-        ResultSet resultSet;
-        resultSet = query.getGeneratedKeys();
-        if (resultSet != null && resultSet.next()) {
-            id = resultSet.getInt(1);
-        }
-        return id;
-    }
-
-    private int insertPersonalData(User user, QueryJDBC query) throws SQLException {
-        query.createPreparedStatement(INSERT_USER_PERSONAL_DATA, Statement.RETURN_GENERATED_KEYS);
-        query.setString(1, user.getFirstName());
-        query.setString(2, user.getLastName());
-        query.executeUpdate();
-        return getGeneratedId(query);
-    }
-
-    private int insertLoginData(User user, QueryJDBC query) throws SQLException {
-        query.createPreparedStatement(INSERT_USER_LOGIN_DATA, Statement.RETURN_GENERATED_KEYS);
-        query.setString(1, user.getEmail());
-        query.setString(2, user.getPassword());
-        query.setString(3, user.getRole().name());
-        query.executeUpdate();
-        return getGeneratedId(query);
     }
 
     @Override

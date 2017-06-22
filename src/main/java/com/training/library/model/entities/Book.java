@@ -79,7 +79,8 @@ public class Book {
 
         if (id != book.id) return false;
         if (!title.equals(book.title)) return false;
-        return author.equals(book.author);
+        if (!author.equals(book.author)) return false;
+        return inventoryNumber.equals(book.inventoryNumber);
     }
 
     @Override
@@ -87,6 +88,7 @@ public class Book {
         int result = id;
         result = 31 * result + title.hashCode();
         result = 31 * result + author.hashCode();
+        result = 31 * result + inventoryNumber.hashCode();
         return result;
     }
 
@@ -96,6 +98,7 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
+                ", inventoryNumber='" + inventoryNumber + '\'' +
                 '}';
     }
 }

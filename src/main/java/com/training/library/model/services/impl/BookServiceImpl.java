@@ -10,16 +10,12 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
     private DaoFactory daoFactory;
 
-    private static class Holder{
-        static final BookServiceImpl INSTANCE = new BookServiceImpl( DaoFactory.getInstance() );
+    public BookServiceImpl() {
+        this.daoFactory = DaoFactory.getInstance();
     }
 
-    BookServiceImpl(DaoFactory instance) {
+    public BookServiceImpl(DaoFactory instance) {
         this.daoFactory = instance;
-    }
-
-    public static BookServiceImpl getInstance(){
-        return Holder.INSTANCE;
     }
 
     public Optional<Book> find(int id) {
