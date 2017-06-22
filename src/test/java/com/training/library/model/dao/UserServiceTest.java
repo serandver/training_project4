@@ -16,14 +16,23 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class UserServiceTest {
-    private UserService userService;
+    private UserService userService = new UserServiceImpl();
     private DaoFactory daoFactory;
     private UserDao userDao;
-    private User testUser;
+    private User testUser = new User.Builder()
+            .setId(100500)
+            .setFirstName("Test")
+            .setLastName("Test")
+            .setEmail("test1")
+            .setPassword("123")
+            .setRole(User.Role.READER).build();
 
-    @Before
-    public void getUserDao() {
-        userService = new UserServiceImpl();
+    @Ignore
+    @Test
+    public void testCreateUser() throws Exception {
+        int indexFromUserService = userService.create(testUser);
+        int indexFromUser = testUser.getId();
+        assertEquals(indexFromUserService, indexFromUser);
     }
 
     @Test
@@ -33,29 +42,10 @@ public class UserServiceTest {
         assertTrue(users.size() > 0);
     }
 
-    @Ignore
-    @Test
-    public void testCreateUser() throws Exception {
-        testUser = initTestUser();
-        int indexFromUserService = userService.create(testUser);
-        int indexFromUser = testUser.getId();
-        assertEquals(indexFromUserService, indexFromUser);
-    }
-
-    private User initTestUser() {
-        return testUser =  new User.Builder()
-                .setFirstName("Test")
-                .setLastName("Test")
-                .setEmail("test")
-                .setPassword("123")
-                .setRole(User.Role.READER).build();
-    }
-
     @Test
     public void testGetUserById() throws Exception {
         User expectedUser;
-        testUser = initTestUser();
-        int index = 1;
+        int index = testUser.getId();
         Optional<User> result = userService.find(index);
         result.ifPresent(theUser -> assertNotNull(theUser));
         if(result.isPresent()) {
@@ -70,7 +60,7 @@ public class UserServiceTest {
 
     @Test
     public void testGetUserLogin() throws Exception {
-        String expectedUserLogin = "test";
+        String expectedUserLogin = testUser.getEmail();
         Optional<User> result = userService.findByLogin(expectedUserLogin);
         result.ifPresent(theUser -> assertNotNull(theUser));
         if(result.isPresent()) {
@@ -80,15 +70,39 @@ public class UserServiceTest {
         }
     }
 
+    @Test
     public void testUpdateUser() throws Exception {
-        User user = new User();
-        user.setLastName("Another");
-        int index = 1;
-        Optional<User> result = userService.find(index);
-        result.ifPresent(theUser -> assertNotNull(theUser));
-        if(result.isPresent()) {
-            user = result.get();
+        int userIdForUpdating = userService.create(testUser);
+
+        String updatedFirstName = "Another first name";
+        String updatedLastName = "Another last name";
+        String updatedPass = "Another pass";
+        String updatedEmail = "Another email";
+        User.Role updatedUserRole = User.Role.LIBRARIAN;
+
+        Optional<User> beforeUpdate = userService.find(userIdForUpdating);
+        beforeUpdate.ifPresent(theUser -> assertNotNull(theUser));
+        if(beforeUpdate.isPresent()) {
+            User userBeforeUpdating = beforeUpdate.get();
+            userBeforeUpdating.setFirstName(updatedFirstName);
+            userBeforeUpdating.setLastName(updatedLastName);
+            userBeforeUpdating.setPassword(updatedPass);
+            userBeforeUpdating.setEmail(updatedEmail);
+            userBeforeUpdating.setRole(updatedUserRole);
+            userService.update(userBeforeUpdating);
         }
+
+        User updatedUser = new User();
+        Optional<User> afterUpdate = userService.find(userIdForUpdating);
+        afterUpdate.ifPresent(theUser -> assertNotNull(theUser));
+        if(afterUpdate.isPresent()) {
+            updatedUser = afterUpdate.get();
+        }
+        assertEquals(updatedFirstName, updatedUser.getFirstName());
+        assertEquals(updatedLastName, updatedUser.getLastName());
+        assertEquals(updatedPass, updatedUser.getEmail());
+        assertEquals(updatedEmail, updatedUser.getPassword());
+        assertEquals(updatedUserRole, updatedUser.getRole());
     }
 
     @Ignore
@@ -98,6 +112,4 @@ public class UserServiceTest {
         Optional<User> result = userService.find(100500);
         result.ifPresent(theUser -> Assert.assertNull(theUser));
     }
-
-
 }

@@ -14,9 +14,11 @@ import java.util.Optional;
 
 public class JdbcUserDao implements UserDao{
 
-    private final String SELECT_ALL =   "SELECT users.user_id, personal_data.first_name, personal_data.last_name, login_data.email, login_data.password, login_data.role_name FROM users " +
-            "JOIN personal_data ON users.personal_data_id = personal_data.personal_data_id " +
-            "JOIN login_data ON users.login_data_id = login_data.login_data_id";
+    private final String SELECT_ALL =   "SELECT users.user_id, personal_data.first_name, personal_data.last_name, " +
+            "login_data.email, login_data.password, login_data.role_name " +
+            "FROM users " +
+            "JOIN personal_data USING (personal_data_id) " +
+            "JOIN login_data USING (login_data_id)";
 
     private final String INSERT_USER_LOGIN_DATA = "INSERT INTO login_data (email, password, role_name) VALUES(? , ?, ?);";
     private final String INSERT_USER_PERSONAL_DATA = "INSERT INTO personal_data (first_name, last_name) VALUES(?, ?);";
@@ -24,9 +26,13 @@ public class JdbcUserDao implements UserDao{
     private final String SELECT_USER_BY_ID = SELECT_ALL + " WHERE user_id = ?";
     private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE email = ?";
 
-    private final String UPDATE_USER_LOGIN_DATA = "UPDATE login_data SET email = ?, password = ?, role_name = ?);";
-    private final String UPDATE_USER_PERSONAL_DATA = "UPDATE personal_data SET first_name = ?, last_name = ?);";
-    private final String UPDATE_USER = "UPDATE users SET login_data_id = ?, personal_data_id = ? WHERE user_id = ?);";
+    private final String UPDATE_USER = "UPDATE users " +
+            "JOIN personal_data USING (personal_data_id) " +
+            "JOIN login_data USING (login_data_id) " +
+            "SET personal_data.first_name = ?, personal_data.last_name = ?, login_data.email = ?, " +
+            "login_data.password = ?, login_data.role_name = ? " +
+            "WHERE users.user_id = ?;";
+
     private final String DELETE = "DELETE FROM users WHERE user_id = ?";
 
     private static final int COLUMN_ID = 1;
@@ -157,52 +163,20 @@ public class JdbcUserDao implements UserDao{
 
     @Override
     public int update(User user) {
-        int userId = -1;
-        ResultSet resultSet;
+        int result;
         try (QueryJDBC query = new QueryJDBC()){
-            query.getConnection().setAutoCommit(false);
-            query.createPreparedStatement(UPDATE_USER_LOGIN_DATA, Statement.RETURN_GENERATED_KEYS);
-            query.setString(1, user.getEmail());
-            query.setString(2, user.getPassword());
-            query.setString(3, user.getRole().name());
-            query.executeUpdate();
-            resultSet = query.getGeneratedKeys();
-            int loginDataId = -1;
-            if (resultSet != null && resultSet.next()) {
-                loginDataId = resultSet.getInt(1);
-            }
-
-            query.createPreparedStatement(UPDATE_USER_PERSONAL_DATA, Statement.RETURN_GENERATED_KEYS);
+            query.createPreparedStatement(UPDATE_USER);
             query.setString(1, user.getFirstName());
             query.setString(2, user.getLastName());
-            query.executeUpdate();
-            query.getGeneratedKeys();
-            int personalDataId  = -1;
-            resultSet = query.getGeneratedKeys();
-            if (resultSet != null && resultSet.next()) {
-                personalDataId = resultSet.getInt(1);
-            }
-
-            query.createPreparedStatement(UPDATE_USER, Statement.RETURN_GENERATED_KEYS);
-            if (loginDataId != -1 && personalDataId != -1) {
-                query.setInt(1, loginDataId);
-                query.setInt(2, personalDataId);
-            }
-            else {
-                throw new RuntimeException();
-            }
-            query.executeUpdate();
-            resultSet = query.getGeneratedKeys();
-            if (resultSet != null && resultSet.next()) {
-                user.setId(resultSet.getInt(1));
-                userId = resultSet.getInt(1);
-            }
-            query.getConnection().commit();
+            query.setString(3, user.getPassword());
+            query.setString(4, user.getEmail());
+            query.setString(5, user.getRole().name());
+            query.setInt(6, user.getId());
+            result = query.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return userId;
-
+        return result;
     }
 
     @Override
