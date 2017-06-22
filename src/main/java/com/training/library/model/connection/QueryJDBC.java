@@ -8,10 +8,14 @@ public class QueryJDBC implements AutoCloseable{
 	private PreparedStatement preparedStatement = null;
     private Statement statement = null;
 
-    private static ConnectionManagerJDBC connectionManager = ConnectionManagerJDBC.getConnectionManagerInstance();
+    private static ConnectionManager connectionManager = ConnectionManager.getConnectionManagerInstance();
 
     public QueryJDBC() {
         this.connection = connectionManager.getConnection();
+    }
+    
+    public QueryJDBC(Connection connection) {
+        this.connection = connection;
     }
 
     public void createStatement() throws SQLException {

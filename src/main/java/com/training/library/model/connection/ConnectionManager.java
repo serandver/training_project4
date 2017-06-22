@@ -2,19 +2,19 @@ package com.training.library.model.connection;
 
 import java.sql.Connection;
 
-public final class ConnectionManagerJDBC {
+public final class ConnectionManager {
 
-	private static volatile ConnectionManagerJDBC connectionManagerInstance;
+	private static volatile ConnectionManager connectionManagerInstance;
 	private static ConnectionPoolJDBC connectionPool = ConnectionPoolJDBC.getConnectionPoolInstance();
-	
-	private ConnectionManagerJDBC() {
+	private static ConnectionPoolContext poolContext;
+	private ConnectionManager() {
 	}
 			
-	public static ConnectionManagerJDBC getConnectionManagerInstance() {
+	public static ConnectionManager getConnectionManagerInstance() {
 		if (connectionManagerInstance == null) {
-			synchronized (ConnectionManagerJDBC.class) {				
+			synchronized (ConnectionManager.class) {
 				if (connectionManagerInstance == null) {
-					connectionManagerInstance = new ConnectionManagerJDBC();
+					connectionManagerInstance = new ConnectionManager();
 				}
 			}
 		}

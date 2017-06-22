@@ -24,7 +24,9 @@ public class JdbcUserDao implements UserDao{
     private final String SELECT_USER_BY_ID = SELECT_ALL + " WHERE user_id = ?";
     private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE email = ?";
 
-    private final String UPDATE = "UPDATE users SET first_name = ?, last_name = ?, login = ?, password = ?, user_role_id = ? WHERE user_id = ?";
+    private final String UPDATE_USER_LOGIN_DATA = "UPDATE login_data SET email = ?, password = ?, role_name = ?);";
+    private final String UPDATE_USER_PERSONAL_DATA = "UPDATE personal_data SET first_name = ?, last_name = ?);";
+    private final String UPDATE_USER = "UPDATE users SET login_data_id = ?, personal_data_id = ? WHERE user_id = ?);";
     private final String DELETE = "DELETE FROM users WHERE user_id = ?";
 
     private static final int COLUMN_ID = 1;
@@ -155,24 +157,52 @@ public class JdbcUserDao implements UserDao{
 
     @Override
     public int update(User user) {
-        return executeQuery(user, UPDATE);
-    }
-
-    private int executeQuery(User user, String sql) {
-        int result;
+        int userId = -1;
+        ResultSet resultSet;
         try (QueryJDBC query = new QueryJDBC()){
-            query.createPreparedStatement(sql);
-            query.setInt(1, user.getId());
-            query.setString(2, user.getFirstName());
-            query.setString(3, user.getLastName());
-            query.setString(4, user.getEmail());
-            query.setString(5, user.getPassword());
-            query.setInt(6, user.getRole().ordinal() + 1);
-            result = query.executeUpdate();
+            query.getConnection().setAutoCommit(false);
+            query.createPreparedStatement(UPDATE_USER_LOGIN_DATA, Statement.RETURN_GENERATED_KEYS);
+            query.setString(1, user.getEmail());
+            query.setString(2, user.getPassword());
+            query.setString(3, user.getRole().name());
+            query.executeUpdate();
+            resultSet = query.getGeneratedKeys();
+            int loginDataId = -1;
+            if (resultSet != null && resultSet.next()) {
+                loginDataId = resultSet.getInt(1);
+            }
+
+            query.createPreparedStatement(UPDATE_USER_PERSONAL_DATA, Statement.RETURN_GENERATED_KEYS);
+            query.setString(1, user.getFirstName());
+            query.setString(2, user.getLastName());
+            query.executeUpdate();
+            query.getGeneratedKeys();
+            int personalDataId  = -1;
+            resultSet = query.getGeneratedKeys();
+            if (resultSet != null && resultSet.next()) {
+                personalDataId = resultSet.getInt(1);
+            }
+
+            query.createPreparedStatement(UPDATE_USER, Statement.RETURN_GENERATED_KEYS);
+            if (loginDataId != -1 && personalDataId != -1) {
+                query.setInt(1, loginDataId);
+                query.setInt(2, personalDataId);
+            }
+            else {
+                throw new RuntimeException();
+            }
+            query.executeUpdate();
+            resultSet = query.getGeneratedKeys();
+            if (resultSet != null && resultSet.next()) {
+                user.setId(resultSet.getInt(1));
+                userId = resultSet.getInt(1);
+            }
+            query.getConnection().commit();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        return result;
+        return userId;
+
     }
 
     @Override

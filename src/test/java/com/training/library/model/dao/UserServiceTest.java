@@ -40,15 +40,15 @@ public class UserServiceTest {
         int indexFromUserService = userService.create(testUser);
         int indexFromUser = testUser.getId();
         assertEquals(indexFromUserService, indexFromUser);
+    }
 
-//        Optional<User> result = userDao.find(100500);
-//        result.ifPresent(theUser -> assertNotNull(theUser));
-//        if(result.isPresent()) {
-//            User addedUser = result.get();
-//            String expected = user.getEmail();
-//            String actual = user.getEmail();
-//            assertEquals(expected, actual);
-//        }
+    private User initTestUser() {
+        return testUser =  new User.Builder()
+                .setFirstName("Test")
+                .setLastName("Test")
+                .setEmail("test")
+                .setPassword("123")
+                .setRole(User.Role.READER).build();
     }
 
     @Test
@@ -80,7 +80,16 @@ public class UserServiceTest {
         }
     }
 
-
+    public void testUpdateUser() throws Exception {
+        User user = new User();
+        user.setLastName("Another");
+        int index = 1;
+        Optional<User> result = userService.find(index);
+        result.ifPresent(theUser -> assertNotNull(theUser));
+        if(result.isPresent()) {
+            user = result.get();
+        }
+    }
 
     @Ignore
     @Test
@@ -90,12 +99,5 @@ public class UserServiceTest {
         result.ifPresent(theUser -> Assert.assertNull(theUser));
     }
 
-    private User initTestUser() {
-        return testUser =  new User.Builder()
-                .setFirstName("Test")
-                .setLastName("Test")
-                .setEmail("test")
-                .setPassword("123")
-                .setRole(User.Role.READER).build();
-    }
+
 }
