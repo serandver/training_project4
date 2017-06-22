@@ -34,7 +34,6 @@ public class BookServiceImpl implements BookService {
         return daoFactory.createBookDao().findAll();
     }
 
-
     public int create(Book book) {
         return daoFactory.createBookDao().create(book);
     }
@@ -46,5 +45,4 @@ public class BookServiceImpl implements BookService {
     public int delete(int id) {
         return daoFactory.createBookDao().delete(id);
     }
-
 }

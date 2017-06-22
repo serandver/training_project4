@@ -15,11 +15,10 @@ public class JdbcBookDao implements BookDao {
 
     private static final String INSERT_BOOK_NUMBER = "INSERT INTO book_numbers (book_number) VALUES(?)";
     private static final String INSERT_BOOK = "INSERT INTO books (title, author, book_number_id) VALUES(?, ?, ?)";
-
+    private static final String SELECT_ALL = "SELECT * FROM books JOIN book_numbers USING (book_number_id)";
 
     private static final String UPDATE = "UPDATE books SET title = ?, author = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM books WHERE id = ?";
-    private static final String SELECT_ALL = "SELECT * FROM books";
     private static final String SELECT_BOOK_BY_ID = SELECT_ALL + " WHERE id = ?";
     private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL + " WHERE title = ?";
     private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL + " WHERE author = ?";
@@ -98,6 +97,14 @@ public class JdbcBookDao implements BookDao {
         }
     }
 
+    private Book buildBook(ResultSet resultSet) throws SQLException {
+        return new Book.Builder()
+                .setId(resultSet.getInt(COLUMN_BOOK_ID))
+                .setTitle(resultSet.getString(COLUMN_TITLE))
+                .setAuthor(resultSet.getString(COLUMN_AUTHOR))
+                .setInventoryNumber(resultSet.getString(COLUMN_BOOK_NUMBER)).build();
+    }
+
     @Override
     public Optional<Book> find(int id) {
         Optional<Book> result;
@@ -121,13 +128,6 @@ public class JdbcBookDao implements BookDao {
             }
         }
         return result;
-    }
-
-    private Book buildBook(ResultSet resultSet) throws SQLException {
-        return new Book.Builder()
-                .setId(resultSet.getInt(COLUMN_BOOK_ID))
-                .setTitle(resultSet.getString(COLUMN_TITLE))
-                .setAuthor(resultSet.getString(COLUMN_AUTHOR)).build();
     }
 
     @Override

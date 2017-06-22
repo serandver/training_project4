@@ -10,16 +10,12 @@ public class BookOrderServiceImpl {
 
     private DaoFactory daoFactory;
 
-    private static class Holder{
-        static final BookOrderServiceImpl INSTANCE = new BookOrderServiceImpl( DaoFactory.getInstance() );
+    public BookOrderServiceImpl() {
+        this.daoFactory = DaoFactory.getInstance();
     }
 
-    BookOrderServiceImpl(DaoFactory instance) {
+    public BookOrderServiceImpl(DaoFactory instance) {
         this.daoFactory = instance;
-    }
-
-    public static BookOrderServiceImpl getInstance(){
-        return Holder.INSTANCE;
     }
 
     public Optional<BookOrder> find(int id) {

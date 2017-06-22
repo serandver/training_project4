@@ -42,6 +42,4 @@ public class UserServiceImpl implements UserService {
     public int delete(int id) {
         return daoFactory.createUserDao().delete(id);
     }
-
-
 }

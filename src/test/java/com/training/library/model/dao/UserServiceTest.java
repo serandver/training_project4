@@ -27,21 +27,21 @@ public class UserServiceTest {
             .build();
 
     @Test
-    public void testCreateUser() throws Exception {
+    public void testCreateUser() {
         int indexFromUserService = userService.create(testUser);
         int indexFromUser = testUser.getId();
         assertEquals(indexFromUserService, indexFromUser);
     }
 
     @Test
-    public void testFindAllUsers() throws Exception {
+    public void testFindAllUsers()  {
         List<User> users = userService.findAll();
         assertNotNull(users);
         assertTrue(users.size() > 0);
     }
 
     @Test
-    public void testFindUserById() throws Exception {
+    public void testFindUserById() {
         int index = testUser.getId();
         Optional<User> result = userService.find(index);
         result.ifPresent(theUser -> assertNotNull(theUser));
@@ -56,7 +56,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testFindUserByEmail() throws Exception {
+    public void testFindUserByEmail() {
         String expectedUserEmail = testUser.getEmail();
         Optional<User> result = userService.findByLogin(expectedUserEmail);
         result.ifPresent(theUser -> assertNotNull(theUser));
@@ -68,7 +68,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testUpdateUser() throws Exception {
+    public void testUpdateUser() {
         int userIdForUpdating = testUser.getId();
 
         String updatedFirstName = "Another first name";
@@ -103,7 +103,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testDeleteUser() throws Exception {
+    public void testDeleteUser() {
         int userIdForDeleting = testUser.getId();
         userService.delete(userIdForDeleting);
         Optional<User> result = userService.find(userIdForDeleting);
