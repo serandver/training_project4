@@ -4,7 +4,6 @@ import com.training.library.model.connection.QueryJDBC;
 import com.training.library.model.dao.UserDao;
 import com.training.library.model.entities.User;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,26 +13,30 @@ import java.util.Optional;
 
 public class JdbcUserDao implements UserDao{
 
-    private final String SELECT_ALL =   "SELECT users.user_id, personal_data.first_name, personal_data.last_name, " +
-            "login_data.email, login_data.password, login_data.role_name " +
+    private final String SELECT_ALL =
+            "SELECT users.user_id, personal_data.first_name, personal_data.last_name, " +
+                "login_data.email, login_data.password, login_data.role_name " +
             "FROM users " +
             "JOIN personal_data USING (personal_data_id) " +
             "JOIN login_data USING (login_data_id)";
 
-    private final String INSERT_USER_LOGIN_DATA = "INSERT INTO login_data (email, password, role_name) VALUES(? , ?, ?);";
-    private final String INSERT_USER_PERSONAL_DATA = "INSERT INTO personal_data (first_name, last_name) VALUES(?, ?);";
-    private final String INSERT_USER = "INSERT INTO users (login_data_id, personal_data_id) VALUES(?, ?);";
+    private final String INSERT_USER_LOGIN_DATA = "INSERT INTO login_data (email, password, role_name) VALUES(? , ?, ?)";
+    private final String INSERT_USER_PERSONAL_DATA = "INSERT INTO personal_data (first_name, last_name) VALUES(?, ?)";
+    private final String INSERT_USER = "INSERT INTO users (login_data_id, personal_data_id) VALUES(?, ?)";
     private final String SELECT_USER_BY_ID = SELECT_ALL + " WHERE user_id = ?";
     private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE email = ?";
-
-    private final String UPDATE_USER = "UPDATE users " +
+    private final String UPDATE_USER =
+            "UPDATE users " +
             "JOIN personal_data USING (personal_data_id) " +
             "JOIN login_data USING (login_data_id) " +
             "SET personal_data.first_name = ?, personal_data.last_name = ?, login_data.email = ?, " +
-            "login_data.password = ?, login_data.role_name = ? " +
-            "WHERE users.user_id = ?;";
-
-    private final String DELETE = "DELETE FROM users WHERE user_id = ?";
+                "login_data.password = ?, login_data.role_name = ? " +
+            "WHERE users.user_id = ?";
+    private final String DELETE_USER =
+            "DELETE FROM users, login_data " +
+            "USING users, login_data " +
+            "WHERE users.login_data_id = login_data.login_data_id " +
+            "AND users.user_id = ?";
 
     private static final int COLUMN_ID = 1;
     private static final int COLUMN_FIRSTNAME = 2;
@@ -75,51 +78,58 @@ public class JdbcUserDao implements UserDao{
 
     @Override
     public int create(User user) {
-        int userId = -1;
-        ResultSet resultSet;
+        int generatedUserId = -1;
         try (QueryJDBC query = new QueryJDBC()){
-            query.getConnection().setAutoCommit(false);
-            query.createPreparedStatement(INSERT_USER_LOGIN_DATA, Statement.RETURN_GENERATED_KEYS);
-            query.setString(1, user.getEmail());
-            query.setString(2, user.getPassword());
-            query.setString(3, user.getRole().name());
-            query.executeUpdate();
-            resultSet = query.getGeneratedKeys();
-            int loginDataId = -1;
-            if (resultSet != null && resultSet.next()) {
-                loginDataId = resultSet.getInt(1);
-            }
-
-            query.createPreparedStatement(INSERT_USER_PERSONAL_DATA, Statement.RETURN_GENERATED_KEYS);
-            query.setString(1, user.getFirstName());
-            query.setString(2, user.getLastName());
-            query.executeUpdate();
-            query.getGeneratedKeys();
-            int personalDataId  = -1;
-            resultSet = query.getGeneratedKeys();
-            if (resultSet != null && resultSet.next()) {
-                personalDataId = resultSet.getInt(1);
-            }
-
-            query.createPreparedStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
-            if (loginDataId != -1 && personalDataId != -1) {
-                query.setInt(1, loginDataId);
-                query.setInt(2, personalDataId);
+            query.beginTransaction();
+            int loginDataId = insertLoginData(user, query);
+            int personalDataId = insertPersonalData(user, query);
+            if (loginDataId != -1 || personalDataId != -1) {
+                generatedUserId = insertUser(query, loginDataId, personalDataId);
             }
             else {
-                throw new RuntimeException();
+                query.rollbackTransaction();
             }
-            query.executeUpdate();
-            resultSet = query.getGeneratedKeys();
-            if (resultSet != null && resultSet.next()) {
-                user.setId(resultSet.getInt(1));
-                userId = resultSet.getInt(1);
-            }
-            query.getConnection().commit();
+            user.setId(generatedUserId);
+            query.commitTransaction();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return userId;
+        return generatedUserId;
+    }
+
+    private int insertUser(QueryJDBC query, int loginDataId, int personalDataId) throws SQLException {
+        query.createPreparedStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+        query.setInt(1, loginDataId);
+        query.setInt(2, personalDataId);
+        query.executeUpdate();
+        return getGeneratedId(query);
+    }
+
+    private int getGeneratedId(QueryJDBC query) throws SQLException {
+        int id = -1;
+        ResultSet resultSet;
+        resultSet = query.getGeneratedKeys();
+        if (resultSet != null && resultSet.next()) {
+            id = resultSet.getInt(1);
+        }
+        return id;
+    }
+
+    private int insertPersonalData(User user, QueryJDBC query) throws SQLException {
+        query.createPreparedStatement(INSERT_USER_PERSONAL_DATA, Statement.RETURN_GENERATED_KEYS);
+        query.setString(1, user.getFirstName());
+        query.setString(2, user.getLastName());
+        query.executeUpdate();
+        return getGeneratedId(query);
+    }
+
+    private int insertLoginData(User user, QueryJDBC query) throws SQLException {
+        query.createPreparedStatement(INSERT_USER_LOGIN_DATA, Statement.RETURN_GENERATED_KEYS);
+        query.setString(1, user.getEmail());
+        query.setString(2, user.getPassword());
+        query.setString(3, user.getRole().name());
+        query.executeUpdate();
+        return getGeneratedId(query);
     }
 
     @Override
@@ -183,7 +193,7 @@ public class JdbcUserDao implements UserDao{
     public int delete(int id) {
         int result;
         try (QueryJDBC query = new QueryJDBC()){
-            query.createPreparedStatement(DELETE);
+            query.createPreparedStatement(DELETE_USER);
             query.setInt(1, id);
             result = query.executeUpdate();
         } catch (SQLException e) {

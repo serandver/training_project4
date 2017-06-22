@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
         return daoFactory.createUserDao().findByLogin(login);
     }
 
-
     public int update(User user) {
         return daoFactory.createUserDao().update(user);
     }

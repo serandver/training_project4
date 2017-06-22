@@ -62,8 +62,16 @@ public class QueryJDBC implements AutoCloseable{
         return preparedStatement.getGeneratedKeys();
     }
 
-    public Connection getConnection() {
-        return connection;
+    public void beginTransaction() throws SQLException {
+        connection.setAutoCommit(false);
+    }
+
+    public void commitTransaction() throws SQLException {
+        connection.commit();
+    }
+
+    public void rollbackTransaction() throws SQLException{
+        connection.rollback();
     }
 
     @Override
