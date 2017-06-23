@@ -35,7 +35,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             "JOIN book_numbers " +
             "USING (book_number_id)) AS book_inf " +
             "USING (book_id)";
-    private final String UPDATE_ORDER = "UPDATE orders SET user_id = ?, book_id = ?, date_from = ?, reading_place = ?, is_returned = ? WHERE order_id = ?";
+    private final String UPDATE_ORDER = "UPDATE orders SET user_id = ?, book_id = ?, date_receive = ?, date_return = ?, " +
+            "reading_place = ? WHERE order_id = ?";
     private final String DELETE_ORDER = "DELETE FROM orders WHERE order_id = ?";
     private final String SELECT_ORDER_BY_ID = SELECT_ALL_ORDERS + " WHERE order_id = ?";
     private final String SELECT_ORDER_BY_USER_ID = SELECT_ALL_ORDERS + " WHERE user_id = ?";
@@ -152,6 +153,23 @@ public class JdbcBookOrderDao implements BookOrderDao{
                 .setInventoryNumber(resultSet.getString(COLUMN_BOOK_NUMBER)).build();
     }
 
+    @Override
+    public int update(BookOrder bookOrder) {
+        int result;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement(UPDATE_ORDER);
+            query.setInt(1, bookOrder.getId());
+            query.setInt(2, bookOrder.getUser().getId());
+            query.setTimestamp(3, new Timestamp(bookOrder.getDateOfReceive().getTime()));
+            query.setTimestamp(4, getTimeStampOfReturnDate(bookOrder));
+            query.setString(5, bookOrder.getPlace().name());
+            query.setInt(6, bookOrder.getId());
+            result = query.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
 
     @Override
     public Optional<BookOrder> find(int id) {
@@ -178,32 +196,6 @@ public class JdbcBookOrderDao implements BookOrderDao{
         return result;
     }
 
-
-
-
-
-    private int executeQuery(BookOrder bookOrder, String sql) {
-        int result;
-        try (QueryJDBC query = new QueryJDBC()){
-            query.createPreparedStatement(sql);
-            query.createPreparedStatement(sql);
-            query.setInt(1, bookOrder.getId());
-            query.setInt(2, bookOrder.getUser().getId());
-            query.setInt(3, bookOrder.getBook().getId());
-//            query.setDate(4, new java.sql.Date(bookOrder.getDateOfReceive().getTime()));
-            query.setString(5, bookOrder.getPlace().name());
-//            query.setBoolean(6, bookOrder.isReturned());
-            result = query.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return result;
-    }
-
-    @Override
-    public int update(BookOrder bookOrder) {
-        return executeQuery(bookOrder, UPDATE_ORDER);
-    }
 
     @Override
     public int delete(int id) {
