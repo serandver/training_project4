@@ -20,8 +20,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             "VALUES (?, ?, ?, ?, ?);";
     private final String SELECT_ALL_ORDERS =
             "SELECT orders.order_id, user_inf.user_id, user_inf.first_name, user_inf.last_name, " +
-            "book_inf.book_id, book_inf.title, book_inf.author, orders.date_receive, " +
-            "orders.date_return, orders.reading_place " +
+            "book_inf.book_id, book_inf.title, book_inf.author, book_inf.book_number, " +
+            "orders.date_receive, orders.date_return, orders.reading_place " +
             "FROM orders " +
             "JOIN " +
             "(SELECT users.user_id, personal_data.first_name, personal_data.last_name " +
@@ -50,9 +50,10 @@ public class JdbcBookOrderDao implements BookOrderDao{
     private static final int COLUMN_BOOK_ID = 5;
     private static final int COLUMN_TITLE = 6;
     private static final int COLUMN_AUTHOR = 7;
-    private static final int COLUMN_DATE_RECEIVE = 8;
-    private static final int COLUMN_DATE_RETURN = 9;
-    private static final int COLUMN_READING_PLACE = 10;
+    private static final int COLUMN_BOOK_NUMBER = 8;
+    private static final int COLUMN_DATE_RECEIVE = 9;
+    private static final int COLUMN_DATE_RETURN = 10;
+    private static final int COLUMN_READING_PLACE = 11;
 
     @Override
     public int create(BookOrder bookOrder) {
@@ -147,7 +148,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
         return new Book.Builder()
                 .setId(resultSet.getInt(COLUMN_BOOK_ID))
                 .setTitle(resultSet.getString(COLUMN_TITLE))
-                .setAuthor(resultSet.getString(COLUMN_AUTHOR)).build();
+                .setAuthor(resultSet.getString(COLUMN_AUTHOR))
+                .setInventoryNumber(resultSet.getString(COLUMN_BOOK_NUMBER)).build();
     }
 
 
