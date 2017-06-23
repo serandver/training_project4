@@ -6,16 +6,16 @@ public class BookOrder {
     private int id;
     private User user;
     private Book book;
-    private Date dateFrom;
-    private Date dateOfReturn;
+    private Date dateOfReceive;
+    private Date dateOfReturn = null;
     private ReadingPlace place;
 
     public static class Builder{
         private int id;
         private User user;
         private Book book;
-        private Date dateFrom;
-        private Date dateOfReturn;
+        private Date dateOfReceive;
+        private Date dateOfReturn = null;
         private ReadingPlace place;
 
         public Builder setId(int id) {
@@ -33,8 +33,8 @@ public class BookOrder {
             return this;
         }
 
-        public Builder setDateFrom(Date dateFrom) {
-            this.dateFrom = dateFrom;
+        public Builder setDateOfReceive(Date dateOfReceive) {
+            this.dateOfReceive = dateOfReceive;
             return this;
         }
 
@@ -53,7 +53,7 @@ public class BookOrder {
             bookOrder.setId(id);
             bookOrder.setUser(user);
             bookOrder.setBook(book);
-            bookOrder.setDateFrom(dateFrom);
+            bookOrder.setDateOfReceive(dateOfReceive);
             bookOrder.setDateOfReturn(dateOfReturn);
             bookOrder.setPlace(place);
             return bookOrder;
@@ -89,12 +89,12 @@ public class BookOrder {
         this.book = book;
     }
 
-    public Date getDateFrom() {
-        return dateFrom;
+    public Date getDateOfReceive() {
+        return dateOfReceive;
     }
 
-    public void setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
+    public void setDateOfReceive(Date dateOfReceive) {
+        this.dateOfReceive = dateOfReceive;
     }
 
     public ReadingPlace getPlace() {
@@ -123,7 +123,7 @@ public class BookOrder {
         if (id != bookOrder.id) return false;
         if (!user.equals(bookOrder.user)) return false;
         if (!book.equals(bookOrder.book)) return false;
-        if (!dateFrom.equals(bookOrder.dateFrom)) return false;
+        if (!dateOfReceive.equals(bookOrder.dateOfReceive)) return false;
         if (dateOfReturn != null ? !dateOfReturn.equals(bookOrder.dateOfReturn) : bookOrder.dateOfReturn != null)
             return false;
         return place == bookOrder.place;
@@ -134,7 +134,7 @@ public class BookOrder {
         int result = id;
         result = 31 * result + user.hashCode();
         result = 31 * result + book.hashCode();
-        result = 31 * result + dateFrom.hashCode();
+        result = 31 * result + dateOfReceive.hashCode();
         result = 31 * result + (dateOfReturn != null ? dateOfReturn.hashCode() : 0);
         result = 31 * result + place.hashCode();
         return result;
@@ -146,7 +146,7 @@ public class BookOrder {
                 "id=" + id +
                 ", user=" + user +
                 ", book=" + book +
-                ", dateFrom=" + dateFrom +
+                ", dateOfReceive=" + dateOfReceive +
                 ", dateOfReturn=" + dateOfReturn +
                 ", place=" + place +
                 '}';

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class JdbcUserDao implements UserDao{
 
-    private final String SELECT_ALL =
+    private final String SELECT_ALL_USERS =
             "SELECT users.user_id, personal_data.first_name, personal_data.last_name, " +
                 "login_data.email, login_data.password, login_data.role_name " +
             "FROM users " +
@@ -23,8 +23,8 @@ public class JdbcUserDao implements UserDao{
     private final String INSERT_USER_LOGIN_DATA = "INSERT INTO login_data (email, password, role_name) VALUES(? , ?, ?)";
     private final String INSERT_USER_PERSONAL_DATA = "INSERT INTO personal_data (first_name, last_name) VALUES(?, ?)";
     private final String INSERT_USER = "INSERT INTO users (login_data_id, personal_data_id) VALUES(?, ?)";
-    private final String SELECT_USER_BY_ID = SELECT_ALL + " WHERE user_id = ?";
-    private final String SELECT_USER_BY_LOGIN = SELECT_ALL + " WHERE email = ?";
+    private final String SELECT_USER_BY_ID = SELECT_ALL_USERS + " WHERE user_id = ?";
+    private final String SELECT_USER_BY_LOGIN = SELECT_ALL_USERS + " WHERE email = ?";
     private final String UPDATE_USER =
             "UPDATE users " +
             "JOIN personal_data USING (personal_data_id) " +
@@ -77,8 +77,7 @@ public class JdbcUserDao implements UserDao{
 
     private int getGeneratedId(QueryJDBC query) throws SQLException {
         int id = -1;
-        ResultSet resultSet;
-        resultSet = query.getGeneratedKeys();
+        ResultSet resultSet = query.getGeneratedKeys();
         if (resultSet != null && resultSet.next()) {
             id = resultSet.getInt(1);
         }
@@ -103,23 +102,25 @@ public class JdbcUserDao implements UserDao{
 
     @Override
     public List<User> findAll() {
-        List<User> users = new ArrayList<>();
+        List<User> users;
         try (QueryJDBC query = new QueryJDBC()){
             query.createStatement();
-            ResultSet resultSet = query.executeQuery(SELECT_ALL);
-            getAllUsersFromResultSet(users, resultSet);
+            ResultSet resultSet = query.executeQuery(SELECT_ALL_USERS);
+            users = getAllUsersFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return users;
     }
 
-    private void getAllUsersFromResultSet(List<User> users, ResultSet resultSet) throws SQLException {
+    private List<User>  getAllUsersFromResultSet(ResultSet resultSet) throws SQLException {
+        List<User> users = new ArrayList<>();
         User user;
         while (resultSet.next()) {
             user = buildUser(resultSet);
             users.add(user);
         }
+        return users;
     }
 
     private User buildUser(ResultSet resultSet) throws SQLException {

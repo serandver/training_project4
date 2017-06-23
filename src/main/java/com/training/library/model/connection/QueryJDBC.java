@@ -42,8 +42,8 @@ public class QueryJDBC implements AutoCloseable{
         preparedStatement.setBoolean(key, value);
 	}
 	
-	public void setDate(int key, Date date) throws SQLException {
-        preparedStatement.setDate(key, date);
+	public void setTimestamp(int key, Timestamp timestamp) throws SQLException {
+        preparedStatement.setTimestamp(key, timestamp);
 	}
 	
 	public ResultSet executeQuery(String query) throws SQLException {

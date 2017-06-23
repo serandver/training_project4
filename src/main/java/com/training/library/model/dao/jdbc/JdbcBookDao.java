@@ -15,14 +15,14 @@ public class JdbcBookDao implements BookDao {
 
     private static final String INSERT_BOOK_NUMBER = "INSERT INTO book_numbers (book_number) VALUES(?)";
     private static final String INSERT_BOOK = "INSERT INTO books (title, author, book_number_id) VALUES(?, ?, ?)";
-    private static final String SELECT_ALL =
+    private static final String SELECT_ALL_BOOKS =
             "SELECT books.book_id, books.title, books.author, book_numbers.book_number " +
             "FROM books " +
             "JOIN book_numbers " +
             "USING (book_number_id)";
-    private static final String SELECT_BOOK_BY_ID = SELECT_ALL + " WHERE book_id = ?";
-    private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL + " WHERE title = ?";
-    private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL + " WHERE author = ?";
+    private static final String SELECT_BOOK_BY_ID = SELECT_ALL_BOOKS + " WHERE book_id = ?";
+    private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL_BOOKS + " WHERE title = ?";
+    private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL_BOOKS + " WHERE author = ?";
     private static final String UPDATE_BOOK =
             "UPDATE books " +
             "JOIN book_numbers USING (book_number_id) " +
@@ -78,8 +78,7 @@ public class JdbcBookDao implements BookDao {
 
     private int getGeneratedId(QueryJDBC query) throws SQLException {
         int id = -1;
-        ResultSet resultSet;
-        resultSet = query.getGeneratedKeys();
+        ResultSet resultSet = query.getGeneratedKeys();
         if (resultSet != null && resultSet.next()) {
             id = resultSet.getInt(1);
         }
@@ -89,23 +88,25 @@ public class JdbcBookDao implements BookDao {
 
     @Override
     public List<Book> findAll() {
-        List<Book> books = new ArrayList<>();
+        List<Book> books;
         try (QueryJDBC query = new QueryJDBC()){
             query.createStatement();
-            ResultSet resultSet = query.executeQuery(SELECT_ALL);
-            getAllBooksFromResultSet(books, resultSet);
+            ResultSet resultSet = query.executeQuery(SELECT_ALL_BOOKS);
+            books = getAllBooksFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return books;
     }
 
-    private void getAllBooksFromResultSet(List<Book> books, ResultSet resultSet) throws SQLException {
+    private List<Book> getAllBooksFromResultSet(ResultSet resultSet) throws SQLException {
+        List<Book> books = new ArrayList<>();
         Book book;
         while (resultSet.next()) {
             book = buildBook(resultSet);
             books.add(book);
         }
+        return books;
     }
 
     private Book buildBook(ResultSet resultSet) throws SQLException {
