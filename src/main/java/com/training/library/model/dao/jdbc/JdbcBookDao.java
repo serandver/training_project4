@@ -15,13 +15,24 @@ public class JdbcBookDao implements BookDao {
 
     private static final String INSERT_BOOK_NUMBER = "INSERT INTO book_numbers (book_number) VALUES(?)";
     private static final String INSERT_BOOK = "INSERT INTO books (title, author, book_number_id) VALUES(?, ?, ?)";
-    private static final String SELECT_ALL = "SELECT * FROM books JOIN book_numbers USING (book_number_id)";
-
-    private static final String UPDATE = "UPDATE books SET title = ?, author = ? WHERE id = ?";
-    private static final String DELETE = "DELETE FROM books WHERE id = ?";
-    private static final String SELECT_BOOK_BY_ID = SELECT_ALL + " WHERE id = ?";
+    private static final String SELECT_ALL =
+            "SELECT books.book_id, books.title, books.author, book_numbers.book_number " +
+            "FROM books " +
+            "JOIN book_numbers " +
+            "USING (book_number_id)";
+    private static final String SELECT_BOOK_BY_ID = SELECT_ALL + " WHERE book_id = ?";
     private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL + " WHERE title = ?";
     private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL + " WHERE author = ?";
+    private static final String UPDATE_BOOK =
+            "UPDATE books " +
+            "JOIN book_numbers USING (book_number_id) " +
+            "SET books.title = ?, books.author = ?, book_numbers.book_number = ? " +
+            "WHERE books.book_id = ?";
+    private static final String DELETE_BOOK =
+            "DELETE FROM books, book_numbers " +
+            "USING books, book_numbers " +
+            "WHERE books.book_number_id = book_numbers.book_number_id " +
+            "AND books.book_id = ?";
 
     private static final int COLUMN_BOOK_ID = 1;
     private static final int COLUMN_TITLE = 2;
@@ -153,32 +164,26 @@ public class JdbcBookDao implements BookDao {
         return findByColumnValue(SELECT_BOOK_BY_AUTHOR, author);
     }
 
-
-
-    private int executeQuery(Book book, String sql) {
+    @Override
+    public int update(Book book) {
         int result;
         try (QueryJDBC query = new QueryJDBC()){
-            query.createPreparedStatement(sql);
-            query.setInt(1, book.getId());
-            query.setString(2, book.getTitle());
-            query.setString(3, book.getAuthor());
+            query.createPreparedStatement(UPDATE_BOOK);
+            query.setString(1, book.getTitle());
+            query.setString(2, book.getAuthor());
+            query.setString(3, book.getInventoryNumber());
+            query.setInt(4, book.getId());
             result = query.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return result;
-    }
-
-    @Override
-    public int update(Book book) {
-        return executeQuery(book, UPDATE);
-    }
+        return result;    }
 
     @Override
     public int delete(int id) {
         int result;
         try (QueryJDBC query = new QueryJDBC()){
-            query.createPreparedStatement(DELETE);
+            query.createPreparedStatement(DELETE_BOOK);
             query.setInt(1, id);
             result = query.executeUpdate();
         } catch (SQLException e) {
