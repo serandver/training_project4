@@ -35,16 +35,15 @@ public class Runner {
 //        bookOrderService.create(bookOrder);
 
 
-//        List<BookOrder> bookOrders = new ArrayList<>();
-//        bookOrders = bookOrderService.findAll();
-//        for (BookOrder bo: bookOrders) {
-//            System.out.println(bo);
-//        }
-        BookOrder bookOrder = bookOrderService.find(1).get();
-        System.out.println(bookOrder);
-        bookOrder.setPlace(BookOrder.ReadingPlace.SUBSCRIPTION);
-        bookOrderService.update(bookOrder);
-        BookOrder bookOrderFromDB = bookOrderService.find(1).get();
-        System.out.println(bookOrderFromDB);
+        List<BookOrder> bookOrders = bookOrderService.findByReadingPlace(BookOrder.ReadingPlace.READING_ROOM);
+        for (BookOrder bo: bookOrders) {
+            System.out.println(bo);
+        }
+//        BookOrder bookOrder = bookOrderService.find(1).get();
+//        System.out.println(bookOrder);
+//        bookOrder.setPlace(BookOrder.ReadingPlace.SUBSCRIPTION);
+//        bookOrderService.update(bookOrder);
+//        BookOrder bookOrderFromDB = bookOrderService.find(1).get();
+//        System.out.println(bookOrderFromDB);
     }
 }

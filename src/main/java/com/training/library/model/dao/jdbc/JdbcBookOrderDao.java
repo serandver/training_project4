@@ -20,20 +20,20 @@ public class JdbcBookOrderDao implements BookOrderDao{
             "VALUES (?, ?, ?, ?, ?);";
     private final String SELECT_ALL_ORDERS =
             "SELECT orders.order_id, user_inf.user_id, user_inf.first_name, user_inf.last_name, " +
-            "book_inf.book_id, book_inf.title, book_inf.author, book_inf.book_number, " +
-            "orders.date_receive, orders.date_return, orders.reading_place " +
+                "book_inf.book_id, book_inf.title, book_inf.author, book_inf.book_number, " +
+                "orders.date_receive, orders.date_return, orders.reading_place " +
             "FROM orders " +
             "JOIN " +
-            "(SELECT users.user_id, personal_data.first_name, personal_data.last_name " +
-            "FROM users " +
-            "JOIN personal_data " +
-            "USING (personal_data_id)) AS user_inf " +
+                "(SELECT users.user_id, personal_data.first_name, personal_data.last_name " +
+                "FROM users " +
+                "JOIN personal_data " +
+                "USING (personal_data_id)) AS user_inf " +
             "USING (user_id) " +
             "JOIN " +
-            "(SELECT books.book_id, books.title, books.author, book_numbers.book_number " +
-            "FROM books " +
-            "JOIN book_numbers " +
-            "USING (book_number_id)) AS book_inf " +
+                "(SELECT books.book_id, books.title, books.author, book_numbers.book_number " +
+                "FROM books " +
+                "JOIN book_numbers " +
+                "USING (book_number_id)) AS book_inf " +
             "USING (book_id)";
     private final String UPDATE_ORDER = "UPDATE orders SET user_id = ?, book_id = ?, date_receive = ?, date_return = ?, " +
             "reading_place = ? WHERE order_id = ?";
@@ -42,7 +42,9 @@ public class JdbcBookOrderDao implements BookOrderDao{
     private final String SELECT_ORDER_BY_USER_ID = SELECT_ALL_ORDERS + " WHERE user_id = ?";
     private final String SELECT_ORDER_BY_BOOK_ID = SELECT_ALL_ORDERS + " WHERE book_id = ?";
     private final String SELECT_ORDER_BY_READING_PLACE = SELECT_ALL_ORDERS + " WHERE reading_place = ?";
-    private final String SELECT_ORDER_BY_STATUS = SELECT_ALL_ORDERS + " WHERE is_returned = ?";
+    private final String SELECT_ORDER_BY_DATE_OF_RECEIVE = SELECT_ALL_ORDERS + " WHERE orders.date_receive = ?";
+    private final String SELECT_ORDER_BY_DATE_OF_RETURN = SELECT_ALL_ORDERS + " WHERE orders.date_return = ?";
+    private final String SELECT_NOT_RETURNED_BOOKS = SELECT_ALL_ORDERS + " WHERE orders.date_return IS NULL";
 
     private static final int COLUMN_ORDER_ID = 1;
     private static final int COLUMN_USER_ID = 2;
@@ -197,6 +199,88 @@ public class JdbcBookOrderDao implements BookOrderDao{
     }
 
 
+
+    @Override
+    public List<BookOrder> findByUserId(int userId) {
+        List<BookOrder> ordersByUserId;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement(SELECT_ORDER_BY_USER_ID);
+            query.setInt(1, userId);
+            ResultSet resultSet = query.executeQuery();
+            ordersByUserId = getAllOrdersFromResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ordersByUserId;
+    }
+
+    @Override
+    public List<BookOrder> findByBookId(int bookId) {
+        List<BookOrder> ordersByBookId;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement(SELECT_ORDER_BY_BOOK_ID);
+            query.setInt(1, bookId);
+            ResultSet resultSet = query.executeQuery();
+            ordersByBookId = getAllOrdersFromResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ordersByBookId;
+
+    }
+
+    @Override
+    public List<BookOrder> findByReadingPlace(BookOrder.ReadingPlace place) {
+        List<BookOrder> ordersByReadingPlace;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement(SELECT_ORDER_BY_READING_PLACE);
+            query.setString(1, place.name());
+            ResultSet resultSet = query.executeQuery();
+            ordersByReadingPlace = getAllOrdersFromResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ordersByReadingPlace;
+    }
+
+    @Override
+    public List<BookOrder> findByDateOfReceive(Date date) {
+        List<BookOrder> ordersByDateOfReceive;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement(SELECT_ORDER_BY_DATE_OF_RECEIVE);
+            query.setTimestamp(1, new Timestamp(date.getTime()));
+            ResultSet resultSet = query.executeQuery();
+            ordersByDateOfReceive = getAllOrdersFromResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ordersByDateOfReceive;
+    }
+
+    @Override
+    public List<BookOrder> findByDateOfReturn(Date date) {
+        List<BookOrder> ordersByDateOfReturn;
+        if (date != null) {
+            try (QueryJDBC query = new QueryJDBC()){
+                query.createPreparedStatement(SELECT_ORDER_BY_DATE_OF_RETURN);
+                query.setTimestamp(1, new Timestamp(date.getTime()));
+                ResultSet resultSet = query.executeQuery();
+                ordersByDateOfReturn = getAllOrdersFromResultSet(resultSet);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try (QueryJDBC query = new QueryJDBC()){
+                query.createPreparedStatement(SELECT_NOT_RETURNED_BOOKS);
+                ResultSet resultSet = query.executeQuery();
+                ordersByDateOfReturn = getAllOrdersFromResultSet(resultSet);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return ordersByDateOfReturn;
+    }
+
     @Override
     public int delete(int id) {
         int result;
@@ -210,42 +294,4 @@ public class JdbcBookOrderDao implements BookOrderDao{
         }
         return result;
     }
-
-    @Override
-    public List<BookOrder> findByUserId(int userId) {
-//        return findByColumnValue(SELECT_ORDER_BY_USER_ID, userId);
-        return null;
-    }
-
-    @Override
-    public List<BookOrder> findByBookId(int bookId) {
-//        return findByColumnValue(SELECT_ORDER_BY_BOOK_ID, bookId);
-        return null;
-    }
-
-    @Override
-    public List<BookOrder> findByReadingPlace(BookOrder.ReadingPlace place) {
-//        return findByColumnValue(SELECT_ORDER_BY_READING_PLACE, place);
-        return null;
-    }
-
-    @Override
-    public List<BookOrder> findByStatus(boolean isReturned) {
-//        return findByColumnValue(SELECT_ORDER_BY_STATUS, isReturned);
-        return null;
-    }
-
-    private Optional<BookOrder> findByColumnValue(String sql, String columnValue) {
-    Optional<BookOrder> result;
-    try (QueryJDBC query = new QueryJDBC()){
-        query.createPreparedStatement(sql);
-        query.setString(1, columnValue);
-        try (ResultSet resultSet = query.executeQuery()) {
-            result = getOptionalBookOrderFromResultSet(resultSet);
-        }
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
-    return result;
-}
 }
