@@ -159,11 +159,11 @@ public class JdbcUserDao implements UserDao{
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional<User> findByEmail(String email) {
         Optional<User> result;
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(SELECT_USER_BY_LOGIN);
-            query.setString(1, login);
+            query.setString(1, email);
             ResultSet resultSet = query.executeQuery();
             result = getOptionalUserFromResultSet(resultSet);
         } catch (SQLException e) {

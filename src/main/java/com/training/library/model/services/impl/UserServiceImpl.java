@@ -1,7 +1,6 @@
 package com.training.library.model.services.impl;
 
 import com.training.library.model.dao.DaoFactory;
-import com.training.library.model.dao.jdbc.JdbcUserDao;
 import com.training.library.model.entities.User;
 import com.training.library.model.services.UserService;
 
@@ -35,8 +34,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
-        return daoFactory.createUserDao().findByLogin(login);
+    public Optional<User> findByEmail(String email) {
+        return daoFactory.createUserDao().findByEmail(email);
     }
 
     @Override

@@ -15,7 +15,9 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class UserServiceTest {
@@ -24,7 +26,7 @@ public class UserServiceTest {
     private UserDao mockUserDao;
 
     private User testUser = new User.Builder()
-            .setId(5)
+            .setId(1)
             .setFirstName("Test")
             .setLastName("Test")
             .setEmail("test1")
@@ -41,50 +43,88 @@ public class UserServiceTest {
         for(int i = 0; i < 3; i++) {
             usersFromMockUserDao.add(mock(User.class));
         }
+
         when(mockDaoFactory.createUserDao()).thenReturn(mockUserDao);
         when(mockUserDao.findAll()).thenReturn(usersFromMockUserDao);
 
         List<User> users = userService.findAll();
+        verify(mockDaoFactory).createUserDao();
+        verify(mockUserDao).findAll();
         assertNotNull(users);
         assertTrue(users.size() == 3);
     }
 
-/*
+
     @Test
     public void testCreateUser() {
-        int indexFromUserService = userService.create(testUser);
-        int indexFromUser = testUser.getId();
-        assertEquals(indexFromUserService, indexFromUser);
+        mockDaoFactory = mock(DaoFactory.class);
+        mockUserDao = mock(UserDao.class);
+        userService = new UserServiceImpl(mockDaoFactory);
+        User mockUser = mock(User.class);
+        int expectedId = 1;
+
+        when(mockDaoFactory.createUserDao()).thenReturn(mockUserDao);
+        when(mockUserDao.create(mockUser)).thenReturn(expectedId);
+
+        int actualId = userService.create(mockUser);
+        verify(mockDaoFactory).createUserDao();
+        verify(mockUserDao).create(mockUser);
+        assertEquals(expectedId, actualId);
     }
 
 
     @Test
     public void testFindUserById() {
-        int index = testUser.getId();
-        Optional<User> result = userService.find(index);
-        result.ifPresent(theUser -> assertNotNull(theUser));
-        if(result.isPresent()) {
-            User expectedUser = result.get();
-            assertEquals(expectedUser.getFirstName(), testUser.getFirstName());
-            assertEquals(expectedUser.getLastName(), testUser.getLastName());
-            assertEquals(expectedUser.getEmail(), testUser.getEmail());
-            assertEquals(expectedUser.getPassword(), testUser.getPassword());
-            assertEquals(expectedUser.getRole(), testUser.getRole());
+        mockDaoFactory = mock(DaoFactory.class);
+        mockUserDao = mock(UserDao.class);
+        userService = new UserServiceImpl(mockDaoFactory);
+        int indexToFind = 1;
+        Optional<User> expectedResult = Optional.of(testUser);
+
+        when(mockDaoFactory.createUserDao()).thenReturn(mockUserDao);
+        when(mockUserDao.find(indexToFind)).thenReturn(expectedResult);
+
+        Optional<User> actualResult = userService.find(indexToFind);
+
+        verify(mockDaoFactory).createUserDao();
+        verify(mockUserDao).find(indexToFind);
+        actualResult.ifPresent(theUser -> assertNotNull(theUser));
+        if(actualResult.isPresent()) {
+            User actualUser = actualResult.get();
+            assertEquals(testUser.getFirstName(), actualUser.getFirstName());
+            assertEquals(testUser.getLastName(), actualUser.getLastName());
+            assertEquals(testUser.getEmail(), actualUser.getEmail());
+            assertEquals(testUser.getPassword(), actualUser.getPassword());
+            assertEquals(testUser.getRole(), actualUser.getRole());
         }
     }
 
     @Test
     public void testFindUserByEmail() {
-        String expectedUserEmail = testUser.getEmail();
-        Optional<User> result = userService.findByLogin(expectedUserEmail);
-        result.ifPresent(theUser -> assertNotNull(theUser));
-        if(result.isPresent()) {
-            User user = result.get();
-            String actualUserLogin = user.getEmail();
-            assertEquals(expectedUserEmail, actualUserLogin);
+        mockDaoFactory = mock(DaoFactory.class);
+        mockUserDao = mock(UserDao.class);
+        userService = new UserServiceImpl(mockDaoFactory);
+        String email = "email";
+        Optional<User> expectedResult = Optional.of(testUser);
+
+        when(mockDaoFactory.createUserDao()).thenReturn(mockUserDao);
+        when(mockUserDao.findByEmail(email)).thenReturn(expectedResult);
+
+        Optional<User> actualResult = userService.findByEmail(email);
+
+        verify(mockDaoFactory).createUserDao();
+        verify(mockUserDao).findByEmail(email);
+        actualResult.ifPresent(theUser -> assertNotNull(theUser));
+        if(actualResult.isPresent()) {
+            User actualUser = actualResult.get();
+            assertEquals(testUser.getFirstName(), actualUser.getFirstName());
+            assertEquals(testUser.getLastName(), actualUser.getLastName());
+            assertEquals(testUser.getEmail(), actualUser.getEmail());
+            assertEquals(testUser.getPassword(), actualUser.getPassword());
+            assertEquals(testUser.getRole(), actualUser.getRole());
         }
     }
-
+/*
     @Test
     public void testUpdateUser() {
         int userIdForUpdating = testUser.getId();
