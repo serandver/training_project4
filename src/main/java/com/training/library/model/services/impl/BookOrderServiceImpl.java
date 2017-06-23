@@ -4,6 +4,7 @@ import com.training.library.model.dao.DaoFactory;
 import com.training.library.model.entities.BookOrder;
 import com.training.library.model.services.BookOrderService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +61,12 @@ public class BookOrderServiceImpl implements BookOrderService {
     }
 
     @Override
-    public List<BookOrder> findByStatus(boolean isReturned) {
-        return daoFactory.createBookOrderDao().findByStatus(isReturned);
+    public List<BookOrder> findByDateOfReceive(Date date) {
+        return null;
+    }
+
+    @Override
+    public List<BookOrder> findByDateOfReturn(Date date) {
+        return null;
     }
 }

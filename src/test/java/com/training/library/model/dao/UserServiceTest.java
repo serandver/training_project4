@@ -8,15 +8,21 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class UserServiceTest {
-    private UserService userService = new UserServiceImpl();
+    private UserService userService;
+    private DaoFactory mockDaoFactory;
+    private UserDao mockUserDao;
+
     private User testUser = new User.Builder()
             .setId(5)
             .setFirstName("Test")
@@ -27,18 +33,30 @@ public class UserServiceTest {
             .build();
 
     @Test
+    public void testFindAllUsers()  {
+        mockDaoFactory = mock(DaoFactory.class);
+        mockUserDao = mock(UserDao.class);
+        userService = new UserServiceImpl(mockDaoFactory);
+        List<User> usersFromMockUserDao = new ArrayList<>();
+        for(int i = 0; i < 3; i++) {
+            usersFromMockUserDao.add(mock(User.class));
+        }
+        when(mockDaoFactory.createUserDao()).thenReturn(mockUserDao);
+        when(mockUserDao.findAll()).thenReturn(usersFromMockUserDao);
+
+        List<User> users = userService.findAll();
+        assertNotNull(users);
+        assertTrue(users.size() == 3);
+    }
+
+/*
+    @Test
     public void testCreateUser() {
         int indexFromUserService = userService.create(testUser);
         int indexFromUser = testUser.getId();
         assertEquals(indexFromUserService, indexFromUser);
     }
 
-    @Test
-    public void testFindAllUsers()  {
-        List<User> users = userService.findAll();
-        assertNotNull(users);
-        assertTrue(users.size() > 0);
-    }
 
     @Test
     public void testFindUserById() {
@@ -109,4 +127,5 @@ public class UserServiceTest {
         Optional<User> result = userService.find(userIdForDeleting);
         result.ifPresent(theUser -> Assert.assertNull(theUser));
     }
+    */
 }
