@@ -10,7 +10,7 @@ public interface BookOrderService {
     Optional<BookOrder> find(int id);
     List<BookOrder> findAll();
     int create(BookOrder bookOrder);
-    int update(BookOrder bookOrder);
+    void update(BookOrder bookOrder);
     int delete(int id);
     List<BookOrder> findByUserId(int userId);
     List<BookOrder> findByBookId(int bookId);

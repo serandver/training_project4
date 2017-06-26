@@ -10,6 +10,6 @@ public interface UserService {
     Optional<User> find(int id);
     Optional<User> findByEmail(String email);
     int create(User user);
-    int update(User user);
+    void update(User user);
     int delete(int id);
 }

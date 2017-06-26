@@ -166,19 +166,18 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public int update(Book book) {
-        int result;
+    public void update(Book book) {
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(UPDATE_BOOK);
             query.setString(1, book.getTitle());
             query.setString(2, book.getAuthor());
             query.setString(3, book.getInventoryNumber());
             query.setInt(4, book.getId());
-            result = query.executeUpdate();
+            query.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return result;    }
+    }
 
     @Override
     public int delete(int id) {

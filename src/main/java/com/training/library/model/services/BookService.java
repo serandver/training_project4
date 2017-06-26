@@ -11,6 +11,6 @@ public interface BookService {
     Optional<Book> findByAuthor(String author);
     List<Book> findAll();
     int create(Book book);
-    int update(Book book);
+    void update(Book book);
     int delete(int id);
 }

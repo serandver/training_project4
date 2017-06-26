@@ -44,8 +44,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int update(Book book) {
-        return daoFactory.createBookDao().update(book);
+    public void update(Book book) {
+        daoFactory.createBookDao().update(book);
     }
 
     @Override

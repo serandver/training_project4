@@ -36,8 +36,8 @@ public class BookOrderServiceImpl implements BookOrderService {
     }
 
     @Override
-    public int update(BookOrder bookOrder) {
-        return daoFactory.createBookOrderDao().update(bookOrder);
+    public void update(BookOrder bookOrder) {
+        daoFactory.createBookOrderDao().update(bookOrder);
     }
 
     @Override

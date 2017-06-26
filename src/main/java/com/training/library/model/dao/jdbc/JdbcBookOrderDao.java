@@ -37,7 +37,6 @@ public class JdbcBookOrderDao implements BookOrderDao{
             "USING (book_id)";
     private final String UPDATE_ORDER = "UPDATE orders SET user_id = ?, book_id = ?, date_receive = ?, date_return = ?, " +
             "reading_place = ? WHERE order_id = ?";
-    private final String DELETE_ORDER = "DELETE FROM orders WHERE order_id = ?";
     private final String SELECT_ORDER_BY_ID = SELECT_ALL_ORDERS + " WHERE order_id = ?";
     private final String SELECT_ORDER_BY_USER_ID = SELECT_ALL_ORDERS + " WHERE user_id = ?";
     private final String SELECT_ORDER_BY_BOOK_ID = SELECT_ALL_ORDERS + " WHERE book_id = ?";
@@ -45,6 +44,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
     private final String SELECT_ORDER_BY_DATE_OF_RECEIVE = SELECT_ALL_ORDERS + " WHERE orders.date_receive = ?";
     private final String SELECT_ORDER_BY_DATE_OF_RETURN = SELECT_ALL_ORDERS + " WHERE orders.date_return = ?";
     private final String SELECT_NOT_RETURNED_BOOKS = SELECT_ALL_ORDERS + " WHERE orders.date_return IS NULL";
+    private final String DELETE_ORDER = "DELETE FROM orders WHERE order_id = ?";
 
     private static final int COLUMN_ORDER_ID = 1;
     private static final int COLUMN_USER_ID = 2;
@@ -156,8 +156,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
     }
 
     @Override
-    public int update(BookOrder bookOrder) {
-        int result;
+    public void update(BookOrder bookOrder) {
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(UPDATE_ORDER);
             query.setInt(1, bookOrder.getId());
@@ -166,11 +165,10 @@ public class JdbcBookOrderDao implements BookOrderDao{
             query.setTimestamp(4, getTimeStampOfReturnDate(bookOrder));
             query.setString(5, bookOrder.getPlace().name());
             query.setInt(6, bookOrder.getId());
-            result = query.executeUpdate();
+            query.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return result;
     }
 
     @Override
@@ -198,27 +196,15 @@ public class JdbcBookOrderDao implements BookOrderDao{
         return result;
     }
 
-
-
     @Override
     public List<BookOrder> findByUserId(int userId) {
-        List<BookOrder> ordersByUserId;
-        try (QueryJDBC query = new QueryJDBC()){
-            query.createPreparedStatement(SELECT_ORDER_BY_USER_ID);
-            query.setInt(1, userId);
-            ResultSet resultSet = query.executeQuery();
-            ordersByUserId = getAllOrdersFromResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return ordersByUserId;
+        return getBookOrdersByColumnId(userId, SELECT_ORDER_BY_USER_ID);
     }
 
-    @Override
-    public List<BookOrder> findByBookId(int bookId) {
+    private List<BookOrder> getBookOrdersByColumnId(int bookId, String sql) {
         List<BookOrder> ordersByBookId;
-        try (QueryJDBC query = new QueryJDBC()){
-            query.createPreparedStatement(SELECT_ORDER_BY_BOOK_ID);
+        try (QueryJDBC query = new QueryJDBC()) {
+            query.createPreparedStatement(sql);
             query.setInt(1, bookId);
             ResultSet resultSet = query.executeQuery();
             ordersByBookId = getAllOrdersFromResultSet(resultSet);
@@ -226,7 +212,11 @@ public class JdbcBookOrderDao implements BookOrderDao{
             throw new RuntimeException(e);
         }
         return ordersByBookId;
+    }
 
+    @Override
+    public List<BookOrder> findByBookId(int bookId) {
+        return getBookOrdersByColumnId(bookId, SELECT_ORDER_BY_BOOK_ID);
     }
 
     @Override
@@ -245,9 +235,13 @@ public class JdbcBookOrderDao implements BookOrderDao{
 
     @Override
     public List<BookOrder> findByDateOfReceive(Date date) {
+        return getBookOrdersByDate(SELECT_ORDER_BY_DATE_OF_RECEIVE, date);
+    }
+
+    private List<BookOrder> getBookOrdersByDate(String sql, Date date) {
         List<BookOrder> ordersByDateOfReceive;
         try (QueryJDBC query = new QueryJDBC()){
-            query.createPreparedStatement(SELECT_ORDER_BY_DATE_OF_RECEIVE);
+            query.createPreparedStatement(sql);
             query.setTimestamp(1, new Timestamp(date.getTime()));
             ResultSet resultSet = query.executeQuery();
             ordersByDateOfReceive = getAllOrdersFromResultSet(resultSet);
@@ -261,14 +255,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
     public List<BookOrder> findByDateOfReturn(Date date) {
         List<BookOrder> ordersByDateOfReturn;
         if (date != null) {
-            try (QueryJDBC query = new QueryJDBC()){
-                query.createPreparedStatement(SELECT_ORDER_BY_DATE_OF_RETURN);
-                query.setTimestamp(1, new Timestamp(date.getTime()));
-                ResultSet resultSet = query.executeQuery();
-                ordersByDateOfReturn = getAllOrdersFromResultSet(resultSet);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            ordersByDateOfReturn = getBookOrdersByDate(SELECT_ORDER_BY_DATE_OF_RETURN, date);
         } else {
             try (QueryJDBC query = new QueryJDBC()){
                 query.createPreparedStatement(SELECT_NOT_RETURNED_BOOKS);
@@ -287,7 +274,6 @@ public class JdbcBookOrderDao implements BookOrderDao{
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(DELETE_ORDER);
             query.setInt(1, id);
-            query.executeUpdate();
             result = query.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
