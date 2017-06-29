@@ -1,4 +1,4 @@
-package com.training.library.commands;
+package com.training.library.controller.commands;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
