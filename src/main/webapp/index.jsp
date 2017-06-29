@@ -12,13 +12,13 @@
     <meta name="author" content=""/>
     <link rel="icon" href="resources/favicon.ico"/>
 
-    <title>Narrow Jumbotron Template for Bootstrap</title>
+    <title>Library</title>
 
     <!-- Bootstrap core CSS -->
     <link href="resources/css/bootstrap.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link href="resources/css/jumbotron-narrow.css" rel="stylesheet"/>
+    <link href="resources/css/start-page.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -27,17 +27,17 @@
     <div class="header clearfix">
         <nav>
             <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="signin.html">Sign in</a></li>
-                <li role="presentation"><a href="signup.html">Sign up</a></li>
+                <li role="presentation" class="active"><a href="jsp/signin.jsp">Sign in</a></li>
+                <li role="presentation"><a href="jsp/signup.jsp">Sign up</a></li>
             </ul>
         </nav>
-        <h3 class="text-muted">Lardi test task</h3>
+        <h3 class="text-muted">Project 4 - Library System</h3>
     </div>
 
     <div class="jumbotron">
-        <h1>Phone book application</h1>
-        <p class="lead">Here you can keep all your contacts!</p>
-        <p><a class="btn btn-lg btn-success" href="signin.html" role="button">Sign in</a></p>
+        <h1>Library System</h1>
+        <p class="lead">Here you can read e-books for free!</p>
+        <p><a class="btn btn-lg btn-success" href="jsp/signin.jsp" role="button">Sign in</a></p>
     </div>
 
     <footer class="footer">

@@ -41,7 +41,7 @@ public class Controller extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        processRequest(request, response);
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+//        request.getRequestDispatcher("/index.jsp").forward(request, response);
 //        PrintWriter out = response.getWriter();
 //        out.print("Hello!");
     }

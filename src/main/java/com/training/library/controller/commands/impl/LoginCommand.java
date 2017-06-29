@@ -14,13 +14,14 @@ import java.util.Optional;
 public class LoginCommand implements Command{
     public static final String PARAM_LOGIN = "login";
     public static final String PARAM_PASSWORD ="password";
+    public static final String START_PAGE ="/index.jsp";
 
     private UserService userService = new UserServiceImpl();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pageToGo = "/index.jsp";
+        String pageToGo = START_PAGE;
 
         String email = request.getParameter(PARAM_LOGIN);
         String password = request.getParameter(PARAM_PASSWORD);
