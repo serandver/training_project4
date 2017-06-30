@@ -1,17 +1,12 @@
 package com.training.library;
 
-import com.training.library.model.entities.Book;
-import com.training.library.model.entities.BookOrder;
-import com.training.library.model.entities.User;
-import com.training.library.model.services.BookOrderService;
-import com.training.library.model.services.BookService;
-import com.training.library.model.services.impl.BookOrderServiceImpl;
-import com.training.library.model.services.impl.BookServiceImpl;
+import com.training.library.entities.BookOrder;
+import com.training.library.services.BookOrderService;
+import com.training.library.services.BookService;
+import com.training.library.services.impl.BookOrderServiceImpl;
+import com.training.library.services.impl.BookServiceImpl;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 
 public class Runner {

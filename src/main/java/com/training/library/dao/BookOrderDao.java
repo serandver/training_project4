@@ -1,8 +1,6 @@
-package com.training.library.model.dao;
+package com.training.library.dao;
 
-import com.training.library.model.entities.Book;
-import com.training.library.model.entities.BookOrder;
-import com.training.library.model.entities.User;
+import com.training.library.entities.BookOrder;
 
 import java.util.Date;
 import java.util.List;

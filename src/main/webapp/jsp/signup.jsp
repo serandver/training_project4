@@ -28,12 +28,16 @@
       <form class="form-signin">
         <h2 class="form-signin-heading">Please sign up</h2>
         <div class="form-group">
-          <label for="userName" class="sr-only">Login</label>
-          <input type="text" class="form-control" userId="userName" placeholder="Login" required="required" autofocus="autofocus"/>
+          <label for="userName" class="sr-only">First name</label>
+          <input type="text" class="form-control" userId="userName" placeholder="First name" required="required" autofocus="autofocus"/>
         </div>
         <div class="form-group">
-          <label for="name" class="sr-only">Full name</label>
-          <input type="text" class="form-control" userId="name" placeholder="Full name" required="required"/>
+          <label for="name" class="sr-only">Last name</label>
+          <input type="text" class="form-control" userId="name" placeholder="Last name" required="required"/>
+        </div>
+        <div class="form-group">
+          <label for="name" class="sr-only">Email</label>
+          <input type="email" class="form-control" userId="name" placeholder="Email" required="required"/>
         </div>
         <div class="form-group">
           <label for="inputPassword" class="sr-only">Your password</label>
@@ -41,9 +45,10 @@
         </div>
         <div class="form-group">
           <label for="confirmPassword" class="sr-only">Confirm password</label>
-          <input type="passwouserId" id="inputPassword" class="form-control" placeholder="Confirm password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+          <input type="passworduserId" id="inputPassword" class="form-control" placeholder="Confirm password" required>
         </div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+
       </form>
 
     </div> <!-- /container -->

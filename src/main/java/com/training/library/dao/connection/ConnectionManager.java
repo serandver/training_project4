@@ -1,4 +1,4 @@
-package com.training.library.model.connection;
+package com.training.library.dao.connection;
 
 import java.sql.Connection;
 

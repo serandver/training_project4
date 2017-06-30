@@ -1,8 +1,8 @@
 package com.training.library.services.impl;
 
-import com.training.library.model.dao.DaoFactory;
-import com.training.library.model.dao.UserDao;
-import com.training.library.model.entities.User;
+import com.training.library.dao.DaoFactory;
+import com.training.library.dao.UserDao;
+import com.training.library.entities.User;
 import com.training.library.services.UserService;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.training.library.services;
 
-import com.training.library.model.entities.Book;
+import com.training.library.entities.Book;
 
 import java.util.List;
 import java.util.Optional;

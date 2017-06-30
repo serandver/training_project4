@@ -1,6 +1,6 @@
 package com.training.library.services;
 
-import com.training.library.model.entities.User;
+import com.training.library.entities.User;
 
 import java.util.List;
 import java.util.Optional;

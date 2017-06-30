@@ -1,6 +1,5 @@
-package com.training.library.model.connection;
+package com.training.library.dao.connection;
 
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.sql.Connection;

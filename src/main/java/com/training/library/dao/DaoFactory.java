@@ -1,4 +1,4 @@
-package com.training.library.model.dao;
+package com.training.library.dao;
 
 import java.io.IOException;
 import java.io.InputStream;

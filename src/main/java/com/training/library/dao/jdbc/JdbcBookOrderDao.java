@@ -1,10 +1,10 @@
-package com.training.library.model.dao.jdbc;
+package com.training.library.dao.jdbc;
 
-import com.training.library.model.connection.QueryJDBC;
-import com.training.library.model.dao.BookOrderDao;
-import com.training.library.model.entities.Book;
-import com.training.library.model.entities.BookOrder;
-import com.training.library.model.entities.User;
+import com.training.library.dao.connection.QueryJDBC;
+import com.training.library.dao.BookOrderDao;
+import com.training.library.entities.Book;
+import com.training.library.entities.BookOrder;
+import com.training.library.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

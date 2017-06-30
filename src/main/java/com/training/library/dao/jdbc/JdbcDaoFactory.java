@@ -1,6 +1,6 @@
-package com.training.library.model.dao.jdbc;
+package com.training.library.dao.jdbc;
 
-import com.training.library.model.dao.*;
+import com.training.library.dao.*;
 
 public class JdbcDaoFactory extends DaoFactory {
     @Override

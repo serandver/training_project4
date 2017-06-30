@@ -1,9 +1,8 @@
-package com.training.library.model.dao;
+package com.training.library.dao;
 
-import com.training.library.model.entities.User;
-import com.training.library.model.services.UserService;
-import com.training.library.model.services.impl.UserServiceImpl;
-import org.junit.Assert;
+import com.training.library.entities.User;
+import com.training.library.services.UserService;
+import com.training.library.services.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class UserServiceTest {

@@ -1,4 +1,4 @@
-package com.training.library.model.entities;
+package com.training.library.entities;
 
 import java.util.Date;
 

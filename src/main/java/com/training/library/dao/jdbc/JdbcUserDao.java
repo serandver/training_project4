@@ -1,8 +1,8 @@
-package com.training.library.model.dao.jdbc;
+package com.training.library.dao.jdbc;
 
-import com.training.library.model.connection.QueryJDBC;
-import com.training.library.model.dao.UserDao;
-import com.training.library.model.entities.User;
+import com.training.library.dao.connection.QueryJDBC;
+import com.training.library.dao.UserDao;
+import com.training.library.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

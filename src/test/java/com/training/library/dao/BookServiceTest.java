@@ -1,13 +1,12 @@
-package com.training.library.model.dao;
+package com.training.library.dao;
 
-import com.training.library.model.entities.Book;
-import com.training.library.model.services.BookService;
-import com.training.library.model.services.impl.BookServiceImpl;
+import com.training.library.entities.Book;
+import com.training.library.services.BookService;
+import com.training.library.services.impl.BookServiceImpl;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

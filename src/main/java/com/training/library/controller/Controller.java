@@ -1,22 +1,13 @@
 package com.training.library.controller;
 
 import com.training.library.controller.commands.Command;
-import com.training.library.model.entities.User;
-import com.training.library.services.UserService;
-import com.training.library.services.impl.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Controller extends HttpServlet {
     RequestHelper requestHelper = RequestHelper.getRequestHelperInstance();
