@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class NoCommand implements Command {
+
+    public static final String START_PAGE ="/index.jsp";
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        return null;
+        return START_PAGE;
     }
 }

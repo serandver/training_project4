@@ -17,8 +17,7 @@ public class Controller extends HttpServlet {
         response.setContentType ("text/html; charset=UTF-8");
         request.setCharacterEncoding ("UTF-8");
 
-        String page = null;
-
+        String page;
         try {
             Command command = requestHelper.getCommand(request);
             page = command.execute(request, response);
@@ -31,10 +30,7 @@ public class Controller extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        processRequest(request, response);
-//        request.getRequestDispatcher("/index.jsp").forward(request, response);
-//        PrintWriter out = response.getWriter();
-//        out.print("Hello!");
+        processRequest(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

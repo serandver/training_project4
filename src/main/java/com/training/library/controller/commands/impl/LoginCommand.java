@@ -21,8 +21,8 @@ public class LoginCommand implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pageToGo = START_PAGE;
 
+        String pageToGo = START_PAGE;
         String email = request.getParameter(PARAM_LOGIN);
         String password = request.getParameter(PARAM_PASSWORD);
 
@@ -31,7 +31,7 @@ public class LoginCommand implements Command{
             user = userService.login(email, password);
             if(user.isPresent()){
                 request.getSession().setAttribute("user", user.get());
-                pageToGo = "/rest/library";
+                pageToGo = "/jsp/library.jsp";
             }
         }
         return pageToGo;
