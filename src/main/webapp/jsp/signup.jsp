@@ -12,7 +12,7 @@
     <meta name="author" content=""/>
     <link rel="icon" href="../resources/favicon.ico"/>
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Sign in page</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/bootstrap.min.css" th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
@@ -25,30 +25,25 @@
 
     <div class="container">
 
-      <form class="form-signin">
+      <form method="post" action="/controller" class="form-signin">
         <h2 class="form-signin-heading">Please sign up</h2>
-        <div class="form-group">
-          <label for="userName" class="sr-only">First name</label>
-          <input type="text" class="form-control" userId="userName" placeholder="First name" required="required" autofocus="autofocus"/>
+          <input type="hidden" name="command" value="register">
+          <div class="form-group">
+          <input type="text" class="form-control" name="firstName" placeholder="First name" required="required" autofocus="autofocus"/>
         </div>
         <div class="form-group">
-          <label for="name" class="sr-only">Last name</label>
-          <input type="text" class="form-control" userId="name" placeholder="Last name" required="required"/>
+          <input type="text" class="form-control" name="lastName" placeholder="Last name" required="required"/>
         </div>
         <div class="form-group">
-          <label for="name" class="sr-only">Email</label>
-          <input type="email" class="form-control" userId="name" placeholder="Email" required="required"/>
+          <input type="email" class="form-control" name="email" placeholder="Email" required="required"/>
         </div>
         <div class="form-group">
-          <label for="inputPassword" class="sr-only">Your password</label>
-          <input type="password" userId="inputPassword" class="form-control" placeholder="Your password" required="required"/>
+          <input type="password" class="form-control" name="password" placeholder="Your password" required="required"/>
         </div>
         <div class="form-group">
-          <label for="confirmPassword" class="sr-only">Confirm password</label>
-          <input type="passworduserId" id="inputPassword" class="form-control" placeholder="Confirm password" required>
+          <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password" required="required"/>
         </div>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
-
       </form>
 
     </div> <!-- /container -->

@@ -1,5 +1,6 @@
 package com.training.library.controller.commands.impl;
 
+import com.training.library.config.PathConfig;
 import com.training.library.controller.commands.Command;
 import com.training.library.entities.User;
 import com.training.library.services.UserService;
@@ -11,10 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+import static com.training.library.config.PathConfig.CATALOGUE_PAGE;
+import static com.training.library.config.PathConfig.ERROR_PAGE;
+
 public class LoginCommand implements Command{
     public static final String PARAM_LOGIN = "login";
     public static final String PARAM_PASSWORD ="password";
-    public static final String START_PAGE ="/index.jsp";
 
     private UserService userService = new UserServiceImpl();
 
@@ -22,7 +25,7 @@ public class LoginCommand implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String pageToGo = START_PAGE;
+        String pageToGo = PathConfig.getInstance().getProperty(ERROR_PAGE);
         String email = request.getParameter(PARAM_LOGIN);
         String password = request.getParameter(PARAM_PASSWORD);
 
@@ -31,7 +34,7 @@ public class LoginCommand implements Command{
             user = userService.login(email, password);
             if(user.isPresent()){
                 request.getSession().setAttribute("user", user.get());
-                pageToGo = "/jsp/library.jsp";
+                pageToGo = PathConfig.getInstance().getProperty(CATALOGUE_PAGE);;
             }
         }
         return pageToGo;
