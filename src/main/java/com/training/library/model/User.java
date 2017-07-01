@@ -1,4 +1,4 @@
-package com.training.library.entities;
+package com.training.library.model;
 
 public class User {
     private int id;

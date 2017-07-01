@@ -1,7 +1,7 @@
 package com.training.library.dao.jdbc;
 
 import com.training.library.dao.connection.QueryJDBC;
-import com.training.library.entities.Book;
+import com.training.library.model.Book;
 import com.training.library.dao.BookDao;
 
 import java.sql.ResultSet;

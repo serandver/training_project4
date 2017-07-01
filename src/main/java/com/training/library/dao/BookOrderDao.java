@@ -1,6 +1,6 @@
 package com.training.library.dao;
 
-import com.training.library.entities.BookOrder;
+import com.training.library.model.BookOrder;
 
 import java.util.Date;
 import java.util.List;

@@ -1,10 +1,8 @@
 package com.training.library;
 
-import com.training.library.entities.BookOrder;
+import com.training.library.model.BookOrder;
 import com.training.library.services.BookOrderService;
-import com.training.library.services.BookService;
 import com.training.library.services.impl.BookOrderServiceImpl;
-import com.training.library.services.impl.BookServiceImpl;
 
 import java.util.List;
 

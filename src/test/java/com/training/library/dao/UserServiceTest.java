@@ -1,6 +1,6 @@
 package com.training.library.dao;
 
-import com.training.library.entities.User;
+import com.training.library.model.User;
 import com.training.library.services.UserService;
 import com.training.library.services.impl.UserServiceImpl;
 import org.junit.Before;

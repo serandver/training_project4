@@ -2,7 +2,7 @@ package com.training.library.controller.commands.impl;
 
 import com.training.library.config.PathConfig;
 import com.training.library.controller.commands.Command;
-import com.training.library.entities.User;
+import com.training.library.model.User;
 import com.training.library.services.UserService;
 import com.training.library.services.impl.UserServiceImpl;
 

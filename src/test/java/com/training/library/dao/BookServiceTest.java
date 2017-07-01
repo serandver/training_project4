@@ -1,6 +1,6 @@
 package com.training.library.dao;
 
-import com.training.library.entities.Book;
+import com.training.library.model.Book;
 import com.training.library.services.BookService;
 import com.training.library.services.impl.BookServiceImpl;
 import org.junit.Ignore;

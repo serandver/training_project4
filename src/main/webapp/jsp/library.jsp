@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -36,43 +37,42 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="index.jsp">Sign out</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search..."/>
-          </form>
         </div>
       </div>
     </nav>
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addModal">
-            Add new contact
-          </button>
-        </div>
-
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h2 class="sub-header">My contacts</h2>
-          <div class="table-responsive">
+          <h2 class="sub-header">Book Catalogue</h2>
+            <div class="input-group custom-search-form">
+                <input type="text" class="form-control" name="findbook" id="findbook">
+                <button class="btn btn-default" type="button">Search</button>
+            </div>
+            <div class="table-responsive">
             <table class="table table-striped">
-              <thead>
+                <thead>
                 <tr>
-                  <th>№</th>
-                  <th>First name</th>
-                  <th>Last name</th>
-                  <th>Patrynomic</th>
-                  <th>Mobile phone number</th>
-                  <th>Home phone number</th>
-                  <th>Address</th>
-                  <th>email</th>
-                  <th></th>
-                  <th></th>
+                    <th>Book title</th>
+                    <th>Book author</th>
+                    <th>Choose book</th>
                 </tr>
-              </thead>
-              <tbody>
-                
-              </tbody>
+                </thead>
+                <tbody>
+                <c:forEach var="book" items="${listTask}">
+                    <div class="wrapper-task">
+                        <div class="wrapper-checkbox">
+                            <input type="checkbox"/>
+                        </div>
+                        <div class="task-todo">${task.getTextTask()}</div>
+                        <div class="idTask">${task.getId()}</div>
+                    </div>
+                </c:forEach>
+                </tbody>
             </table>
+                <form class="navbar-form navbar-right">
+                    <button type="button">Order book</button>
+                </form>
           </div>
         </div>
       </div>

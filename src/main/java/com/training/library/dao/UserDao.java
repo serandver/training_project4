@@ -1,6 +1,6 @@
 package com.training.library.dao;
 
-import com.training.library.entities.User;
+import com.training.library.model.User;
 
 import java.util.Optional;
 

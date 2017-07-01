@@ -1,7 +1,7 @@
 package com.training.library.services.impl;
 
 import com.training.library.dao.DaoFactory;
-import com.training.library.entities.Book;
+import com.training.library.model.Book;
 import com.training.library.services.BookService;
 
 import java.util.List;
