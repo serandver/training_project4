@@ -20,6 +20,16 @@ public class JdbcBookDao implements BookDao {
             "FROM books " +
             "JOIN book_numbers " +
             "USING (book_number_id)";
+    private static final String SELECT_ALL_AVAILABLE_BOOKS =
+            "SELECT books.book_id, books.title, books.author, book_numbers.book_number " +
+            "FROM books " +
+            "JOIN book_numbers " +
+            "USING (book_number_id) " +
+            "WHERE books.book_id NOT IN " +
+            "(SELECT book_id FROM orders " +
+            "WHERE date_return IS NULL) " +
+            "GROUP BY books.title, books.author " +
+            "ORDER BY books.book_id";
     private static final String SELECT_BOOK_BY_ID = SELECT_ALL_BOOKS + " WHERE book_id = ?";
     private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL_BOOKS + " WHERE title = ?";
     private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL_BOOKS + " WHERE author = ?";
@@ -85,13 +95,16 @@ public class JdbcBookDao implements BookDao {
         return id;
     }
 
-
     @Override
     public List<Book> findAll() {
+        return getListBooksByQuery(SELECT_ALL_BOOKS);
+    }
+
+    private List<Book> getListBooksByQuery(String selectAllAvailableBooks) {
         List<Book> books;
-        try (QueryJDBC query = new QueryJDBC()){
+        try (QueryJDBC query = new QueryJDBC()) {
             query.createStatement();
-            ResultSet resultSet = query.executeQuery(SELECT_ALL_BOOKS);
+            ResultSet resultSet = query.executeQuery(selectAllAvailableBooks);
             books = getAllBooksFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -115,6 +128,11 @@ public class JdbcBookDao implements BookDao {
                 .setTitle(resultSet.getString(COLUMN_TITLE))
                 .setAuthor(resultSet.getString(COLUMN_AUTHOR))
                 .setInventoryNumber(resultSet.getString(COLUMN_BOOK_NUMBER)).build();
+    }
+
+    @Override
+    public List<Book> findAllAvailableForOrderBooks() {
+        return getListBooksByQuery(SELECT_ALL_AVAILABLE_BOOKS);
     }
 
     @Override

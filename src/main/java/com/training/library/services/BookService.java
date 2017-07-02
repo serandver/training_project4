@@ -10,6 +10,7 @@ public interface BookService {
     Optional<Book> findByTitle(String title);
     Optional<Book> findByAuthor(String author);
     List<Book> findAll();
+    List<Book> findAllAvailableForOrderBooks();
     int create(Book book);
     void update(Book book);
     int delete(int id);

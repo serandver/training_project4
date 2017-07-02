@@ -39,6 +39,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> findAllAvailableForOrderBooks() {
+        return daoFactory.createBookDao().findAllAvailableForOrderBooks();
+    }
+
+    @Override
     public int create(Book book) {
         return daoFactory.createBookDao().create(book);
     }

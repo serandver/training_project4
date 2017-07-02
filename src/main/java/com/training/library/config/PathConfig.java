@@ -5,7 +5,8 @@ import java.util.ResourceBundle;
 public class PathConfig {
     public static final String ERROR_PAGE = "ERROR_PAGE";
     public static final String LOGIN_PAGE = "LOGIN_PAGE";
-    public static final String CATALOGUE_PAGE = "CATALOGUE_PAGE";
+    public static final String READER_HOME_PAGE = "READER_HOME_PAGE";
+    public static final String LIBRARIAN_HOME_PAGE = "LIBRARIAN_HOME_PAGE";
     private static final String CONFIGURATION = "path";
 
     private static volatile PathConfig instance;

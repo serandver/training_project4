@@ -21,7 +21,6 @@
   </head>
 
   <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -31,15 +30,60 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">My contacts</a>
         </div>
-        <div userId="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.jsp">Sign out</a></li>
-          </ul>
-        </div>
+          <div userId="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a href="../index.jsp">Sign out</a></li>
+              </ul>
+          </div>
       </div>
     </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <button class="btn btn-success btn-lg">
+                    Search a book
+                </button>
+                <button class="btn btn-success btn-lg">
+                    My orders
+                </button>
+            </div>
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h2 class="sub-header">Book catalogue</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Book title</th>
+                            <th>Book author</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="book" items="${bookList}">
+                                <tr>
+                                    <td>${book.title}</td>
+                                    <td>${book.author}</td>
+                                    <td>
+                                        <form class="navbar-form navbar-right">
+                                            <button type="button">Order book</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 
     <div class="container-fluid">
       <div class="row">
@@ -50,22 +94,18 @@
                 <button class="btn btn-default" type="button">Search</button>
             </div>
             <table>
-                <c:forEach var="user" items="${userList}">
+                <c:forEach var="book" items="${bookList}">
                     <tr>
-                        <td>${user.id}</td>
-                        <td>${user.firstName}</td>
-                        <td>${user.lastName}</td>
-                        <td>${user.email}</td>
-                        <td>${user.role}</td>
+                        <td>${book.id}</td>
+                        <td>${book.firstName}</td>
+                        <td>${book.lastName}</td>
                         <td>
                             <input type="checkbox">
                         </td>
                     </tr>
                 </c:forEach>
                 <tr>
-                    <form class="navbar-form navbar-right">
-                        <button type="button">Order book</button>
-                    </form>
+
                 </tr>
             </table>
           </div>
