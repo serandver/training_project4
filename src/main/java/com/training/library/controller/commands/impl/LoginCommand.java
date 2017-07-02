@@ -3,9 +3,12 @@ package com.training.library.controller.commands.impl;
 import com.training.library.config.PathConfig;
 import com.training.library.controller.commands.Command;
 import com.training.library.model.Book;
+import com.training.library.model.BookOrder;
 import com.training.library.model.User;
+import com.training.library.services.BookOrderService;
 import com.training.library.services.BookService;
 import com.training.library.services.UserService;
+import com.training.library.services.impl.BookOrderServiceImpl;
 import com.training.library.services.impl.BookServiceImpl;
 import com.training.library.services.impl.UserServiceImpl;
 
@@ -24,6 +27,7 @@ public class LoginCommand implements Command{
 
     private UserService userService = new UserServiceImpl();
     private BookService bookService = new BookServiceImpl();
+    private BookOrderService bookOrderService = new BookOrderServiceImpl();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -46,7 +50,7 @@ public class LoginCommand implements Command{
                 }
                 else if(role == User.Role.LIBRARIAN){
                     pageToGo = PathConfig.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
-                    setBookCatalogForLibrarian(request);
+                    setListBookOrders(request);
                 }
             }
         }
@@ -58,8 +62,8 @@ public class LoginCommand implements Command{
         request.setAttribute("bookList", booksAvailableForOrder);
     }
 
-    private void setBookCatalogForLibrarian(HttpServletRequest request) {
-        List<Book> allBooks = bookService.findAll();
-        request.setAttribute("bookList", allBooks);
+    private void setListBookOrders(HttpServletRequest request) {
+        List<BookOrder> bookOrders = bookOrderService.findAll();
+        request.setAttribute("orderList", bookOrders);
     }
 }

@@ -11,7 +11,7 @@
     <meta name="author" content=""/>
     <link rel="icon" href="../resources/favicon.ico"/>
 
-    <title>Library catalog</title>
+    <title>Reader home page</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
@@ -68,6 +68,7 @@
                                     <td>${book.author}</td>
                                     <td>
                                         <form class="navbar-form navbar-right">
+                                            <input type="hidden" name="command" value="login">
                                             <button type="button">Order book</button>
                                         </form>
                                     </td>
