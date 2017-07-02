@@ -49,30 +49,25 @@
                 <input type="text" class="form-control" name="findbook" id="findbook">
                 <button class="btn btn-default" type="button">Search</button>
             </div>
-            <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Book title</th>
-                    <th>Book author</th>
-                    <th>Choose book</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="book" items="${listTask}">
-                    <div class="wrapper-task">
-                        <div class="wrapper-checkbox">
-                            <input type="checkbox"/>
-                        </div>
-                        <div class="task-todo">${task.getTextTask()}</div>
-                        <div class="idTask">${task.getId()}</div>
-                    </div>
+            <table>
+                <c:forEach var="user" items="${userList}">
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                    </tr>
                 </c:forEach>
-                </tbody>
+                <tr>
+                    <form class="navbar-form navbar-right">
+                        <button type="button">Order book</button>
+                    </form>
+                </tr>
             </table>
-                <form class="navbar-form navbar-right">
-                    <button type="button">Order book</button>
-                </form>
           </div>
         </div>
       </div>
