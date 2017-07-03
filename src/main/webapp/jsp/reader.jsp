@@ -31,10 +31,15 @@
             <span class="icon-bar"></span>
           </button>
         </div>
-          <div userId="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav navbar-right">
-                  <li><a href="../index.jsp">Sign out</a></li>
-              </ul>
+          <div class="navbar-collapse collapse list-inline">
+              <form class="navbar-form navbar-right">
+                  <input type="hidden" name="command" value="signout">
+                  <input type="submit" value="Sign out">
+              </form>
+              <form class="navbar-form navbar-right">
+                  <input type="hidden" name="command" value="show-my-orders">
+                  <input type="submit" value="My orders">
+              </form>
           </div>
       </div>
     </nav>
@@ -42,15 +47,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
-                <form class="navbar-form navbar-right">
-                    <input type="hidden" name="command" value="loadSearchPage">
-                    <button type="button">
-                        Search a book
-                    </button>
-                </form>
-                <button class="btn btn-success btn-lg">
-                    My orders
-                </button>
+                <p>
+                    <a class="btn btn-lg btn-success" href="jsp/search.jsp" role="button">Search a book</a>
+                </p>
             </div>
 
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
