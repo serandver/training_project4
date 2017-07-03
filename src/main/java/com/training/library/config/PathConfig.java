@@ -9,6 +9,7 @@ public class PathConfig {
     public static final String READER_HOME_PAGE = "READER_HOME_PAGE";
     public static final String MY_ORDERS_PAGE = "MY_ORDERS_PAGE";
     public static final String LIBRARIAN_HOME_PAGE = "LIBRARIAN_HOME_PAGE";
+    public static final String CATALOGUE_PAGE = "CATALOGUE_PAGE";
 
     private static final String CONFIGURATION = "path";
 

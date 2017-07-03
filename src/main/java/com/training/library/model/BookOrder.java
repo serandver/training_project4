@@ -65,7 +65,8 @@ public class BookOrder {
         SUBSCRIPTION
     }
 
-    /*public static enum Status {
+    /*
+    public static enum Status {
         REQUEST_FOR_RECEIVING,
         APPROVED_FOR_RECEIVING,
         REQUEST_FOR_RETURNING,

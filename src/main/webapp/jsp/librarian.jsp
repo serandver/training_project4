@@ -31,10 +31,15 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div userId="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="../index.jsp">Sign out</a></li>
-            </ul>
+        <div class="navbar-collapse collapse list-inline">
+            <form class="navbar-form navbar-right">
+                <input type="hidden" name="command" value="signout">
+                <input type="submit" value="Sign out">
+            </form>
+            <form class="navbar-form navbar-right">
+                <input type="hidden" name="command" value="catalogue">
+                <input type="submit" value="View full catalogue">
+            </form>
         </div>
     </div>
 </nav>

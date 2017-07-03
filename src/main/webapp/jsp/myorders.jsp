@@ -34,6 +34,60 @@
                     <a class="btn btn-lg btn-success" href="jsp/reader.jsp" role="button">Home page</a>
                 </p>
             </div>
+
+            <!-- Modal #editModal-->
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true" class="">×   </span><span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title" id="editModalLabel">Edit your order</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" id="editContactForm">
+                                <div class="form-group">
+                                    <label for="contactId">Order id</label>
+                                    <p class="form-control-static" id="contactId"></p>
+                                </div><div class="form-group">
+                                <label for="editFirstName">Book title</label>
+                                <input type="text" class="form-control" id="editFirstName"/>
+                            </div>
+                                <div class="form-group">
+                                    <label for="editLastName">Book author</label>
+                                    <input type="text" class="form-control" id="editLastName"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editPatronymic">Date of receiving</label>
+                                    <input type="text" class="form-control" id="editPatronymic"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editMobilePhoneNumber">Date of returning</label>
+                                    <input type="tel" class="form-control" id="editMobilePhoneNumber"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editHomePhoneNumber">Home phone</label>
+                                    <input type="tel" class="form-control" id="editHomePhoneNumber"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editAddress">Address</label>
+                                    <input type="text" class="form-control" id="editAddress"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editInputEmail">Email address</label>
+                                    <input type="email" class="form-control" id="editInputEmail"/>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="editContact" data-dismiss="modal">Save changes</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End modal #editModal-->
+
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h2 class="sub-header">My orders</h2>
                 <div class="table-responsive">
@@ -60,7 +114,7 @@
                                 <td>${order.place}</td>
                                 <td>
                                     <form class="navbar-form navbar-right">
-                                        <input type="hidden" name="command" value="login">
+                                        <input type="hidden" name="command" value="">
                                         <button type="button">Edit order</button>
                                     </form>
                                 </td>
