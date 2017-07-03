@@ -1,10 +1,7 @@
 package com.training.library.controller;
 
 import com.training.library.controller.commands.Command;
-import com.training.library.controller.commands.impl.LoginCommand;
-import com.training.library.controller.commands.impl.LogoutCommand;
-import com.training.library.controller.commands.impl.NoCommand;
-import com.training.library.controller.commands.impl.RegisterCommand;
+import com.training.library.controller.commands.impl.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -17,6 +14,9 @@ public class RequestHelper {
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
         commands.put("register", new RegisterCommand());
+        commands.put("loadSearchPage", new GotoSearchPage());
+
+
     }
 
     public Command getCommand(HttpServletRequest request) {

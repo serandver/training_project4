@@ -1,0 +1,27 @@
+/* 
+    Document   : catalog
+    Created on : 08.06.2013, 0:52:18
+    Author     : lor1an
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.search{   		
+    vertical-align: top;
+    text-align:left;
+    width: 200px;
+} 
+
+.inner_table{
+
+    width: 1100px;
+    border: 2px solid white;
+}
+
+input.submit{
+    width: 90px; 
+    vertical-align: middle;
+}
+.subo{
+    width: 100px; 
+}

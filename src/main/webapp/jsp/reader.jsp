@@ -42,9 +42,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
-                <button class="btn btn-success btn-lg">
-                    Search a book
-                </button>
+                <form class="navbar-form navbar-right">
+                    <input type="hidden" name="command" value="loadSearchPage">
+                    <button type="button">
+                        Search a book
+                    </button>
+                </form>
                 <button class="btn btn-success btn-lg">
                     My orders
                 </button>
@@ -81,42 +84,9 @@
         </div>
     </div>
 
-
-
-
-
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h2 class="sub-header">Book Catalogue</h2>
-            <div class="input-group custom-search-form">
-                <input type="text" class="form-control" name="findbook" id="findbook">
-                <button class="btn btn-default" type="button">Search</button>
-            </div>
-            <table>
-                <c:forEach var="book" items="${bookList}">
-                    <tr>
-                        <td>${book.id}</td>
-                        <td>${book.firstName}</td>
-                        <td>${book.lastName}</td>
-                        <td>
-                            <input type="checkbox">
-                        </td>
-                    </tr>
-                </c:forEach>
-                <tr>
-
-                </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <script src="../resources/js/jquery.min.js"></script>
     <script src=../resources/js/bootstrap.min.js"></script>
-    <script src="../resources/js/phonebook.js"></script>
+    <script src="../resources/js/reader.js"></script>
 
   </body>
 </html>

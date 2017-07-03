@@ -1,0 +1,36 @@
+/* 
+    Document   : log
+    Created on : 05.06.2013, 18:13:20
+    Author     : lor1an
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body{
+    font:13px Arial, sans-serif;
+}
+
+p span:first-of-type{
+    display:inline-block;
+    width:82px;
+    font-weight:bold;
+}
+
+p:nth-of-type(7){
+    margin-top:32px;
+    font-weight:bold;
+}
+p:last-child span:first-child{
+
+    display:inline-block;
+    width:62px;
+    height:28px;
+    vertical-align:middle;
+    margin-right:20px;
+}
+input.submit{
+    width: 90px; 
+    vertical-align: middle;
+}
+
+
