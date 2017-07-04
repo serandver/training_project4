@@ -13,21 +13,39 @@
     </resource-ref>
 
     <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>com.training.library.controller.Controller</servlet-class>
+        <servlet-name>CommandController</servlet-name>
+        <servlet-class>com.training.library.controller.CommandController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
+        <servlet-name>CommandController</servlet-name>
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Admin</servlet-name>
-        <servlet-class>com.training.library.controller.AdminController</servlet-class>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>com.training.library.controller.UserController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Admin</servlet-name>
-        <url-pattern>/admin</url-pattern>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/editusers</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BookController</servlet-name>
+        <servlet-class>com.training.library.controller.BookController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookController</servlet-name>
+        <url-pattern>/editbooks</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BookOrderController</servlet-name>
+        <servlet-class>com.training.library.controller.BookOrderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookOrderController</servlet-name>
+        <url-pattern>/editbookorders</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

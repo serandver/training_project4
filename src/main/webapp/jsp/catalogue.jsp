@@ -6,6 +6,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link href="../resources/css/catalogue.css" rel="stylesheet"/>
+
+    <link rel="icon" href="../resources/favicon.ico"/>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -74,7 +79,7 @@
         <!-- End modal #editModal-->
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h2 class="sub-header">My orders</h2>
+            <h2 class="sub-header">Book catalogue</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -94,7 +99,7 @@
                             <td>${book.author}</td>
                             <td>${book.inventoryNumber}</td>
                             <td>
-                                <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#editModal">
+                                <button class="btn btn-success btn-lg edit" data-toggle="modal" data-target="#editModal">
                                     Edit book
                                 </button>
                             </td>

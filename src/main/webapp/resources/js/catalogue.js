@@ -1,5 +1,5 @@
 (function (){
-    $('body').on('click', 'button #edit-modal', function() {
+    $('body').on('click', '.edit', function() {
 
         var columnValues = $(this).parent().siblings().map(function() {
             return $(this).text();
@@ -14,14 +14,14 @@
     $('#editModal').on('click', '#editBook', function() {
 
         var bookToSave = {
-            contactId: $("#bookId").text(),
-            firstName: $("#editBookTitle").val(),
-            lastName:$("#editBookAuthor").val(),
-            patronymic:$("#editInventoryNumber").val()
+            bookId: $("#bookId").text(),
+            bookTitle: $("#editBookTitle").val(),
+            bookAuthor:$("#editBookAuthor").val(),
+            inventoryNumber:$("#editInventoryNumber").val()
         };
 
         $.ajax({
-            url: '/controller',
+            url: '/editbooks',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(bookToSave),
@@ -29,13 +29,15 @@
             success: function (rp) {
                 $("td").filter(function() {
                     return $(this).text() == rp.id;
-                }).closest("tr").replaceWith("<tr>"+
+                }).closest("tr").replaceWith(
+                    "<tr>"+
                     "<td>"+rp.id+"</td>"+
                     "<td>"+rp.title+"</td>"+
                     "<td>"+rp.author+"</td>"+
                     "<td>"+rp.inventoryNumber+"</td>"+
                     "<td><button class=\"btn btn-success btn-sm edit-modal\" data-toggle=\"modal\" data-target=\"#editModal\" contenteditable=\"false\">Edit</button></td>"+
-                    "</tr>");
+                    "</tr>"
+                );
             }
         });
     });

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class Controller extends HttpServlet {
+public class CommandController extends HttpServlet {
     RequestHelper requestHelper = RequestHelper.getRequestHelperInstance();
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,6 +38,6 @@ public class Controller extends HttpServlet {
     }
 
     public String getServletInfo() {
-        return "Servlet Controller";
+        return "Servlet CommandController";
     }
 }

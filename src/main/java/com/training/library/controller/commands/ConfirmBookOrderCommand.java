@@ -1,4 +1,4 @@
-package com.training.library.controller.commands.impl;
+package com.training.library.controller.commands;
 
 import com.training.library.config.PathConfig;
 import com.training.library.controller.commands.Command;

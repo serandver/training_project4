@@ -1,7 +1,6 @@
 package com.training.library.controller;
 
-import com.training.library.controller.commands.Command;
-import com.training.library.controller.commands.impl.*;
+import com.training.library.controller.commands.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -17,7 +16,6 @@ public class RequestHelper {
         commands.put("show-my-orders", new ShowMyOrdersCommand());
         commands.put("catalogue", new ViewFullCatalogueCommand());
         commands.put("confirmOrder", new ConfirmBookOrderCommand());
-
     }
 
     public Command getCommand(HttpServletRequest request) {

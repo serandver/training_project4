@@ -47,9 +47,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <button class="btn btn-success btn-lg">
-                Book orders archive
-            </button>
+            <form class="navbar-form navbar-right">
+                <input type="hidden" name="command" value="orders">
+                <input type="submit" class="btn btn-success btn-lg" value="All book orders">
+            </form>
         </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -89,7 +90,7 @@
                             <td>
                                 <form class="navbar-form navbar-right">
                                     <input type="hidden" name="command" value="confirmOrder">
-                                    <button type="button">Confirm order</button>
+                                    <input type="submit" class="btn btn-success btn-lg" value="Confirm order">
                                 </form>
                             </td>
                         </tr>

@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;;
 import java.util.List;
 
-public class AdminController extends HttpServlet {
+public class UserController extends HttpServlet {
 
     private UserService userService = UserServiceImpl.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List allRegisteredUsers = userService.findAll();
-        req.setAttribute("userList", allRegisteredUsers);
-        req.getRequestDispatcher("/jsp/admin.jsp").forward(req, resp);
+        request.setAttribute("userList", allRegisteredUsers);
+        request.getRequestDispatcher("/jsp/users.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        super.doPost(request, response);
     }
 }
