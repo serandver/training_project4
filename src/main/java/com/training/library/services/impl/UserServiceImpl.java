@@ -11,12 +11,16 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private DaoFactory daoFactory;
 
-    public UserServiceImpl() {
-        this.daoFactory = DaoFactory.getInstance();
-    }
-
     public UserServiceImpl(DaoFactory instance) {
         this.daoFactory = instance;
+    }
+
+    private static class Holder{
+        static final UserServiceImpl INSTANCE = new UserServiceImpl( DaoFactory.getInstance() );
+    }
+
+    public static UserServiceImpl getInstance(){
+        return Holder.INSTANCE;
     }
 
     @Override

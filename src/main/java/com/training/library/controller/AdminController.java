@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AdminController extends HttpServlet {
 
-    private UserService userService = new UserServiceImpl();
+    private UserService userService = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

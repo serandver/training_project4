@@ -15,7 +15,7 @@ import java.util.List;
 public class ViewFullCatalogueCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BookService bookService = new BookServiceImpl();
+        BookService bookService = BookServiceImpl.getInstance();
         List<Book> orders = bookService.findAll();
         request.setAttribute("bookList", orders);
 

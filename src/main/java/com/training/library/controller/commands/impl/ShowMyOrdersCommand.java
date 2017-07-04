@@ -19,7 +19,7 @@ public class ShowMyOrdersCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        BookOrderService bookOrderService = new BookOrderServiceImpl();
+        BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
         User currentUser = (User)session.getAttribute("user");
         int currentUserId = currentUser.getId();
 

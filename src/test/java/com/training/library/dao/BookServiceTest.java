@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 public class BookServiceTest {
 
-    private BookService bookService = new BookServiceImpl();
+    private BookService bookService = BookServiceImpl.getInstance();
     private Book testBook = new Book.Builder()
             .setId(1)
             .setTitle("Title")

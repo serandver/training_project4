@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Runner {
     public static void main(String[] args) {
-        BookOrderService bookOrderService = new BookOrderServiceImpl();
+        BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
 //        User user = new User.Builder()
 //                .setId(1)
 //                .setFirstName("Иван")

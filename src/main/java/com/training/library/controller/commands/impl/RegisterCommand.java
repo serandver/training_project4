@@ -32,7 +32,7 @@ public class RegisterCommand implements Command {
         String confirmPassword = new String(request.getParameter(CONFIRM_PASSWORD).getBytes("UTF-8"), "UTF-8");
 
         if (confirm(password, confirmPassword)) {
-            UserService userService = new UserServiceImpl();
+            UserService userService = UserServiceImpl.getInstance();
             User user = new User.Builder()
                     .setFirstName(firstname)
                     .setLastName(lastname)

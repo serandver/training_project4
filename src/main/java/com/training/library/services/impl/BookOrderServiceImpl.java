@@ -12,12 +12,16 @@ public class BookOrderServiceImpl implements BookOrderService {
 
     private DaoFactory daoFactory;
 
-    public BookOrderServiceImpl() {
-        this.daoFactory = DaoFactory.getInstance();
-    }
-
     public BookOrderServiceImpl(DaoFactory instance) {
         this.daoFactory = instance;
+    }
+
+    private static class Holder{
+        static final BookOrderServiceImpl INSTANCE = new BookOrderServiceImpl( DaoFactory.getInstance() );
+    }
+
+    public static BookOrderServiceImpl getInstance(){
+        return Holder.INSTANCE;
     }
 
     @Override
@@ -62,11 +66,17 @@ public class BookOrderServiceImpl implements BookOrderService {
 
     @Override
     public List<BookOrder> findByDateOfReceive(Date date) {
-        return null;
+        return daoFactory.createBookOrderDao().findByDateOfReceive(date);
+
     }
 
     @Override
     public List<BookOrder> findByDateOfReturn(Date date) {
-        return null;
+        return daoFactory.createBookOrderDao().findByDateOfReturn(date);
+    }
+
+    @Override
+    public List<BookOrder> findByStatus(BookOrder.Status status) {
+        return daoFactory.createBookOrderDao().findByStatus(status);
     }
 }

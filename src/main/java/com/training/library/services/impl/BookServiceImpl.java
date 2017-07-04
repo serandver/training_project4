@@ -10,12 +10,16 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
     private DaoFactory daoFactory;
 
-    public BookServiceImpl() {
-        this.daoFactory = DaoFactory.getInstance();
-    }
-
     public BookServiceImpl(DaoFactory instance) {
         this.daoFactory = instance;
+    }
+
+    private static class Holder{
+        static final BookServiceImpl INSTANCE = new BookServiceImpl( DaoFactory.getInstance() );
+    }
+
+    public static BookServiceImpl getInstance(){
+        return Holder.INSTANCE;
     }
 
     @Override

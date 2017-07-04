@@ -9,6 +9,7 @@ public class BookOrder {
     private Date dateOfReceive;
     private Date dateOfReturn = null;
     private ReadingPlace place;
+    private Status status;
 
     public static class Builder{
         private int id;
@@ -17,6 +18,7 @@ public class BookOrder {
         private Date dateOfReceive;
         private Date dateOfReturn = null;
         private ReadingPlace place;
+        private Status status;
 
         public Builder setId(int id) {
             this.id = id;
@@ -48,6 +50,11 @@ public class BookOrder {
             return this;
         }
 
+        public Builder setStatus(Status status) {
+            this.status = status;
+            return this;
+        }
+
         public BookOrder build(){
             BookOrder bookOrder = new BookOrder();
             bookOrder.setId(id);
@@ -56,6 +63,7 @@ public class BookOrder {
             bookOrder.setDateOfReceive(dateOfReceive);
             bookOrder.setDateOfReturn(dateOfReturn);
             bookOrder.setPlace(place);
+            bookOrder.setStatus(status);
             return bookOrder;
         }
     }
@@ -65,14 +73,12 @@ public class BookOrder {
         SUBSCRIPTION
     }
 
-    /*
+
     public static enum Status {
-        REQUEST_FOR_RECEIVING,
-        APPROVED_FOR_RECEIVING,
-        REQUEST_FOR_RETURNING,
-        APPROVED_FOR_RETURNING
+        OPEN,
+        CLOSED
     }
-    */
+
 
     public int getId() {
         return id;
@@ -122,6 +128,14 @@ public class BookOrder {
         this.dateOfReturn = dateOfReturn;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -135,7 +149,8 @@ public class BookOrder {
         if (!dateOfReceive.equals(bookOrder.dateOfReceive)) return false;
         if (dateOfReturn != null ? !dateOfReturn.equals(bookOrder.dateOfReturn) : bookOrder.dateOfReturn != null)
             return false;
-        return place == bookOrder.place;
+        if (place != bookOrder.place) return false;
+        return status == bookOrder.status;
     }
 
     @Override
@@ -146,6 +161,7 @@ public class BookOrder {
         result = 31 * result + dateOfReceive.hashCode();
         result = 31 * result + (dateOfReturn != null ? dateOfReturn.hashCode() : 0);
         result = 31 * result + place.hashCode();
+        result = 31 * result + status.hashCode();
         return result;
     }
 
@@ -158,6 +174,7 @@ public class BookOrder {
                 ", dateOfReceive=" + dateOfReceive +
                 ", dateOfReturn=" + dateOfReturn +
                 ", place=" + place +
+                ", status=" + status +
                 '}';
     }
 }

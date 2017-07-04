@@ -25,9 +25,9 @@ public class LoginCommand implements Command{
     public static final String PARAM_LOGIN = "login";
     public static final String PARAM_PASSWORD ="password";
 
-    private UserService userService = new UserServiceImpl();
-    private BookService bookService = new BookServiceImpl();
-    private BookOrderService bookOrderService = new BookOrderServiceImpl();
+    private UserService userService = UserServiceImpl.getInstance();
+    private BookService bookService = BookServiceImpl.getInstance();
+    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
