@@ -63,7 +63,7 @@ public class LoginCommand implements Command{
     }
 
     private void setListBookOrders(HttpServletRequest request) {
-        List<BookOrder> bookOrders = bookOrderService.findAll();
+        List<BookOrder> bookOrders = bookOrderService.findByStatus(BookOrder.Status.OPEN);
         request.setAttribute("orderList", bookOrders);
     }
 }

@@ -11,7 +11,7 @@
     <meta name="author" content=""/>
     <link rel="icon" href="../resources/favicon.ico"/>
 
-    <title>Reader home page</title>
+    <title>Librarian home page</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
@@ -48,12 +48,12 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <button class="btn btn-success btn-lg">
-                Book catalogue
+                Book orders archive
             </button>
         </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h2 class="sub-header">Book orders</h2>
+            <h2 class="sub-header">Unconfirmed book orders</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -88,8 +88,8 @@
                             <td>${order.place}</td>
                             <td>
                                 <form class="navbar-form navbar-right">
-                                    <input type="hidden" name="command" value="createOrder">
-                                    <button type="button">Approve order</button>
+                                    <input type="hidden" name="command" value="confirmOrder">
+                                    <button type="button">Confirm order</button>
                                 </form>
                             </td>
                         </tr>
@@ -103,7 +103,7 @@
 
 <script src="../resources/js/jquery.min.js"></script>
 <script src=../resources/js/bootstrap.min.js"></script>
-<script src="../resources/js/reader.js"></script>
+<script src="../resources/js/librarian.js"></script>
 
 </body>
 </html>

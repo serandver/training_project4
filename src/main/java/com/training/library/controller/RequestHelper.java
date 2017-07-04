@@ -16,6 +16,7 @@ public class RequestHelper {
         commands.put("register", new RegisterCommand());
         commands.put("show-my-orders", new ShowMyOrdersCommand());
         commands.put("catalogue", new ViewFullCatalogueCommand());
+        commands.put("confirmOrder", new ConfirmBookOrderCommand());
 
     }
 

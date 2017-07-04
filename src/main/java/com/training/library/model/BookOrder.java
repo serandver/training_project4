@@ -6,7 +6,7 @@ public class BookOrder {
     private int id;
     private User user;
     private Book book;
-    private Date dateOfReceive;
+    private Date dateOfReceive = null;
     private Date dateOfReturn = null;
     private ReadingPlace place;
     private Status status;
