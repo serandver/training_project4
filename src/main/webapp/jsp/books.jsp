@@ -2,13 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Full book catalogue</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link href="../resources/css/books.css" rel="stylesheet"/>
+    <link href="../resources/css/dashboard.css" rel="stylesheet"/>
 
     <link rel="icon" href="../resources/favicon.ico"/>
 </head>
@@ -32,7 +34,7 @@
                 <li><a href="/users">Users</a></li>
                 <li><a href="/orders">Orders</a></li>
             </ul>
-            <form class="navbar-form navbar-right ">
+            <form class="navbar-form navbar-right">
                 <input type="hidden" name="command" value="signout">
                 <input type="submit" value="Sign out">
             </form>
@@ -49,50 +51,58 @@
     </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container-fluid main-content">
+<div class="container-fluid">
     <div class="row">
-        <h2 class="sub-header">Book catalogue</h2>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Book id</th>
-                    <th>Book title</th>
-                    <th>Book author</th>
-                    <th>Inventory number</th>
-                    <th></th>
-                    <th></th>
+        <div class="col-sm-3 col-md-2 sidebar">
+            <form class="navbar-form navbar-right">
+                <input type="hidden" name="command" value="addBook">
+                <input type="submit" class="btn btn-success btn-lg" value="Add book">
+            </form>
+        </div>
 
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="book" items="${bookList}">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h2 class="sub-header">Book catalogue</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
                     <tr>
-                        <td>${book.id}</td>
-                        <td>${book.title}</td>
-                        <td>${book.author}</td>
-                        <td>${book.inventoryNumber}</td>
-                        <td>
-                            <form action="/controller" class="navbar-form navbar-right">
-                                <input type="hidden" name="command" value="openBook">
-                                <input type="hidden" name="bookId" value="${book.id}">
-                                <input type="hidden" name="bookTitle" value="${book.title}">
-                                <input type="hidden" name="bookAuthor" value="${book.author}">
-                                <input type="hidden" name="bookNumber" value="${book.inventoryNumber}">
-                                <input type="submit" value="Edit" class="btn btn-success btn-lg">
-                            </form>
-                        </td>
-                        <td>
-                            <form class="navbar-form navbar-right">
-                                <input type="hidden" name="command" value="deleteBook">
-                                <input type="hidden" name="bookId" value=${book.id}>
-                                <input type="submit" value="Delete" class="btn btn-success btn-lg">
-                            </form>
-                        </td>
+                        <th>Book id</th>
+                        <th>Book title</th>
+                        <th>Book author</th>
+                        <th>Inventory number</th>
+                        <th></th>
+                        <th></th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="book" items="${bookList}">
+                        <tr>
+                            <td>${book.id}</td>
+                            <td>${book.title}</td>
+                            <td>${book.author}</td>
+                            <td>${book.inventoryNumber}</td>
+                            <td>
+                                <form action="/controller" class="navbar-form navbar-right">
+                                    <input type="hidden" name="command" value="openBook">
+                                    <input type="hidden" name="bookId" value="${book.id}">
+                                    <input type="hidden" name="bookTitle" value="${book.title}">
+                                    <input type="hidden" name="bookAuthor" value="${book.author}">
+                                    <input type="hidden" name="bookNumber" value="${book.inventoryNumber}">
+                                    <input type="submit" value="Edit" class="btn btn-success btn-lg">
+                                </form>
+                            </td>
+                            <td>
+                                <form class="navbar-form navbar-right">
+                                    <input type="hidden" name="command" value="deleteBook">
+                                    <input type="hidden" name="bookId" value=${book.id}>
+                                    <input type="submit" value="Delete" class="btn btn-success btn-lg">
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

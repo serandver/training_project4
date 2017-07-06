@@ -10,7 +10,7 @@ public interface UserService {
     Optional<User> find(int id);
     Optional<User> findByEmail(String email);
     int create(User user);
-    void update(User user);
+    int update(User user);
     int delete(int id);
     Optional<User> login(String email, String password);
 }

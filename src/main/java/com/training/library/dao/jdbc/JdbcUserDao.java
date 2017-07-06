@@ -173,7 +173,8 @@ public class JdbcUserDao implements UserDao{
     }
 
     @Override
-    public void update(User user) {
+    public int update(User user) {
+        int result;
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(UPDATE_USER);
             query.setString(1, user.getFirstName());
@@ -182,10 +183,11 @@ public class JdbcUserDao implements UserDao{
             query.setString(4, user.getEmail());
             query.setString(5, user.getRole().name());
             query.setInt(6, user.getId());
-            query.executeUpdate();
+            result = query.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return result;
     }
 
     @Override

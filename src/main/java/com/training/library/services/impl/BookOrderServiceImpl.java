@@ -1,5 +1,6 @@
 package com.training.library.services.impl;
 
+import com.training.library.dao.BookOrderDao;
 import com.training.library.dao.DaoFactory;
 import com.training.library.model.BookOrder;
 import com.training.library.services.BookOrderService;
@@ -26,57 +27,67 @@ public class BookOrderServiceImpl implements BookOrderService {
 
     @Override
     public Optional<BookOrder> find(int id) {
-       return daoFactory.createBookOrderDao().find(id);
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.find(id);
     }
 
     @Override
     public List<BookOrder> findAll() {
-        return daoFactory.createBookOrderDao().findAll();
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.findAll();
     }
 
     @Override
     public int create(BookOrder bookOrder) {
-        return daoFactory.createBookOrderDao().create(bookOrder);
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.create(bookOrder);
     }
 
     @Override
-    public void update(BookOrder bookOrder) {
-        daoFactory.createBookOrderDao().update(bookOrder);
+    public int update(BookOrder bookOrder) {
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.update(bookOrder);
     }
 
     @Override
     public int delete(int id) {
-        return daoFactory.createBookOrderDao().delete(id);
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.delete(id);
     }
 
     @Override
     public List<BookOrder> findByUserId(int userId) {
-        return daoFactory.createBookOrderDao().findByUserId(userId);
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.findByUserId(userId);
     }
 
     @Override
     public List<BookOrder> findByBookId(int bookId) {
-        return daoFactory.createBookOrderDao().findByBookId(bookId);
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.findByBookId(bookId);
     }
 
     @Override
     public List<BookOrder> findByReadingPlace(BookOrder.ReadingPlace place) {
-        return daoFactory.createBookOrderDao().findByReadingPlace(place);
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.findByReadingPlace(place);
     }
 
     @Override
     public List<BookOrder> findByDateOfReceive(Date date) {
-        return daoFactory.createBookOrderDao().findByDateOfReceive(date);
-
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.findByDateOfReceive(date);
     }
 
     @Override
     public List<BookOrder> findByDateOfReturn(Date date) {
-        return daoFactory.createBookOrderDao().findByDateOfReturn(date);
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.findByDateOfReturn(date);
     }
 
     @Override
     public List<BookOrder> findByStatus(BookOrder.Status status) {
-        return daoFactory.createBookOrderDao().findByStatus(status);
+        BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        return bookOrderDao.findByStatus(status);
     }
 }

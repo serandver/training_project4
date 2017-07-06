@@ -12,6 +12,6 @@ public interface BookService {
     List<Book> findAll();
     List<Book> findAllAvailableForOrderBooks();
     int create(Book book);
-    void update(Book book);
+    int update(Book book);
     int delete(int id);
 }

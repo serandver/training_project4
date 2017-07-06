@@ -160,7 +160,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
     }
 
     @Override
-    public void update(BookOrder bookOrder) {
+    public int update(BookOrder bookOrder) {
+        int result;
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(UPDATE_ORDER);
             query.setInt(1, bookOrder.getUser().getId());
@@ -170,10 +171,11 @@ public class JdbcBookOrderDao implements BookOrderDao{
             query.setString(5, bookOrder.getPlace().name());
             query.setString(6, bookOrder.getStatus().name());
             query.setInt(7, bookOrder.getId());
-            query.executeUpdate();
+            result = query.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return result;
     }
 
     @Override

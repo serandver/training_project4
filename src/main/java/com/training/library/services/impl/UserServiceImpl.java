@@ -25,39 +25,45 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return daoFactory.createUserDao().findAll();
+        UserDao userDao = daoFactory.createUserDao();
+        return userDao.findAll();
     }
 
     @Override
     public int create(User user) {
-        return daoFactory.createUserDao().create(user);
+        UserDao userDao = daoFactory.createUserDao();
+        return userDao.create(user);
     }
 
     @Override
     public Optional<User> find(int id) {
-        return daoFactory.createUserDao().find(id);
+        UserDao userDao = daoFactory.createUserDao();
+        return userDao.find(id);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return daoFactory.createUserDao().findByEmail(email);
+        UserDao userDao = daoFactory.createUserDao();
+        return userDao.findByEmail(email);
     }
 
     @Override
-    public void update(User user) {
-        daoFactory.createUserDao().update(user);
+    public int update(User user) {
+        UserDao userDao = daoFactory.createUserDao();
+        return userDao.update(user);
     }
 
     @Override
     public int delete(int id) {
-        return daoFactory.createUserDao().delete(id);
+        UserDao userDao = daoFactory.createUserDao();
+        return userDao.delete(id);
     }
 
     @Override
     public Optional<User> login(String email, String password){
-            UserDao dao = daoFactory.createUserDao();
-            return dao.findByEmail(email)
-                    .filter( user-> password.equals(user.getPassword()));
+        UserDao dao = daoFactory.createUserDao();
+        return dao.findByEmail(email)
+                .filter( user-> password.equals(user.getPassword()));
     }
 }
 

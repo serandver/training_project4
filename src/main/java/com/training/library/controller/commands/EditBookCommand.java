@@ -16,7 +16,7 @@ public class EditBookCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pageToGo;
+        String pageToGo = PathManager.getInstance().getProperty(PathManager.ERROR_PAGE);;
 
         String bookId = request.getParameter("bookId");
         String bookTitle = request.getParameter("bookTitle");
@@ -27,9 +27,10 @@ public class EditBookCommand implements Command {
                 .setTitle(bookTitle)
                 .setAuthor(bookAuthor)
                 .setInventoryNumber(bookNumber).build();
-        bookService.update(bookForUpdating);
-
-        pageToGo = PathManager.getInstance().getProperty(PathManager.CATALOGUE_PAGE);
+        int result = bookService.update(bookForUpdating);
+        if (result == 1) {
+            pageToGo = PathManager.getInstance().getProperty(PathManager.CATALOGUE_PAGE);
+        }
         return pageToGo;
     }
 }

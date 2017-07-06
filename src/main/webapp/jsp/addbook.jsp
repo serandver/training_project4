@@ -1,9 +1,16 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Хоменко Сергій
+  Date: 06.07.2017
+  Time: 16:53
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Edit book page</title>
+    <title>Add book page</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
@@ -49,6 +56,7 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
 <div class="container-fluid main-content">
     <form method="post" action="/books">
         <div class="form-group">
@@ -74,6 +82,5 @@
 </div>
 <script src="../resources/js/jquery.min.js"></script>
 <script src="../resources/js/bootstrap.min.js"></script>
-<script src="../resources/js/catalogue.js"></script>
 </body>
 </html>

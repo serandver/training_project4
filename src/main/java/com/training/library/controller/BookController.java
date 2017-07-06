@@ -23,13 +23,22 @@ public class BookController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        Book book = mapper.readValue(request.getInputStream(), Book.class);
-        System.out.println(book);
-//        BufferedReader reader = request.getReader();
-//        Gson gson = new Gson();
-//        Book book = gson.fromJson(reader, Book.class);
-//        System.out.println(book);
+        String pageToGo = PathManager.getInstance().getProperty(PathManager.ERROR_PAGE);;
+        String bookId = request.getParameter("bookId");
+        String bookTitle = request.getParameter("bookTitle");
+        String bookAuthor = request.getParameter("bookAuthor");
+        String bookNumber = request.getParameter("bookNumber");
+        Book bookForUpdating = new Book.Builder()
+                .setId(Integer.parseInt(bookId))
+                .setTitle(bookTitle)
+                .setAuthor(bookAuthor)
+                .setInventoryNumber(bookNumber).build();
+        int result = bookService.update(bookForUpdating);
+        if (result == 1) {
+            pageToGo = PathManager.getInstance().getProperty(PathManager.CATALOGUE_PAGE);
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher(pageToGo);
+        response.sendRedirect("/books");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.training.library.services.impl;
 
+import com.training.library.dao.BookDao;
 import com.training.library.dao.DaoFactory;
 import com.training.library.model.Book;
 import com.training.library.services.BookService;
@@ -24,41 +25,49 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<Book> find(int id) {
-        return daoFactory.createBookDao().find(id);
+        BookDao bookDao = daoFactory.createBookDao();
+        return bookDao.find(id);
     }
 
     @Override
     public Optional<Book> findByTitle(String title) {
-        return daoFactory.createBookDao().findByTitle(title);
+        BookDao bookDao = daoFactory.createBookDao();
+        return bookDao.findByTitle(title);
     }
 
     @Override
     public Optional<Book> findByAuthor(String author) {
-        return daoFactory.createBookDao().findByAuthor(author);
+        BookDao bookDao = daoFactory.createBookDao();
+        return bookDao.findByAuthor(author);
     }
 
     @Override
     public List<Book> findAll() {
-        return daoFactory.createBookDao().findAll();
+        BookDao bookDao = daoFactory.createBookDao();
+        return bookDao.findAll();
     }
 
     @Override
     public List<Book> findAllAvailableForOrderBooks() {
-        return daoFactory.createBookDao().findAllAvailableForOrderBooks();
+        BookDao bookDao = daoFactory.createBookDao();
+        return bookDao.findAllAvailableForOrderBooks();
     }
 
     @Override
     public int create(Book book) {
-        return daoFactory.createBookDao().create(book);
+        BookDao bookDao = daoFactory.createBookDao();
+        return bookDao.create(book);
     }
 
     @Override
-    public void update(Book book) {
-        daoFactory.createBookDao().update(book);
+    public int update(Book book) {
+        BookDao bookDao = daoFactory.createBookDao();
+        return bookDao.update(book);
     }
 
     @Override
     public int delete(int id) {
-        return daoFactory.createBookDao().delete(id);
+        BookDao bookDao = daoFactory.createBookDao();
+        return bookDao.delete(id);
     }
 }
