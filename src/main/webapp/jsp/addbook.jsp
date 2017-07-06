@@ -16,7 +16,7 @@
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link href="../resources/css/editbook.css" rel="stylesheet"/>
+    <link href="../resources/css/addbook.css" rel="stylesheet"/>
 
     <link rel="icon" href="../resources/favicon.ico"/>
 </head>
@@ -57,27 +57,22 @@
     </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container-fluid main-content">
-    <form method="post" action="/books">
-        <div class="form-group">
-            <label for="bookId">Book id</label>
-            <p class="form-control-static" id="bookId">${book.id}</p>
-            <input type="hidden" name="bookId" value="${book.id}">
-        </div>
+<div class="container-fluid main-content main-content">
+    <form method="post" action="/controller">
         <div class="form-group">
             <label for="editBookTitle">Book title</label>
-            <input type="text" class="form-control"  name="bookTitle" id="editBookTitle" value="${book.title}"/>
+            <input type="text" class="form-control"  name="bookTitle" id="editBookTitle" value="Insert book title"/>
         </div>
         <div class="form-group">
             <label for="editBookAuthor">Book author</label>
-            <input type="text" class="form-control"  name="bookAuthor" id="editBookAuthor" value="${book.author}"/>
+            <input type="text" class="form-control"  name="bookAuthor" id="editBookAuthor" value="Insert book author"/>
         </div>
         <div class="form-group">
             <label for="editInventoryNumber">Inventory number</label>
-            <input type="text" class="form-control"  name="bookNumber" id="editInventoryNumber" value="${book.inventoryNumber}"/>
+            <input type="text" class="form-control"  name="bookNumber" id="editInventoryNumber" value="Insert Inventory number"/>
         </div>
-        <input type="hidden" name="command" value="editBook">
-        <input type="submit" class="btn btn-success btn-lg" value="Save changes"/>
+        <input type="hidden" name="command" value="addBook">
+        <input type="submit" class="btn btn-success btn-lg" value="Add book"/>
     </form>
 </div>
 <script src="../resources/js/jquery.min.js"></script>

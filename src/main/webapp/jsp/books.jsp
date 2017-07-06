@@ -54,8 +54,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <form class="navbar-form navbar-right">
-                <input type="hidden" name="command" value="addBook">
+            <form action="/controller" class="navbar-form navbar-right">
+                <input type="hidden" name="command" value="goToAddBook">
                 <input type="submit" class="btn btn-success btn-lg" value="Add book">
             </form>
         </div>
@@ -92,7 +92,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form class="navbar-form navbar-right">
+                                <form method="post" action="/controller" class="navbar-form navbar-right">
                                     <input type="hidden" name="command" value="deleteBook">
                                     <input type="hidden" name="bookId" value=${book.id}>
                                     <input type="submit" value="Delete" class="btn btn-success btn-lg">

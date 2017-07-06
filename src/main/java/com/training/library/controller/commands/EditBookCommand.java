@@ -29,7 +29,7 @@ public class EditBookCommand implements Command {
                 .setInventoryNumber(bookNumber).build();
         int result = bookService.update(bookForUpdating);
         if (result == 1) {
-            pageToGo = PathManager.getInstance().getProperty(PathManager.CATALOGUE_PAGE);
+            pageToGo = "/books";
         }
         return pageToGo;
     }
