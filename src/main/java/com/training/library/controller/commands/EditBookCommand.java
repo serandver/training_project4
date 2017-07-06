@@ -16,6 +16,7 @@ public class EditBookCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String pageToGo = PathManager.getInstance().getProperty(PathManager.ERROR_PAGE);;
 
         String bookId = request.getParameter("bookId");

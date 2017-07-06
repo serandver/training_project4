@@ -50,7 +50,7 @@
     </div><!-- /.container-fluid -->
 </nav>
 <div class="container-fluid main-content">
-    <form method="post" action="/books">
+    <form method="post" action="/controller">
         <div class="form-group">
             <label for="bookId">Book id</label>
             <p class="form-control-static" id="bookId">${book.id}</p>

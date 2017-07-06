@@ -21,8 +21,6 @@
                     "</tr>");
             }
         });
-
-
     });
 
     $('#editModal').on('click', '#editContact', function() {
