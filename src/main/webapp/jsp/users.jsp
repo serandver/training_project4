@@ -2,13 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>User management</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link href="../resources/css/books.css" rel="stylesheet"/>
+    <link href="../resources/css/custom.css" rel="stylesheet"/>
 
     <link rel="icon" href="../resources/favicon.ico"/>
 </head>
@@ -48,9 +50,9 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="container-fluid">
+    <div class="container-fluid main-content ">
         <div class="row">
-            <h2 class="sub-header">Book catalogue</h2>
+            <h2 class="sub-header">Registered users</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
