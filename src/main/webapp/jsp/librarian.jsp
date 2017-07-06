@@ -21,27 +21,40 @@
 </head>
 
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="navbar-collapse collapse list-inline">
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse visible-lg-inline">
+            <ul class="nav navbar-nav">
+                <li><a href="/books">Books</a></li>
+                <li><a href="/users">Users</a></li>
+                <li><a href="/orders">Orders</a></li>
+            </ul>
             <form class="navbar-form navbar-right">
                 <input type="hidden" name="command" value="signout">
                 <input type="submit" value="Sign out">
             </form>
-            <form class="navbar-form navbar-right">
-                <input type="hidden" name="command" value="catalogue">
-                <input type="submit" value="View full catalogue">
-            </form>
-        </div>
-    </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Language<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Ru</a></li>
+                        <li><a href="#">En</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>
 
 <div class="container-fluid">
@@ -103,7 +116,7 @@
 </div>
 
 <script src="../resources/js/jquery.min.js"></script>
-<script src=../resources/js/bootstrap.min.js"></script>
+<script src="../resources/js/bootstrap.min.js"></script>
 <script src="../resources/js/librarian.js"></script>
 
 </body>

@@ -1,7 +1,6 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathConfig;
-import com.training.library.controller.commands.Command;
+import com.training.library.config.PathManager;
 import com.training.library.model.Book;
 import com.training.library.model.BookOrder;
 import com.training.library.model.User;
@@ -19,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import static com.training.library.config.PathConfig.*;
+import static com.training.library.config.PathManager.*;
 
 public class LoginCommand implements Command{
     public static final String PARAM_LOGIN = "login";
@@ -33,7 +32,7 @@ public class LoginCommand implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String pageToGo = PathConfig.getInstance().getProperty(ERROR_PAGE);
+        String pageToGo = PathManager.getInstance().getProperty(ERROR_PAGE);
         String email = request.getParameter(PARAM_LOGIN);
         String password = request.getParameter(PARAM_PASSWORD);
 
@@ -45,11 +44,11 @@ public class LoginCommand implements Command{
                 User.Role role = user.getRole();
                 request.getSession().setAttribute("user", user);
                 if(role == User.Role.READER) {
-                    pageToGo = PathConfig.getInstance().getProperty(READER_HOME_PAGE);
+                    pageToGo = PathManager.getInstance().getProperty(READER_HOME_PAGE);
                     setBookCatalogForReader(request);
                 }
                 else if(role == User.Role.LIBRARIAN){
-                    pageToGo = PathConfig.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
+                    pageToGo = PathManager.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
                     setListBookOrders(request);
                 }
             }

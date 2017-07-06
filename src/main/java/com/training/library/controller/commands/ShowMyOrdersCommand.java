@@ -1,7 +1,6 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathConfig;
-import com.training.library.controller.commands.Command;
+import com.training.library.config.PathManager;
 import com.training.library.model.BookOrder;
 import com.training.library.model.User;
 import com.training.library.services.BookOrderService;
@@ -26,6 +25,6 @@ public class ShowMyOrdersCommand implements Command {
         List<BookOrder> currentUserOrders = bookOrderService.findByUserId(currentUserId);
         request.setAttribute("orderList", currentUserOrders);
 
-        return PathConfig.getInstance().getProperty(PathConfig.MY_ORDERS_PAGE);
+        return PathManager.getInstance().getProperty(PathManager.MY_ORDERS_PAGE);
     }
 }

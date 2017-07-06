@@ -1,8 +1,10 @@
 package com.training.library.controller;
 
+import com.training.library.config.PathManager;
 import com.training.library.services.UserService;
 import com.training.library.services.impl.UserServiceImpl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,9 @@ public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List allRegisteredUsers = userService.findAll();
         request.setAttribute("userList", allRegisteredUsers);
-        request.getRequestDispatcher("/jsp/users.jsp").forward(request, response);
+        String page = PathManager.getInstance().getProperty(PathManager.USERS_PAGE);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+        dispatcher.forward(request, response);
     }
 
     @Override

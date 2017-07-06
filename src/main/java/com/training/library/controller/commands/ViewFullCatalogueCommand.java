@@ -1,7 +1,6 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathConfig;
-import com.training.library.controller.commands.Command;
+import com.training.library.config.PathManager;
 import com.training.library.model.Book;
 import com.training.library.services.BookService;
 import com.training.library.services.impl.BookServiceImpl;
@@ -19,6 +18,6 @@ public class ViewFullCatalogueCommand implements Command {
         List<Book> orders = bookService.findAll();
         request.setAttribute("bookList", orders);
 
-        return PathConfig.getInstance().getProperty(PathConfig.CATALOGUE_PAGE);
+        return PathManager.getInstance().getProperty(PathManager.CATALOGUE_PAGE);
     }
 }

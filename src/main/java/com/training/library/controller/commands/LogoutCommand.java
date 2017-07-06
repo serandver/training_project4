@@ -1,8 +1,7 @@
 package com.training.library.controller.commands;
 
 
-import com.training.library.config.PathConfig;
-import com.training.library.controller.commands.Command;
+import com.training.library.config.PathManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +14,6 @@ public class LogoutCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         session.invalidate();
-        return PathConfig.getInstance().getProperty(PathConfig.START_PAGE);
+        return PathManager.getInstance().getProperty(PathManager.START_PAGE);
     }
 }

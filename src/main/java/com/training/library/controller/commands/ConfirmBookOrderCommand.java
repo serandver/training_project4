@@ -1,7 +1,6 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathConfig;
-import com.training.library.controller.commands.Command;
+import com.training.library.config.PathManager;
 import com.training.library.model.BookOrder;
 import com.training.library.services.BookOrderService;
 import com.training.library.services.impl.BookOrderServiceImpl;
@@ -14,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static com.training.library.config.PathConfig.LIBRARIAN_HOME_PAGE;
+import static com.training.library.config.PathManager.LIBRARIAN_HOME_PAGE;
 
 public class ConfirmBookOrderCommand implements Command {
 
@@ -30,7 +29,7 @@ public class ConfirmBookOrderCommand implements Command {
             order.setDateOfReceive(new Date());
             bookOrderService.update(order);
         }
-        String pageToGo = PathConfig.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
+        String pageToGo = PathManager.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
         setUnconfirmedBookOrdersList(request);
         return pageToGo;
     }

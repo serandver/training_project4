@@ -1,8 +1,7 @@
 package com.training.library.controller.commands;
 
 
-import com.training.library.config.PathConfig;
-import com.training.library.controller.commands.Command;
+import com.training.library.config.PathManager;
 import com.training.library.model.User;
 import com.training.library.services.UserService;
 import com.training.library.services.impl.UserServiceImpl;
@@ -12,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.training.library.config.PathConfig.ERROR_PAGE;
-import static com.training.library.config.PathConfig.LOGIN_PAGE;
+import static com.training.library.config.PathManager.ERROR_PAGE;
+import static com.training.library.config.PathManager.LOGIN_PAGE;
 
 public class RegisterCommand implements Command {
     private static final String FIRSTNAME = "firstName";
@@ -24,7 +23,7 @@ public class RegisterCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = PathConfig.getInstance().getProperty(ERROR_PAGE);
+        String page = PathManager.getInstance().getProperty(ERROR_PAGE);
         String firstname = new String(request.getParameter(FIRSTNAME).getBytes("UTF-8"), "UTF-8");
         String lastname = new String(request.getParameter(LASTNAME).getBytes("UTF-8"), "UTF-8");
         String email = new String(request.getParameter(EMAIL).getBytes("UTF-8"), "UTF-8");
@@ -42,7 +41,7 @@ public class RegisterCommand implements Command {
                     .build();
             int createdUserId = userService.create(user);
             if (createdUserId != -1) {
-                page = PathConfig.getInstance().getProperty(LOGIN_PAGE);
+                page = PathManager.getInstance().getProperty(LOGIN_PAGE);
             }
         }
         return page;
