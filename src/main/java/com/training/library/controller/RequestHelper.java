@@ -25,7 +25,7 @@ public class RequestHelper {
         commands.put("openOrder", new OpenOrderCommand());
         commands.put("newOrder", new NewOrderPageCommand());
         commands.put("orderBook", new OrderBookCommand());
-
+        commands.put("confirmPage", new ConfirmPageCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

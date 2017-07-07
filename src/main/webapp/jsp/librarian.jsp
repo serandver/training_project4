@@ -102,7 +102,11 @@
                             <td>${order.place}</td>
                             <td>
                                 <form class="navbar-form navbar-right">
-                                    <input type="hidden" name="command" value="confirmOrder">
+                                    <input type="hidden" name="command" value="confirmPage">
+                                    <input type="hidden" name="orderId" value="${order.id}">
+                                    <input type="hidden" name="userId" value="${order.user.id}">
+                                    <input type="hidden" name="bookId" value="${order.book.id}">
+                                    <input type="hidden" name="orderPlace" value="${order.place}">
                                     <input type="submit" class="btn btn-success btn-lg" value="Confirm order">
                                 </form>
                             </td>
