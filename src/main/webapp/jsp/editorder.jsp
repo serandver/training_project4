@@ -37,7 +37,7 @@
             </ul>
             <form action="/controller" class="navbar-form navbar-right ">
                 <input type="hidden" name="command" value="signout">
-                <input type="submit" value="Sign out">
+                <input type="submit" class="btn btn-default" value="Sign out">
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -90,7 +90,10 @@
             </select>
         </c:if>
         <br/>
-        <input type="hidden" name="command" value="editBook">
+
+        <input type="hidden" name="readPlace" value="${order.place}">
+        <input type="hidden" name="orderStatus" value="${order.status}">
+        <input type="hidden" name="command" value="editOrder">
         <input type="submit" class="btn btn-success btn-lg" value="Save changes"/>
     </form>
 </div>

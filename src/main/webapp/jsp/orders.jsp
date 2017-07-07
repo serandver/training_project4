@@ -36,7 +36,7 @@
             </ul>
             <form action="/controller" class="navbar-form navbar-right">
                 <input type="hidden" name="command" value="signout">
-                <input type="submit" value="Sign out">
+                <input type="submit" class="btn btn-default" value="Sign out">
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

@@ -52,13 +52,14 @@ public class EditOrderCommand implements Command {
             user = userResult.get();
         }
 
-        DateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
+        DateFormat formatter1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
+        DateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
         Date dateOfReceiving = null;
         Date dateOfReturning = null;
 
         try {
-            dateOfReceiving = (Date)formatter.parse(dateReceive);
-            dateOfReturning = (Date)formatter.parse(dateReturn);
+            dateOfReceiving = formatter1.parse(dateReceive);
+            dateOfReturning = formatter2.parse(dateReturn);
         } catch (ParseException e) {
             e.printStackTrace();
         }

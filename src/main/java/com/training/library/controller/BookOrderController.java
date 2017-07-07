@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BookOrderController extends HttpServlet {
 
-    BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
+    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,5 +24,10 @@ public class BookOrderController extends HttpServlet {
         String page = PathManager.getInstance().getProperty(PathManager.ORDERS_PAGE);
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);
         dispatcher.forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
     }
 }
