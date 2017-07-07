@@ -15,10 +15,11 @@ import java.util.List;
 
 public class ShowMyOrdersCommand implements Command {
 
+    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
         User currentUser = (User)session.getAttribute("user");
         int currentUserId = currentUser.getId();
 

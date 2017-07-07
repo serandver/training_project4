@@ -78,13 +78,13 @@
                             <td>
                                 <form method="get" action="/controller">
                                     <input type="hidden" name="command" value="edituser">
-                                    <button type="submit">Edit</button>
+                                    <button type="submit" class="btn btn-success btn-lg">Edit</button>
                                 </form>
                             </td>
                             <td>
                                 <form method="post" action="/controller">
                                     <input type="hidden" name="command" value="deleteuser">
-                                    <button type="submit">Delete</button>
+                                    <button type="submit" class="btn btn-success btn-lg">Delete</button>
                                 </form>
                             </td>
                         </tr>

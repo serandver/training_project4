@@ -83,7 +83,7 @@
                             <td>${book.author}</td>
                             <td>${book.inventoryNumber}</td>
                             <td>
-                                <form action="/controller" class="navbar-form navbar-right">
+                                <form action="/controller" method="post" class="navbar-form navbar-right">
                                     <input type="hidden" name="command" value="openBook">
                                     <input type="hidden" name="bookId" value="${book.id}">
                                     <input type="hidden" name="bookTitle" value="${book.title}">

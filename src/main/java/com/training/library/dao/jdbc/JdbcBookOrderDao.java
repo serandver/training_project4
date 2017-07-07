@@ -67,8 +67,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             query.createPreparedStatement(INSERT_ORDER);
             query.setInt(1, bookOrder.getUser().getId());
             query.setInt(2, bookOrder.getBook().getId());
-            query.setTimestamp(3, new Timestamp(bookOrder.getDateOfReceive().getTime()));
-            query.setTimestamp(4, getTimeStampOfReturnDate(bookOrder));
+            query.setTimestamp(3, getTimeStampOfDate(bookOrder, bookOrder.getDateOfReceive()));
+            query.setTimestamp(4, getTimeStampOfDate(bookOrder, bookOrder.getDateOfReturn()));
             query.setString(5, bookOrder.getPlace().name());
             query.setString(6, bookOrder.getStatus().name());
             query.executeUpdate();
@@ -80,9 +80,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
         return generatedBookOrderId;
     }
 
-    private Timestamp getTimeStampOfReturnDate(BookOrder bookOrder) throws SQLException {
+    private Timestamp getTimeStampOfDate(BookOrder bookOrder, Date date) throws SQLException {
         Timestamp timestamp = null;
-        Date date = bookOrder.getDateOfReturn();
         if (date != null) {
             timestamp = new Timestamp(date.getTime());
         }
@@ -167,7 +166,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
             query.setInt(1, bookOrder.getUser().getId());
             query.setInt(2, bookOrder.getBook().getId());
             query.setTimestamp(3, new Timestamp(bookOrder.getDateOfReceive().getTime()));
-            query.setTimestamp(4, getTimeStampOfReturnDate(bookOrder));
+            query.setTimestamp(4, getTimeStampOfDate(bookOrder, bookOrder.getDateOfReturn()));
             query.setString(5, bookOrder.getPlace().name());
             query.setString(6, bookOrder.getStatus().name());
             query.setInt(7, bookOrder.getId());

@@ -26,4 +26,9 @@ public class ReaderHomeController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher(pageToGo);
         dispatcher.forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
 }

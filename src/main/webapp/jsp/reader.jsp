@@ -36,18 +36,17 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse visible-lg-inline">
               <ul class="nav navbar-nav">
-                  <li><a href="/books">Books</a></li>
-                  <li><a href="/users">Users</a></li>
-                  <li><a href="/orders">Orders</a></li>
+                  <li><a href="/reader">Home</a></li>
+                  <li><a href="/jsp/search.jsp">Search</a></li>
               </ul>
 
-              <form class="navbar-form navbar-left">
+              <form action="/controller" class="navbar-form navbar-left">
                   <input type="hidden" name="command" value="show-my-orders">
-                  <input type="submit" value="My orders">
+                  <input type="submit" class="btn btn-default" value="My orders">
               </form>
-              <form class="navbar-form navbar-right">
+              <form action="/controller" class="navbar-form navbar-right">
                   <input type="hidden" name="command" value="signout">
-                  <input type="submit" value="Sign out">
+                  <input type="submit" class="btn btn-default" value="Sign out">
               </form>
               <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
@@ -62,41 +61,36 @@
       </div>
     </nav>
 
-    <div class="container-fluid main-content ">
+    <div class="container-fluid main-content">
         <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                <p>
-                    <a class="btn btn-lg btn-success" href="search.jsp" role="button">Search a book</a>
-                </p>
-            </div>
-
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h2 class="sub-header">Book catalogue</h2>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
+            <h2 class="sub-header">Book catalogue</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Book title</th>
+                        <th>Book author</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="book" items="${bookList}">
                         <tr>
-                            <th>Book title</th>
-                            <th>Book author</th>
-                            <th></th>
+                            <td>${book.title}</td>
+                            <td>${book.author}</td>
+                            <td>
+                                <form action="/controller" method="post" class="navbar-form navbar-right">
+                                    <input type="hidden" name="command" value="newOrder">
+                                    <input type="hidden" name="bookId" value="${book.id}">
+                                    <input type="hidden" name="bookTitle" value="${book.title}">
+                                    <input type="hidden" name="bookAuthor" value="${book.author}">
+                                    <input type="submit" value="Order book" class="btn btn-success btn-lg" />
+                                </form>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="book" items="${bookList}">
-                                <tr>
-                                    <td>${book.title}</td>
-                                    <td>${book.author}</td>
-                                    <td>
-                                        <form class="navbar-form navbar-right">
-                                            <input type="hidden" name="command" value="login">
-                                            <button type="button">Order book</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
