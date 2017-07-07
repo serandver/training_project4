@@ -13,16 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class BookOrderController extends HttpServlet {
+import static com.training.library.config.PathManager.LIBRARIAN_HOME_PAGE;
 
-    BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
+public class LibrarianHomeController extends HttpServlet {
+
+    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<BookOrder> orders = bookOrderService.findAll();
-        request.setAttribute("orders", orders);
-        String page = PathManager.getInstance().getProperty(PathManager.ORDERS_PAGE);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+        List<BookOrder> bookOrders = bookOrderService.findByStatus(BookOrder.Status.OPEN);
+        request.setAttribute("orderList", bookOrders);
+        String pageToGo = PathManager.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(pageToGo);
         dispatcher.forward(request, response);
     }
 }

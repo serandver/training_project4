@@ -112,12 +112,6 @@
                                 <td>${order.dateOfReceive}</td>
                                 <td>${order.dateOfReturn}</td>
                                 <td>${order.place}</td>
-                                <td>
-                                    <form class="navbar-form navbar-right">
-                                        <input type="hidden" name="command" value="">
-                                        <button type="button">Edit order</button>
-                                    </form>
-                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>

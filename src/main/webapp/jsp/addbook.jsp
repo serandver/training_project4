@@ -36,11 +36,12 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse visible-lg-inline">
             <ul class="nav navbar-nav">
+                <li><a href="/librarian">Home</a></li>
                 <li><a href="/books">Books</a></li>
                 <li><a href="/users">Users</a></li>
                 <li><a href="/orders">Orders</a></li>
             </ul>
-            <form class="navbar-form navbar-right ">
+            <form action="/controller" class="navbar-form navbar-right ">
                 <input type="hidden" name="command" value="signout">
                 <input type="submit" value="Sign out">
             </form>

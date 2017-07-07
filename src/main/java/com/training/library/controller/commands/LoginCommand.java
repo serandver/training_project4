@@ -25,8 +25,6 @@ public class LoginCommand implements Command{
     public static final String PARAM_PASSWORD ="password";
 
     private UserService userService = UserServiceImpl.getInstance();
-    private BookService bookService = BookServiceImpl.getInstance();
-    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -44,25 +42,13 @@ public class LoginCommand implements Command{
                 User.Role role = user.getRole();
                 request.getSession().setAttribute("user", user);
                 if(role == User.Role.READER) {
-                    pageToGo = PathManager.getInstance().getProperty(READER_HOME_PAGE);
-                    setBookCatalogForReader(request);
+                    pageToGo = "/reader";
                 }
                 else if(role == User.Role.LIBRARIAN){
-                    pageToGo = PathManager.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
-                    setListBookOrders(request);
+                    pageToGo = "/librarian";
                 }
             }
         }
         return pageToGo;
-    }
-
-    private void setBookCatalogForReader(HttpServletRequest request) {
-        List<Book> booksAvailableForOrder = bookService.findAllAvailableForOrderBooks();
-        request.setAttribute("bookList", booksAvailableForOrder);
-    }
-
-    private void setListBookOrders(HttpServletRequest request) {
-        List<BookOrder> bookOrders = bookOrderService.findByStatus(BookOrder.Status.OPEN);
-        request.setAttribute("orderList", bookOrders);
     }
 }
