@@ -1,6 +1,9 @@
 package com.training.library.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class BookOrder {
     private int id;
@@ -167,12 +170,13 @@ public class BookOrder {
 
     @Override
     public String toString() {
+        DateFormat df = new SimpleDateFormat("dd mm yyyy");
         return "BookOrder{" +
                 "id=" + id +
                 ", user=" + user +
                 ", book=" + book +
-                ", dateOfReceive=" + dateOfReceive +
-                ", dateOfReturn=" + dateOfReturn +
+                ", dateOfReceive=" + df.format(dateOfReceive) +
+                ", dateOfReturn=" + df.format(dateOfReturn) +
                 ", place=" + place +
                 ", status=" + status +
                 '}';

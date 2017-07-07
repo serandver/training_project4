@@ -88,22 +88,21 @@
                         <td>${order.place}</td>
                         <td>${order.status}</td>
                         <td>
-                            <form method="get" action="/controller">
-                                <input type="hidden" name="bookId" value="${order.id}">
-                                <input type="hidden" name="bookTitle" value="${order.user.id}">
-                                <input type="hidden" name="bookAuthor" value="${order.user.firstName}">
-                                <input type="hidden" name="bookNumber" value="${order.user.lastName}">
-                                <input type="hidden" name="bookId" value="${order.book.id}">
-                                <input type="hidden" name="bookTitle" value="${order.book.title}">
-                                <input type="hidden" name="bookAuthor" value="${order.book.author}">
-                                <input type="hidden" name="bookNumber" value="${order.book.inventoryNumber}">
-                                <input type="hidden" name="bookId" value="${order.dateOfReceive}">
-                                <input type="hidden" name="bookTitle" value="${order.dateOfReturn}">
-                                <input type="hidden" name="bookAuthor" value="${order.place}">
-                                <input type="hidden" name="bookNumber" value="${order.status}">
-                                <input type="hidden" name="command" value="editorder">
-                                <button type="submit" class="btn btn-success btn-lg">Edit</button>
-                            </form>
+                            <c:set var="datereturn" value="${order.dateOfReturn}"/>
+                            <c:set var="status" value="${order.status}"/>
+                            <c:if test="${status eq 'OPEN' || empty datereturn}">
+                                <form action="/controller" class="navbar-form navbar-right">
+                                    <input type="hidden" name="orderId" value="${order.id}">
+                                    <input type="hidden" name="userId" value="${order.user.id}">
+                                    <input type="hidden" name="bookId" value="${order.book.id}">
+                                    <input type="hidden" name="dateReceive" value="${order.dateOfReceive}">
+                                    <input type="hidden" name="dateReturn" value="${order.dateOfReturn}">
+                                    <input type="hidden" name="readPlace" value="${order.place}">
+                                    <input type="hidden" name="orderStatus" value="${order.status}">
+                                    <input type="hidden" name="command" value="openOrder">
+                                    <button type="submit" class="btn btn-success btn-lg">Edit</button>
+                                </form>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

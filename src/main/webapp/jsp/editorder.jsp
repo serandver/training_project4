@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Edit book page</title>
+    <title>Edit order page</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
@@ -51,31 +52,49 @@
     </div><!-- /.container-fluid -->
 </nav>
 <div class="container-fluid main-content">
-    <h2 class="sub-header">Edit book:</h2>
+    <h2 class="sub-header">Edit order:</h2>
     <form method="post" action="/controller">
         <div class="form-group">
+            <label for="orderId">Order id</label>
+            <p class="form-control-static" id="orderId">${order.id}</p>
+            <input type="hidden" name="orderId" value="${order.id}">
+        </div>
+        <div class="form-group">
+            <label for="userId">User id</label>
+            <p class="form-control-static" id="userId">${order.user.id}</p>
+            <input type="hidden" class="form-control"  name="userId" value="${order.user.id}"/>
+        </div>
+        <div class="form-group">
             <label for="bookId">Book id</label>
-            <p class="form-control-static" id="bookId">${book.id}</p>
-            <input type="hidden" name="bookId" value="${book.id}">
+            <p class="form-control-static" id="bookId">${order.book.id}</p>
+            <input type="hidden" class="form-control"  name="bookId" value="${order.book.id}"/>
         </div>
         <div class="form-group">
-            <label for="editBookTitle">Book title</label>
-            <input type="text" class="form-control"  name="bookTitle" id="editBookTitle" value="${book.title}"/>
+            <label for="dateReceive">Date of receive</label>
+            <p class="form-control-static" id="dateReceive">${order.dateOfReceive}</p>
+            <input type="hidden" class="form-control"  name="dateReceive" value="${order.dateOfReceive}"/>
         </div>
-        <div class="form-group">
-            <label for="editBookAuthor">Book author</label>
-            <input type="text" class="form-control"  name="bookAuthor" id="editBookAuthor" value="${book.author}"/>
-        </div>
-        <div class="form-group">
-            <label for="editInventoryNumber">Inventory number</label>
-            <input type="text" class="form-control"  name="bookNumber" id="editInventoryNumber" value="${book.inventoryNumber}"/>
-        </div>
+        <c:set var="datereturn" value="${order.dateOfReturn}"/>
+        <c:if test="${empty datereturn}">
+            <div class="form-group">
+                <label for="dateReturn">Set date of return</label>
+                <input type="date" class="form-control" name="dateReturn" id="dateReturn">
+            </div>
+        </c:if>
+        <c:set var="status" value="${order.status}"/>
+        <c:if test="${status eq 'OPEN' }">
+            <select name="orderStatus">
+                <p>Set order status:</p>
+                <option value="closed">CLOSED</option>
+                <option value="open">OPEN</option>
+            </select>
+        </c:if>
+        <br/>
         <input type="hidden" name="command" value="editBook">
         <input type="submit" class="btn btn-success btn-lg" value="Save changes"/>
     </form>
 </div>
 <script src="../resources/js/jquery.min.js"></script>
 <script src="../resources/js/bootstrap.min.js"></script>
-<script src="../resources/js/catalogue.js"></script>
 </body>
 </html>

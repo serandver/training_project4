@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class EditBookCommand implements Command {
 
-    BookService bookService = BookServiceImpl.getInstance();
+    private BookService bookService = BookServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
