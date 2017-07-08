@@ -8,20 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class NewOrderPageCommand implements Command {
-
+public class LoadBookPageCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String bookId = request.getParameter("bookId");
         String bookTitle = request.getParameter("bookTitle");
         String bookAuthor = request.getParameter("bookAuthor");
-        Book book = new Book.Builder()
+        String bookNumber = request.getParameter("bookNumber");
+        Book bookForUpdating = new Book.Builder()
                 .setId(Integer.parseInt(bookId))
                 .setTitle(bookTitle)
                 .setAuthor(bookAuthor)
-                .build();
-        request.setAttribute("book", book);
+                .setInventoryNumber(bookNumber).build();
+        request.setAttribute("book", bookForUpdating);
 
-        return PathManager.getInstance().getProperty(PathManager.ORDER_BOOK_PAGE);
+        return PathManager.getInstance().getProperty(PathManager.EDIT_BOOK_PAGE);
     }
 }

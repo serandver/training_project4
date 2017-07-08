@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-public class ConfirmPageCommand implements Command {
+public class LoadConfirmPageCommand implements Command {
 
     private UserService userService = UserServiceImpl.getInstance();
     private BookService bookService = BookServiceImpl.getInstance();

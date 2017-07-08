@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToAddBookPageCommand implements Command {
+public class LoadAddBookPageCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         return PathManager.getInstance().getProperty(PathManager.ADD_BOOK_PAGE);

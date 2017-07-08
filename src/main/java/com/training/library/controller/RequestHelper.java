@@ -13,19 +13,19 @@ public class RequestHelper {
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
         commands.put("register", new RegisterCommand());
-        commands.put("show-my-orders", new ShowMyOrdersCommand());
-        commands.put("catalogue", new ViewFullCatalogueCommand());
+        commands.put("show-my-orders", new LoadMyOrdersCommand());
+        commands.put("catalogue", new LoadBookCataloguePageCommand());
         commands.put("confirmOrder", new ConfirmBookOrderCommand());
         commands.put("editBook", new EditBookCommand());
-        commands.put("openBook", new OpenBookCommand());
+        commands.put("openBook", new LoadBookPageCommand());
         commands.put("addBook", new AddBookCommand());
-        commands.put("goToAddBook", new GoToAddBookPageCommand());
+        commands.put("goToAddBook", new LoadAddBookPageCommand());
         commands.put("deleteBook", new DeleteBookCommand());
         commands.put("editOrder", new EditOrderCommand());
-        commands.put("openOrder", new OpenOrderCommand());
-        commands.put("newOrder", new NewOrderPageCommand());
+        commands.put("openOrder", new LoadOrderPageCommand());
+        commands.put("newOrder", new LoadNewOrderPageCommand());
         commands.put("orderBook", new OrderBookCommand());
-        commands.put("confirmPage", new ConfirmPageCommand());
+        commands.put("confirmPage", new LoadConfirmPageCommand());
         commands.put("findByTitle", new FindByTitleCommand());
         commands.put("findByAuthor", new FindByAuthorCommand());
     }

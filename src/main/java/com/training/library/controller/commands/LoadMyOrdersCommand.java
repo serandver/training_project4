@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class ShowMyOrdersCommand implements Command {
+public class LoadMyOrdersCommand implements Command {
 
     private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
 

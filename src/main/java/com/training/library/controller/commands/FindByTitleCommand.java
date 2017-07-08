@@ -22,6 +22,6 @@ public class FindByTitleCommand implements Command {
         List<Book> orders = bookService.findByTitle(titleForSearching);
         request.setAttribute("bookList", orders);
 
-        return PathManager.getInstance().getProperty(PathManager.CATALOGUE_PAGE);
+        return PathManager.getInstance().getProperty(PathManager.READER_HOME_PAGE);
     }
 }

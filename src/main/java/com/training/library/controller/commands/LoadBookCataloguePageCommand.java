@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class ViewFullCatalogueCommand implements Command {
+public class LoadBookCataloguePageCommand implements Command {
 
     private BookService bookService = BookServiceImpl.getInstance();
 

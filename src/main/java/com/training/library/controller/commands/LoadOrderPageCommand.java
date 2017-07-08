@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
 
-public class OpenOrderCommand implements Command {
+public class LoadOrderPageCommand implements Command {
     private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
     private BookService bookService = BookServiceImpl.getInstance();
     private UserService userService = UserServiceImpl.getInstance();

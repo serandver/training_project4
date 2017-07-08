@@ -22,6 +22,6 @@ public class FindByAuthorCommand implements Command {
         List<Book> orders = bookService.findByAuthor(authorForSearching);
         request.setAttribute("bookList", orders);
 
-        return PathManager.getInstance().getProperty(PathManager.CATALOGUE_PAGE);
+        return PathManager.getInstance().getProperty(PathManager.READER_HOME_PAGE);
     }
 }
