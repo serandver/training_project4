@@ -26,6 +26,8 @@ public class RequestHelper {
         commands.put("newOrder", new NewOrderPageCommand());
         commands.put("orderBook", new OrderBookCommand());
         commands.put("confirmPage", new ConfirmPageCommand());
+        commands.put("findByTitle", new FindByTitleCommand());
+        commands.put("findByAuthor", new FindByAuthorCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface BookService {
     Optional<Book> find(int id);
-    Optional<Book> findByTitle(String title);
-    Optional<Book> findByAuthor(String author);
+    List<Book> findByTitle(String title);
+    List<Book> findByAuthor(String author);
     List<Book> findAll();
     List<Book> findAllAvailableForOrderBooks();
     int create(Book book);

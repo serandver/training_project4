@@ -30,13 +30,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> findByTitle(String title) {
+    public List<Book> findByTitle(String title) {
         BookDao bookDao = daoFactory.createBookDao();
         return bookDao.findByTitle(title);
     }
 
     @Override
-    public Optional<Book> findByAuthor(String author) {
+    public List<Book> findByAuthor(String author) {
         BookDao bookDao = daoFactory.createBookDao();
         return bookDao.findByAuthor(author);
     }

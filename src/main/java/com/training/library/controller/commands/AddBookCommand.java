@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AddBookCommand implements Command {
-    BookService bookService = BookServiceImpl.getInstance();
+    private BookService bookService = BookServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

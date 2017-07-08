@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookDao extends GenericDao<Book> {
-    Optional<Book> findByTitle(String title);
-    Optional<Book> findByAuthor(String author);
+    List<Book> findByTitle(String title);
+    List<Book> findByAuthor(String author);
     List<Book> findAllAvailableForOrderBooks();
 }

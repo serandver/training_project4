@@ -52,17 +52,19 @@
 
 <div class="container-fluid main-content">
     <div class="row">
-        <form name="SearchForm" method="POST" action="controller">
+        <form name="SearchForm" method="POST" action="/controller">
             <h2><c:out value="Find book by title:"/></h2>
             <input type="text" class="form-control" name="title" value=""/>
             <input type="hidden" name="command" value="findByTitle">
+            <br/>
             <input type="submit" class="btn btn-success btn-lg" value="Search">
         </form>
 
-        <form name="SearchForm" method="POST" action="controller">
+        <form name="SearchForm" method="POST" action="/controller">
             <h2><c:out value="Find book by author:"/></h2>
             <input type="text" class="form-control" name="author" value=""/>
             <input type="hidden" name="command" value="findByAuthor">
+            <br/>
             <input type="submit" class="btn btn-success btn-lg" value="Search">
         </form>
     </div>

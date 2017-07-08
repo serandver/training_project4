@@ -31,8 +31,8 @@ public class JdbcBookDao implements BookDao {
             "GROUP BY books.title, books.author " +
             "ORDER BY books.book_id";
     private static final String SELECT_BOOK_BY_ID = SELECT_ALL_BOOKS + " WHERE book_id = ?";
-    private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL_BOOKS + " WHERE title = ?";
-    private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL_BOOKS + " WHERE author = ?";
+    private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL_BOOKS + " WHERE books.title LIKE CONCAT('%',?,'%')";
+    private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL_BOOKS + " WHERE books.author LIKE CONCAT('%',?,'%')";
     private static final String UPDATE_BOOK =
             "UPDATE books " +
             "JOIN book_numbers USING (book_number_id) " +
@@ -161,17 +161,17 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public Optional<Book> findByTitle(String title) {
+    public List<Book> findByTitle(String title) {
         return findByColumnValue(SELECT_BOOK_BY_TITLE, title);
     }
 
-    private Optional<Book> findByColumnValue(String sql, String columnValue) {
-        Optional<Book> result;
+    private List<Book> findByColumnValue(String sql, String columnValue) {
+        List<Book> result;
         try (QueryJDBC query = new QueryJDBC()){
             query.createPreparedStatement(sql);
             query.setString(1, columnValue);
             ResultSet resultSet = query.executeQuery();
-            result = getOptionalBookFromResultSet(resultSet);
+            result = getAllBooksFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -179,7 +179,7 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public Optional<Book> findByAuthor(String author) {
+    public List<Book> findByAuthor(String author) {
         return findByColumnValue(SELECT_BOOK_BY_AUTHOR, author);
     }
 

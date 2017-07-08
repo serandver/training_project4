@@ -11,14 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class ViewFullCatalogueCommand implements Command {
+public class FindByAuthorCommand implements Command {
 
     private BookService bookService = BookServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String authorForSearching = request.getParameter("author");
 
-        List<Book> orders = bookService.findAll();
+        List<Book> orders = bookService.findByAuthor(authorForSearching);
         request.setAttribute("bookList", orders);
 
         return PathManager.getInstance().getProperty(PathManager.CATALOGUE_PAGE);
