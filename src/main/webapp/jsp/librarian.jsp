@@ -1,15 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <link rel="icon" href="../resources/favicon.ico"/>
-
     <title>Librarian home page</title>
 
     <!-- Bootstrap core CSS -->
@@ -17,8 +12,9 @@
 
     <!-- Custom styles for this template -->
     <link href="../resources/css/dashboard.css" rel="stylesheet"/>
-</head>
 
+    <link rel="icon" href="../resources/favicon.ico"/>
+</head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -121,7 +117,6 @@
 
 <script src="../resources/js/jquery.min.js"></script>
 <script src="../resources/js/bootstrap.min.js"></script>
-<script src="../resources/js/librarian.js"></script>
 
 </body>
 </html>
