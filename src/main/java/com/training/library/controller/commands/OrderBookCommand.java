@@ -47,9 +47,9 @@ public class OrderBookCommand implements Command {
         String placeString = request.getParameter("orderPlace");
         BookOrder.ReadingPlace place = BookOrder.ReadingPlace.valueOf(placeString);
 
-
+        BookOrder newOrder = null;
         if (user != null && book != null) {
-            BookOrder newOrder = new BookOrder.Builder()
+            newOrder = new BookOrder.Builder()
                     .setUser(user)
                     .setBook(book)
                     .setPlace(place)
