@@ -28,6 +28,10 @@ public class RequestHelper {
         commands.put("confirmPage", new LoadConfirmPageCommand());
         commands.put("findByTitle", new FindByTitleCommand());
         commands.put("findByAuthor", new FindByAuthorCommand());
+        commands.put("edituser", new EditUserCommand());
+        commands.put("openuser", new LoadUserCommand());
+
+
     }
 
     public Command getCommand(HttpServletRequest request) {

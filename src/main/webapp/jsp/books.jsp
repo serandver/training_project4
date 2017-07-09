@@ -72,7 +72,6 @@
                         <th>Book author</th>
                         <th>Inventory number</th>
                         <th></th>
-                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -90,13 +89,6 @@
                                     <input type="hidden" name="bookAuthor" value="${book.author}">
                                     <input type="hidden" name="bookNumber" value="${book.inventoryNumber}">
                                     <input type="submit" value="Edit" class="btn btn-success btn-lg">
-                                </form>
-                            </td>
-                            <td>
-                                <form method="post" action="/controller" class="navbar-form navbar-right">
-                                    <input type="hidden" name="command" value="deleteBook">
-                                    <input type="hidden" name="bookId" value=${book.id}>
-                                    <input type="submit" value="Delete" class="btn btn-success btn-lg">
                                 </form>
                             </td>
                         </tr>

@@ -179,8 +179,8 @@ public class JdbcUserDao implements UserDao{
             query.createPreparedStatement(UPDATE_USER);
             query.setString(1, user.getFirstName());
             query.setString(2, user.getLastName());
-            query.setString(3, user.getPassword());
-            query.setString(4, user.getEmail());
+            query.setString(3, user.getEmail());
+            query.setString(4, user.getPassword());
             query.setString(5, user.getRole().name());
             query.setInt(6, user.getId());
             result = query.executeUpdate();

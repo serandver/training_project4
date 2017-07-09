@@ -64,7 +64,6 @@
                         <th>Email</th>
                         <th>Role</th>
                         <th></th>
-                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -76,15 +75,10 @@
                             <td>${user.email}</td>
                             <td>${user.role}</td>
                             <td>
-                                <form method="get" action="/controller">
-                                    <input type="hidden" name="command" value="edituser">
-                                    <button type="submit" class="btn btn-success btn-lg">Edit</button>
-                                </form>
-                            </td>
-                            <td>
                                 <form method="post" action="/controller">
-                                    <input type="hidden" name="command" value="deleteuser">
-                                    <button type="submit" class="btn btn-success btn-lg">Delete</button>
+                                    <input type="hidden" name="command" value="openuser">
+                                    <input type="hidden" name="userId" value="${user.id}">
+                                    <button type="submit" class="btn btn-success btn-lg">Edit</button>
                                 </form>
                             </td>
                         </tr>
