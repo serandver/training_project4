@@ -97,7 +97,7 @@
                             <td>${order.dateOfReturn}</td>
                             <td>${order.place}</td>
                             <td>
-                                <form class="navbar-form navbar-right">
+                                <form action="/controller" class="navbar-form navbar-right">
                                     <input type="hidden" name="command" value="confirmPage">
                                     <input type="hidden" name="orderId" value="${order.id}">
                                     <input type="hidden" name="userId" value="${order.user.id}">

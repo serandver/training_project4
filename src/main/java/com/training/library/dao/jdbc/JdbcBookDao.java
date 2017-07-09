@@ -31,8 +31,10 @@ public class JdbcBookDao implements BookDao {
             "GROUP BY books.title, books.author " +
             "ORDER BY books.book_id";
     private static final String SELECT_BOOK_BY_ID = SELECT_ALL_BOOKS + " WHERE book_id = ?";
-    private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL_BOOKS + " WHERE books.title LIKE CONCAT('%',?,'%')";
-    private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL_BOOKS + " WHERE books.author LIKE CONCAT('%',?,'%')";
+    private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL_BOOKS + " WHERE books.title LIKE CONCAT('%',?,'%') " +
+            "GROUP BY books.title, books.author";
+    private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL_BOOKS + " WHERE books.author LIKE CONCAT('%',?,'%')" +
+            "GROUP BY books.title, books.author";
     private static final String UPDATE_BOOK =
             "UPDATE books " +
             "JOIN book_numbers USING (book_number_id) " +

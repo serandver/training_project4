@@ -5,11 +5,11 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ConnectionPoolContext {
+public class JndiConnectionPool {
 
     private DataSource dataSource;
 
-    public ConnectionPoolContext() {
+    public JndiConnectionPool() {
         try{
             InitialContext ic = new InitialContext();
             dataSource = (DataSource) ic.lookup("java:comp/env/jdbc/library");

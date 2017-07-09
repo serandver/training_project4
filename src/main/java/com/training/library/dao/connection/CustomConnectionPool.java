@@ -6,10 +6,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionPoolJDBC {
+public class CustomConnectionPool {
 	
 	private int connectionCounter = 0;
-	private static volatile ConnectionPoolJDBC connectionPoolInstance;	
+	private static volatile CustomConnectionPool connectionPoolInstance;
 	private Connection [] connectionPoolArray;
     private DatabaseConfig databaseConfig = DatabaseConfig.getDatabaseConfigInstance();
 
@@ -20,7 +20,7 @@ public class ConnectionPoolJDBC {
 	private int connectionPoolSize = Integer.parseInt(databaseConfig.getProperty(DatabaseConfig.DATABASE_POOL_SIZE));
 		
 	
-	private ConnectionPoolJDBC() {	
+	private CustomConnectionPool() {
 		connectionPoolArray = new Connection[connectionPoolSize];
         try {
             Class.forName(jdbcDriver);
@@ -40,11 +40,11 @@ public class ConnectionPoolJDBC {
 		}
 	}
 	
-	public static ConnectionPoolJDBC getConnectionPoolInstance() {
+	public static CustomConnectionPool getConnectionPoolInstance() {
 		if (connectionPoolInstance == null) {
-			synchronized (ConnectionPoolJDBC.class) {				
+			synchronized (CustomConnectionPool.class) {
 				if (connectionPoolInstance == null) {
-					connectionPoolInstance = new ConnectionPoolJDBC();
+					connectionPoolInstance = new CustomConnectionPool();
 				}
 			}
 		}

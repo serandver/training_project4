@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class BookOrderController extends HttpServlet {
@@ -20,6 +22,12 @@ public class BookOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<BookOrder> orders = bookOrderService.findAll();
+        Collections.sort(orders, new Comparator<BookOrder>() {
+            @Override
+            public int compare(BookOrder o1, BookOrder o2) {
+                return o1.getId() - o2.getId();
+            }
+        });
         request.setAttribute("orders", orders);
         String page = PathManager.getInstance().getProperty(PathManager.ORDERS_PAGE);
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);

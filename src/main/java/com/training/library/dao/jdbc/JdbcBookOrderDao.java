@@ -34,7 +34,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
                 "FROM books " +
                 "JOIN book_numbers " +
                 "USING (book_number_id)) AS book_inf " +
-            "USING (book_id)";
+            "USING (book_id) ";
     private final String UPDATE_ORDER = "UPDATE orders SET user_id = ?, book_id = ?, date_receive = ?, date_return = ?, " +
             "reading_place = ?, order_status = ? WHERE order_id = ?";
     private final String SELECT_ORDER_BY_ID = SELECT_ALL_ORDERS + " WHERE order_id = ?";

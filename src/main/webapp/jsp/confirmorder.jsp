@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -82,11 +83,6 @@
                 <label for="orderPlace">Reading place</label>
                 <p class="form-control-static" id="orderPlace">${order.place}</p>
                 <input type="hidden"  class="form-control" name="orderPlace" value="${order.place}">
-            </div>
-            <div class="form-group">
-                <label for="bookNumber">Reading place</label>
-                <p class="form-control-static" id="bookNumber">${order.place}</p>
-                <input type="hidden" class="form-control" name="bookNumber" value="${order.place}">
             </div>
             <input type="hidden" name="command" value="confirmOrder">
             <input type="submit" class="btn btn-success btn-lg" value="Confirm order"/>
