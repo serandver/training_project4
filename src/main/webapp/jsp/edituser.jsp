@@ -83,5 +83,7 @@
         <input type="submit" class="btn btn-success btn-lg" value="Save changes"/>
     </form>
 </div>
+<script src="../resources/js/jquery.min.js"></script>
+<script src="../resources/js/bootstrap.min.js"></script>
 </body>
 </html>

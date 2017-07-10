@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -81,10 +82,10 @@
                         <td>${order.user.lastName}</td>
                         <td>${order.book.id}</td>
                         <td>${order.book.title}</td>
-                        <td>${order.book.author}</td>
                         <td>${order.book.inventoryNumber}</td>
-                        <td>${order.dateOfReceive}</td>
-                        <td>${order.dateOfReturn}</td>
+                        <fmt:setLocale value="ru-RU"/>
+                        <td><fmt:formatDate value="${order.dateOfReceive}"/></td>
+                        <td><fmt:formatDate value="${order.dateOfReturn}"/></td>
                         <td>${order.place}</td>
                         <td>${order.status}</td>
                         <td>
