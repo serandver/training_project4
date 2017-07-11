@@ -28,7 +28,7 @@ public class SessionFilter implements Filter {
         if (session != null && !session.isNew()) {
             chain.doFilter(request, response);
         } else {
-            page = PathManager.getInstance().getProperty(PathManager.LOGIN_PAGE);
+            page = PathManager.getInstance().getProperty(PathManager.START_PAGE);
             RequestDispatcher dispatcher = req.getRequestDispatcher(page);
             dispatcher.forward(request, response);
         }

@@ -33,8 +33,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><fmt:message key="header.language"/><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Ru</a></li>
-                        <li><a href="#">En</a></li>
+                        <input type="submit" class="submit" name="locale" value="en"/>
+                        <input type="submit" class="submit" name="locale" value="ru"/>
                     </ul>
                 </li>
                 <li role="presentation" class="active"><a href="jsp/signin.jsp"><fmt:message key="index.sign.in"/></a></li>
