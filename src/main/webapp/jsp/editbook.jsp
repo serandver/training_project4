@@ -77,7 +77,7 @@
             <input type="text" class="form-control"  name="bookNumber" id="editInventoryNumber" value="${book.inventoryNumber}"/>
         </div>
         <input type="hidden" name="command" value="editBook">
-        <input type="submit" class="btn btn-success btn-lg" value="<fmt:message key="form.editbook.save"/>"/>
+        <input type="submit" class="btn btn-success btn-lg" value="<fmt:message key="form.save"/>"/>
     </form>
 </div>
 <script src="../resources/js/jquery.min.js"></script>
