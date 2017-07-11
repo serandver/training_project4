@@ -67,17 +67,17 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th><fmt:message key="librarian.home.content.column.orderId"/></th>
-                    <th><fmt:message key="librarian.home.content.column.userId"/></th>
-                    <th><fmt:message key="librarian.home.content.column.firstName"/></th>
-                    <th><fmt:message key="librarian.home.content.column.lastName"/></th>
-                    <th><fmt:message key="librarian.home.content.column.bookId"/></th>
-                    <th><fmt:message key="librarian.home.content.column.bookTitle"/></th>
-                    <th><fmt:message key="librarian.home.content.column.bookAuthor"/></th>
-                    <th><fmt:message key="librarian.home.content.column.bookNumber"/></th>
-                    <th><fmt:message key="librarian.home.content.column.order.receiveDate"/></th>
-                    <th><fmt:message key="librarian.home.content.column.order.returnDate"/></th>
-                    <th><fmt:message key="librarian.home.content.column.order.place"/></th>
+                    <th><fmt:message key="tables.column.order.id"/></th>
+                    <th><fmt:message key="tables.column.user.id"/></th>
+                    <th><fmt:message key="tables.column.user.firstName"/></th>
+                    <th><fmt:message key="tables.column.user.lastName"/></th>
+                    <th><fmt:message key="tables.column.book.id"/></th>
+                    <th><fmt:message key="tables.column.book.title"/></th>
+                    <th><fmt:message key="tables.column.book.author"/></th>
+                    <th><fmt:message key="tables.column.book.number"/></th>
+                    <th><fmt:message key="tables.column.order.receiveDate"/></th>
+                    <th><fmt:message key="tables.column.order.returnDate"/></th>
+                    <th><fmt:message key="tables.column.order.place"/></th>
                     <th></th>
                 </tr>
                 </thead>
