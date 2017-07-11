@@ -13,7 +13,7 @@ public class RequestHelper {
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
         commands.put("register", new RegisterCommand());
-        commands.put("show-my-orders", new LoadMyOrdersCommand());
+        commands.put("myorders", new LoadMyOrdersCommand());
         commands.put("catalogue", new LoadBookCataloguePageCommand());
         commands.put("confirmOrder", new ConfirmBookOrderCommand());
         commands.put("editBook", new EditBookCommand());
