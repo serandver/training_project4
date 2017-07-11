@@ -1,19 +1,18 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<fmt:setLocale value="ru_RU" scope="session"/>
+<fmt:setBundle basename="pagecontent"/>
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-
+<html>
   <head>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <link rel="icon" href="../resources/favicon.ico"/>
 
-    <title>Sign in page</title>
+    <title><fmt:message key="signup.title"/></title>
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/bootstrap.min.css" th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
@@ -27,24 +26,24 @@
     <div class="container">
 
       <form method="post" action="/controller" class="form-signin">
-        <h2 class="form-signin-heading">Please sign up</h2>
+        <h2 class="form-signin-heading"><fmt:message key="signup.subtitle"/></h2>
           <input type="hidden" name="command" value="register">
           <div class="form-group">
-          <input type="text" class="form-control" name="firstName" placeholder="First name" required="required" autofocus="autofocus"/>
+          <input type="text" class="form-control" name="firstName" placeholder="<fmt:message key="signup.firstName"/>" required="required" autofocus="autofocus"/>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" name="lastName" placeholder="Last name" required="required"/>
+          <input type="text" class="form-control" name="lastName" placeholder="<fmt:message key="signup.lastName"/>" required="required"/>
         </div>
         <div class="form-group">
-          <input type="email" class="form-control" name="email" placeholder="Email" required="required"/>
+          <input type="email" class="form-control" name="email" placeholder="<fmt:message key="signup.email"/>" required="required"/>
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" name="password" placeholder="Your password" required="required"/>
+          <input type="password" class="form-control" name="password" placeholder="<fmt:message key="signup.password"/>" required="required"/>
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password" required="required"/>
+          <input type="password" class="form-control" name="confirmPassword" placeholder="<fmt:message key="signup.confirmpass"/>" required="required"/>
         </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+          <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="signup.button"/></button>
       </form>
 
     </div> <!-- /container -->

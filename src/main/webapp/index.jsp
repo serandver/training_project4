@@ -38,7 +38,7 @@
                     </ul>
                 </li>
                 <li role="presentation" class="active"><a href="jsp/signin.jsp"><fmt:message key="index.sign.in"/></a></li>
-                <li role="presentation"><a href="jsp/signup.jsp"><fmt:message key="index.sign.up"/></a></li>
+                <li role="presentation"><a href="jsp/signup.jsp"><fmt:message key="index.signup"/></a></li>
             </ul>
         </nav>
         <h3 class="text-muted"><fmt:message key="index.description"/></h3>
