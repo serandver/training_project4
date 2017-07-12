@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<fmt:setLocale value="ru_RU" scope="session"/>
+<fmt:setLocale value="${empty sessionScope.locale ? 'en_US' : sessionScope.locale}"/>
 <fmt:setBundle basename="pagecontent"/>
 <!DOCTYPE HTML>
 <html>
@@ -46,13 +46,24 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <fmt:message key="header.language"/>
-                        <span class="caret"></span>
-                    </a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><fmt:message key="header.language"/><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Ru</a></li>
-                        <li><a href="#">En</a></li>
+                        <li>
+                            <form method="post" action="/controller">
+                                <input type="hidden" name="command" value="local">
+                                <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
+                                <input type="hidden" name="query" value="${pagecontext.request.queryString}">
+                                <input type="submit" class="btn btn-default" name="locale" value="en"/>
+                            </form>
+                        </li>
+                        <li>
+                            <form method="post" action="/controller">
+                                <input type="hidden" name="command" value="local">
+                                <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
+                                <input type="hidden" name="query" value="${pagecontext.request.queryString}">
+                                <input type="submit" class="btn btn-default" name="locale" value="ru"/>
+                            </form>
+                        </li>
                     </ul>
                 </li>
             </ul>

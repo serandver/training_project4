@@ -1,6 +1,7 @@
 package com.training.library.controller;
 
 import com.training.library.controller.commands.Command;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,9 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CommandController extends HttpServlet {
-    RequestHelper requestHelper = RequestHelper.getRequestHelperInstance();
+    private static final Logger LOGGER = Logger.getLogger(CommandController.class);
+    private static final String EN = "en";
+    private static final String RU = "ru";
+    private static final String EN_LOCALE = "en_US";
+    private static final String RU_LOCALE = "ru_RU";
+
+    private RequestHelper requestHelper = RequestHelper.getRequestHelperInstance();
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        localeHandling(request);
 
         response.setContentType ("text/html; charset=UTF-8");
         request.setCharacterEncoding ("UTF-8");
@@ -29,9 +41,21 @@ public class CommandController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
-    }
+//    private void localeHandling(HttpServletRequest request){
+//        request.setAttribute("previousPath", request.getServletPath());
+//        String locale = request.getParameter("locale");
+//        setLocale(locale, request);
+//    }
+//
+//    private void setLocale(String locale, HttpServletRequest request){
+//        if(locale != null) {
+//            if (locale.equals(EN)) {
+//                request.getSession().setAttribute("locale", EN_LOCALE);
+//            } else if (locale.equals(RU)) {
+//                request.getSession().setAttribute("locale", RU_LOCALE);
+//            }
+//        }
+//    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);

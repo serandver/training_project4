@@ -30,8 +30,7 @@ public class RequestHelper {
         commands.put("findByAuthor", new FindByAuthorCommand());
         commands.put("edituser", new EditUserCommand());
         commands.put("openuser", new LoadUserCommand());
-
-
+        commands.put("local", new ChangeLocalCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

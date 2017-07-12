@@ -44,13 +44,22 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <fmt:message key="header.language"/>
-                            <span class="caret"></span>
-                        </a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><fmt:message key="header.language"/><span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Ru</a></li>
-                            <li><a href="#">En</a></li>
+                            <li>
+                                <form method="post" action="/controller">
+                                    <input type="hidden" name="command" value="local">
+                                    <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
+                                    <input type="submit" class="btn btn-default" name="locale" value="en"/>
+                                </form>
+                            </li>
+                            <li>
+                                <form method="post" action="/controller">
+                                    <input type="hidden" name="command" value="local">
+                                    <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
+                                    <input type="submit" class="btn btn-default" name="locale" value="ru"/>
+                                </form>
+                            </li>
                         </ul>
                     </li>
                 </ul>

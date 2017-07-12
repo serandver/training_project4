@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<fmt:setLocale value="en_US" scope="session"/>
+<fmt:setLocale value="${empty sessionScope.locale ? 'en_US' : sessionScope.locale}"/>
 <fmt:setBundle basename="pagecontent"/>
-<html>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,8 +32,22 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><fmt:message key="header.language"/><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <input type="submit" class="submit" name="locale" value="en"/>
-                        <input type="submit" class="submit" name="locale" value="ru"/>
+                        <li>
+                            <form method="post" action="/controller">
+                                <input type="hidden" name="command" value="local">
+                                <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
+                                <input type="hidden" name="query" value="${pagecontext.request.queryString}">
+                                <input type="submit" class="btn btn-default" name="locale" value="en"/>
+                            </form>
+                        </li>
+                        <li>
+                            <form method="post" action="/controller">
+                                <input type="hidden" name="command" value="local">
+                                <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
+                                <input type="hidden" name="query" value="${pagecontext.request.queryString}">
+                                <input type="submit" class="btn btn-default" name="locale" value="ru"/>
+                            </form>
+                        </li>
                     </ul>
                 </li>
                 <li role="presentation" class="active"><a href="jsp/signin.jsp"><fmt:message key="index.sign.in"/></a></li>

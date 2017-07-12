@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<fmt:setLocale value="ru_RU" scope="session"/>
+<fmt:setLocale value="${empty sessionScope.locale ? 'en_US' : sessionScope.locale}"/>
 <fmt:setBundle basename="pagecontent"/>
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
