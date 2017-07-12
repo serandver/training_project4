@@ -40,7 +40,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CommandController</servlet-name>
-        <url-pattern>/controller</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <servlet>

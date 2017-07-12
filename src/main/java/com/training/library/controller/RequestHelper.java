@@ -10,7 +10,7 @@ public class RequestHelper {
     HashMap<String,Command> commands = new HashMap<String,Command>();
 
     private RequestHelper() {
-        commands.put("login", new LoginCommand());
+        commands.put("/signin", new LoginCommand());
         commands.put("logout", new LogoutCommand());
         commands.put("register", new RegisterCommand());
         commands.put("myorders", new LoadMyOrdersCommand());
@@ -33,10 +33,9 @@ public class RequestHelper {
         commands.put("local", new ChangeLocalCommand());
     }
 
-    public Command getCommand(HttpServletRequest request) {
-        String action = request.getParameter("command");
-        Command command = commands.get(action);
-        if (command == null) {
+    public Command getCommand(String path) {
+        Command command = commands.get(path);
+        if(command == null){
             command = new NoCommand();
         }
         return command;
