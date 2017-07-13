@@ -13,7 +13,7 @@ import java.util.List;
 
 import static com.training.library.config.PathManager.LIBRARIAN_HOME_PAGE;
 
-public class LibrarianHomePageCommand implements Command{
+public class LibrarianHomePageCommand implements Command {
 
     private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
 
@@ -21,6 +21,9 @@ public class LibrarianHomePageCommand implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<BookOrder> bookOrders = bookOrderService.findByStatus(BookOrder.Status.OPEN);
         request.setAttribute("orderList", bookOrders);
-        return PathManager.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
+        String pageToGo = PathManager.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
+        request.setAttribute("previousPath", "/librarian/home");
+
+        return pageToGo;
     }
 }

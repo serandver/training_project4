@@ -49,26 +49,28 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><fmt:message key="header.language"/><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <form method="post" action="/controller">
-                                <input type="hidden" name="command" value="local">
-                                <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
-                                <input type="hidden" name="query" value="${pagecontext.request.queryString}">
-                                <input type="submit" class="btn btn-default" name="locale" value="en"/>
-                            </form>
+                            <span class="padding-left">
+                                <input type="submit" class="submit-transparent img-uk" form="previousRequest" name="locale" value="en"/>
+                            </span>
                         </li>
                         <li>
-                            <form method="post" action="/controller">
-                                <input type="hidden" name="command" value="local">
-                                <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
-                                <input type="hidden" name="query" value="${pagecontext.request.queryString}">
-                                <input type="submit" class="btn btn-default" name="locale" value="ru"/>
-                            </form>
+                            <span class="padding-left">
+                                <input type="submit" class="submit-transparent img-ua padding-left" form="previousRequest" name="locale" value="ru"/>
+                            </span>
                         </li>
                     </ul>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
+    <form id="previousRequest" method="post" action=${previousPath}>
+        <c:forEach items="${param}" var="par">
+            <c:if test="${par.key ne 'password' && par.key ne 'confirmPassword'}">
+                <input type="hidden" name="${par.key}" value="${par.value}">
+            </c:if>
+        </c:forEach>
+    </form>
+
 </nav>
 
 <div class="container-fluid padd">

@@ -28,6 +28,7 @@ public class CommandController extends HttpServlet {
         String path = request.getServletPath();
         Command command = requestHelper.getCommand(path);
         String page;
+
         try {
             page = command.execute(request, response);
         } catch (ServletException | IOException e) {

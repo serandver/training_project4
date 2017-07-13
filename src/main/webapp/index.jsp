@@ -34,23 +34,14 @@
                     <ul class="dropdown-menu">
                         <li>
                             <span class="padding-left">
-                                <input type="submit" class="btn btn-default" form="previousRequest"
-                                       name="locale" value="en"/>
+                                <input type="submit" class="submit-transparent img-uk" form="previousRequest" name="locale" value="en"/>
                             </span>
                         </li>
                         <li>
                             <span class="padding-left">
-                                <input type="submit" class="btn btn-default" form="previousRequest"
-                                       name="locale" value="ru"/>
+                                <input type="submit" class="submit-transparent img-ua padding-left" form="previousRequest" name="locale" value="ru"/>
                             </span>
                         </li>
-                        <form id="previousRequest" method="post" action=${previousPath}>
-                            <c:forEach items="${param}" var="par">
-                                <c:if test="${par.key ne 'password' && par.key ne 'confirmPassword'}">
-                                    <input type="hidden" name="${par.key}" value="${par.value}">
-                                </c:if>
-                            </c:forEach>
-                        </form>
                     </ul>
                 </li>
                 <li role="presentation" class="active"><a href="jsp/signin.jsp"><fmt:message key="index.sign.in"/></a></li>
@@ -69,6 +60,14 @@
     <footer class="footer">
         <p><fmt:message key="index.copyright"/></p>
     </footer>
+
+    <form id="previousRequest" method="post" action="/">
+        <c:forEach items="${param}" var="par">
+            <c:if test="${par.key ne 'password' && par.key ne 'confirmPassword'}">
+                <input type="hidden" name="${par.key}" value="${par.value}">
+            </c:if>
+        </c:forEach>
+    </form>
 
 </div>
 <script src="resources/js/jquery.min.js"></script>
