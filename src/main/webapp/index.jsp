@@ -61,7 +61,7 @@
         <p><fmt:message key="index.copyright"/></p>
     </footer>
 
-    <form id="previousRequest" method="post" action="/">
+    <form id="previousRequest" method="post" action="/controller">
         <c:forEach items="${param}" var="par">
             <c:if test="${par.key ne 'password' && par.key ne 'confirmPassword'}">
                 <input type="hidden" name="${par.key}" value="${par.value}">
