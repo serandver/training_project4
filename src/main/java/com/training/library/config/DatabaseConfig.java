@@ -10,19 +10,19 @@ public class DatabaseConfig {
     public static final String DATABASE_PASSWORD = "password";
 
     private static final String CONFIGURATION = "db";
-    private static volatile DatabaseConfig databaseConfigInstance;
+    private static volatile DatabaseConfig instance;
     private ResourceBundle resourceBundle;
 
-    public static DatabaseConfig getDatabaseConfigInstance(){
-        if (databaseConfigInstance == null) {
+    public static DatabaseConfig getInstance(){
+        if (instance == null) {
             synchronized (DatabaseConfig.class) {
-                if (databaseConfigInstance == null) {
-                    databaseConfigInstance = new DatabaseConfig();
-                    databaseConfigInstance.resourceBundle = ResourceBundle.getBundle(CONFIGURATION);
+                if (instance == null) {
+                    instance = new DatabaseConfig();
+                    instance.resourceBundle = ResourceBundle.getBundle(CONFIGURATION);
                 }
             }
         }
-        return databaseConfigInstance;
+        return instance;
     }
 
     public String getProperty(String key){

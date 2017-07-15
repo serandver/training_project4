@@ -5,7 +5,7 @@ import java.sql.Connection;
 public final class ConnectionManager {
 
 	private static volatile ConnectionManager connectionManagerInstance;
-	private static CustomConnectionPool connectionPool = CustomConnectionPool.getConnectionPoolInstance();
+	private static CustomConnectionPool connectionPool = CustomConnectionPool.getInstance();
 	private static JndiConnectionPool poolContext;
 	private ConnectionManager() {
 	}

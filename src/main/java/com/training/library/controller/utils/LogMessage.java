@@ -18,7 +18,10 @@ public final class LogMessage {
     public static final String ORDERDAO_UPDATE_ERROR = "JdbcBookOrderDao update SQL exception: ";
     public static final String ORDERDAO_FINDBY_ERROR = "JdbcBookOrderDao findBy SQL exception: ";
     public static final String ORDERDAO_DELETE_ERROR = "JdbcBookOrderDao delete SQL exception: ";
-
-
-
+    public static final String CONNECTION_FAILED = "Connection %d failed";
+    public static final String GET_CONNECTION_FAILED = "Failed to get connection from pool";
+    public static final String CLOSE_CONNECTION_FAILED = "Failed to close connection %d";
+    public static final String CLOSE_STATEMENT_FAILED = "Failed to close statement";
+    public static final String DRIVER_FOUND = "Driver found";
+    public static final String CONNECTION_ESTABLISHED = "Connection %d established";
 }

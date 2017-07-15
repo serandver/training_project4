@@ -1,10 +1,17 @@
 package com.training.library.dao.connection;
 
+import com.training.library.exceptions.ServerException;
+import org.apache.log4j.Logger;
+
 import java.sql.*;
+
+import static com.training.library.controller.utils.LogMessage.*;
 
 public class QueryJDBC implements AutoCloseable{
 
-	private Connection connection = null;
+    private static final Logger LOGGER = Logger.getLogger(QueryJDBC.class);
+
+    private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
     private Statement statement = null;
 
@@ -84,7 +91,8 @@ public class QueryJDBC implements AutoCloseable{
                 this.statement.close();
             }
 		} catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(CLOSE_STATEMENT_FAILED, e);
+            throw new ServerException(e);
         }
 		finally {
 			connectionManager.releaseConnection(connection);
