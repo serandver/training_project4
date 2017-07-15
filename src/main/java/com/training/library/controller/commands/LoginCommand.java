@@ -42,10 +42,10 @@ public class LoginCommand implements Command{
                 User.Role role = user.getRole();
                 request.getSession().setAttribute("user", user);
                 if(role == User.Role.READER) {
-                    pageToGo = "/reader";
+                    pageToGo = new ReaderHomePageCommand().execute(request, response);
                 }
                 else if(role == User.Role.LIBRARIAN){
-                    pageToGo = "/librarian";
+                    pageToGo = new LibrarianHomePageCommand().execute(request, response);
                 }
             }
         }

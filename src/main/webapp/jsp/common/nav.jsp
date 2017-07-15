@@ -5,10 +5,27 @@
             <c:choose>
                 <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">
                     <ul class="nav navbar-nav">
-                        <li><a href="/librarian"><fmt:message key="librarian.menu.home"/></a></li>
-                        <li><a href="/books"><fmt:message key="librarian.menu.books"/></a></li>
-                        <li><a href="/users"><fmt:message key="librarian.menu.users"/></a></li>
-                        <li><a href="/orders"><fmt:message key="librarian.menu.orders"/></a></li>
+                        <li>
+                            <form action="/controller" class="navbar-form navbar-left">
+                                <input type="hidden" name="command" value="librHome">
+                                <input type="submit" class="btn btn-default" value="<fmt:message key="librarian.menu.home"/>">
+                            </form>
+                        </li>
+                        <li>
+                            <form action="/controller" class="navbar-form navbar-left">
+                                <input type="hidden" name="command" value="catalogue">
+                                <input type="submit" class="btn btn-default" value="<fmt:message key="librarian.menu.books"/>">
+                            </form>
+                        <li>
+                            <form action="/controller" class="navbar-form navbar-left">
+                                <input type="hidden" name="command" value="users">
+                                <input type="submit" class="btn btn-default" value="<fmt:message key="librarian.menu.users"/>">
+                            </form>
+                        <li>
+                            <form action="/controller" class="navbar-form navbar-left">
+                                <input type="hidden" name="command" value="orders">
+                                <input type="submit" class="btn btn-default" value="<fmt:message key="librarian.menu.orders"/>">
+                            </form>
                         <li>
                             <a href="#" class="btn btn-default disabled" role="button">
                                 <ctg:hello-tag role="${sessionScope.user.role}" userName="${sessionScope.user.firstName}"/>
@@ -18,7 +35,11 @@
                 </c:when>
                 <c:when test="${sessionScope.user.role eq 'READER'}">
                     <ul class="nav navbar-nav">
-                        <li><a href="/reader"><fmt:message key="librarian.menu.home"/></a></li>
+                        <li>
+                            <form action="/controller" class="navbar-form navbar-left">
+                                <input type="hidden" name="command" value="readerHome">
+                                <input type="submit" class="btn btn-default" value="<fmt:message key="librarian.menu.home"/>">
+                            </form>
                         <li><a href="/jsp/search.jsp"><fmt:message key="reader.menu.search"/></a></li>
                         <li>
                             <a href="#" class="btn btn-default disabled" role="button">

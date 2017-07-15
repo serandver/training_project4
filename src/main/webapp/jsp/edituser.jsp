@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="/jsp/common/libs.jsp" %>
 
 <html>
 <head>
@@ -10,7 +10,7 @@
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link href="../resources/css/editbook.css" rel="stylesheet"/>
+    <link href="../resources/css/custom.css" rel="stylesheet"/>
 
     <link rel="icon" href="../resources/favicon.ico"/>
 </head>

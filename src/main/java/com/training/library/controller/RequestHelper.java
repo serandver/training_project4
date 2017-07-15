@@ -31,6 +31,11 @@ public class RequestHelper {
         commands.put("edituser", new EditUserCommand());
         commands.put("openuser", new LoadUserCommand());
         commands.put("local", new ChangeLocalCommand());
+        commands.put("librHome", new LibrarianHomePageCommand());
+        commands.put("readerHome", new ReaderHomePageCommand());
+        commands.put("users", new LoadUserManagementPageCommand());
+        commands.put("orders", new LoadOrdersManagementPageCommand());
+
     }
 
     public Command getCommand(HttpServletRequest request) {

@@ -43,51 +43,6 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>UserController</servlet-name>
-        <servlet-class>com.training.library.controller.UserController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UserController</servlet-name>
-        <url-pattern>/users</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>BookController</servlet-name>
-        <servlet-class>com.training.library.controller.BookController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>BookController</servlet-name>
-        <url-pattern>/books</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>BookOrderController</servlet-name>
-        <servlet-class>com.training.library.controller.BookOrderController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>BookOrderController</servlet-name>
-        <url-pattern>/orders</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ReaderHomeController</servlet-name>
-        <servlet-class>com.training.library.controller.ReaderHomeController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ReaderHomeController</servlet-name>
-        <url-pattern>/reader</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>LibrarianHomeController</servlet-name>
-        <servlet-class>com.training.library.controller.LibrarianHomeController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LibrarianHomeController</servlet-name>
-        <url-pattern>/librarian</url-pattern>
-    </servlet-mapping>
-
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

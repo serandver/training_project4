@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="/jsp/common/libs.jsp" %>
 
 <html>
 <head>
@@ -38,7 +38,7 @@
         </div>
         <div class="form-group">
             <label for="dateReceive"><fmt:message key="tables.column.order.receiveDate"/></label>
-            <p class="form-control-static" id="dateReceive">${order.dateOfReceive}</p>
+            <p class="form-control-static" id="dateReceive"><fmt:formatDate value="${order.dateOfReceive}"/></p>
             <input type="hidden" class="form-control"  name="dateReceive" value="${order.dateOfReceive}"/>
         </div>
         <c:set var="datereturn" value="${order.dateOfReturn}"/>
