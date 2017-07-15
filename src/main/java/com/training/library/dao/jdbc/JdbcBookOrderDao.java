@@ -2,9 +2,11 @@ package com.training.library.dao.jdbc;
 
 import com.training.library.dao.connection.QueryJDBC;
 import com.training.library.dao.BookOrderDao;
+import com.training.library.exceptions.ServerException;
 import com.training.library.model.Book;
 import com.training.library.model.BookOrder;
 import com.training.library.model.User;
+import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +16,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.training.library.controller.utils.LogMessage.*;
+
 public class JdbcBookOrderDao implements BookOrderDao{
+
+    private static final Logger LOGGER = Logger.getLogger(JdbcBookOrderDao.class);
+
     private final String INSERT_ORDER =
             "INSERT INTO orders (user_id, book_id, date_receive, date_return, reading_place, order_status) " +
             "VALUES (?, ?, ?, ?, ?, ?);";
@@ -75,8 +82,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             generatedBookOrderId = getGeneratedId(query);
             bookOrder.setId(generatedBookOrderId);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            LOGGER.error(ORDERDAO_CREATE_ERROR, e);
+            throw new ServerException(e);        }
         return generatedBookOrderId;
     }
 
@@ -105,7 +112,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             ResultSet resultSet = query.executeQuery(SELECT_ALL_ORDERS);
             orders = getAllOrdersFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(ORDERDAO_FINDALL_ERROR, e);
+            throw new ServerException(e);
         }
         return orders;
     }
@@ -172,7 +180,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             query.setInt(7, bookOrder.getId());
             result = query.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(ORDERDAO_UPDATE_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }
@@ -186,7 +195,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             ResultSet resultSet = query.executeQuery();
             result = getOptionalBookOrderFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(ORDERDAO_FINDBY_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }
@@ -215,7 +225,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             ResultSet resultSet = query.executeQuery();
             ordersByBookId = getAllOrdersFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(ORDERDAO_FINDBY_ERROR, e);
+            throw new ServerException(e);
         }
         return ordersByBookId;
     }
@@ -238,7 +249,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             ResultSet resultSet = query.executeQuery();
             ordersByEnumValue = getAllOrdersFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(ORDERDAO_FINDBY_ERROR, e);
+            throw new ServerException(e);
         }
         return ordersByEnumValue;
     }
@@ -261,7 +273,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             ResultSet resultSet = query.executeQuery();
             ordersByDateOfReceive = getAllOrdersFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(ORDERDAO_FINDBY_ERROR, e);
+            throw new ServerException(e);
         }
         return ordersByDateOfReceive;
     }
@@ -277,7 +290,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
                 ResultSet resultSet = query.executeQuery();
                 ordersByDateOfReturn = getAllOrdersFromResultSet(resultSet);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                LOGGER.error(ORDERDAO_FINDBY_ERROR, e);
+                throw new ServerException(e);
             }
         }
         return ordersByDateOfReturn;
@@ -291,7 +305,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
             query.setInt(1, id);
             result = query.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(ORDERDAO_DELETE_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }

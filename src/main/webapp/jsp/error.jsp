@@ -20,15 +20,12 @@
 
         <div class=" error alert alert-danger ">
             <strong> ${pageContext.errorData.statusCode}</strong><br /> <strong>
-            <fmt:message key="library.error.serverError" bundle="${rb}" />
+            <fmt:message key="library.error.serverError"/>
         </strong>
         </div>
 
     </div>
-    <div class="row-fluid ">
-        <a href="${pageContext.request.contextPath}/controller/">Back to
-            home page</a>
-    </div>
+
 
 </div>
 </body>

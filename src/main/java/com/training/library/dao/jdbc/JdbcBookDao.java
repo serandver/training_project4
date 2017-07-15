@@ -1,8 +1,10 @@
 package com.training.library.dao.jdbc;
 
 import com.training.library.dao.connection.QueryJDBC;
+import com.training.library.exceptions.ServerException;
 import com.training.library.model.Book;
 import com.training.library.dao.BookDao;
+import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.training.library.controller.utils.LogMessage.*;
+
 public class JdbcBookDao implements BookDao {
+
+    private static final Logger LOGGER = Logger.getLogger(JdbcBookDao.class);
 
     private static final String INSERT_BOOK_NUMBER = "INSERT INTO book_numbers (book_number) VALUES(?)";
     private static final String INSERT_BOOK = "INSERT INTO books (title, author, book_number_id) VALUES(?, ?, ?)";
@@ -67,7 +73,8 @@ public class JdbcBookDao implements BookDao {
             book.setId(generatedBookId);
             query.commitTransaction();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(BOOKDAO_CREATE_ERROR, e);
+            throw new ServerException(e);
         }
         return generatedBookId;
     }
@@ -109,7 +116,8 @@ public class JdbcBookDao implements BookDao {
             ResultSet resultSet = query.executeQuery(selectAllAvailableBooks);
             books = getAllBooksFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(BOOKDAO_FINDALL_ERROR, e);
+            throw new ServerException(e);
         }
         return books;
     }
@@ -146,7 +154,8 @@ public class JdbcBookDao implements BookDao {
             ResultSet resultSet = query.executeQuery();
             result = getOptionalBookFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(BOOKDAO_FINDBY_ID_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }
@@ -175,7 +184,8 @@ public class JdbcBookDao implements BookDao {
             ResultSet resultSet = query.executeQuery();
             result = getAllBooksFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(BOOKDAO_FINDBY_TITLE_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }
@@ -196,7 +206,8 @@ public class JdbcBookDao implements BookDao {
             query.setInt(4, book.getId());
             result = query.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(BOOKDAO_UPDATE_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }
@@ -209,7 +220,8 @@ public class JdbcBookDao implements BookDao {
             query.setInt(1, id);
             result = query.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(BOOKDAO_DELETE_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }
