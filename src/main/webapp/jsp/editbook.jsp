@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<fmt:setLocale value="ru_RU" scope="session"/>
-<fmt:setBundle basename="pagecontent"/>
+<%@include file="/jsp/common/libs.jsp" %>
+
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -17,33 +15,9 @@
     <link rel="icon" href="../resources/favicon.ico"/>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse visible-lg-inline">
-            <ul class="nav navbar-nav">
-                <li><a href="/librarian"><fmt:message key="librarian.menu.home"/></a></li>
-                <li><a href="/books"><fmt:message key="librarian.menu.books"/></a></li>
-                <li><a href="/users"><fmt:message key="librarian.menu.users"/></a></li>
-                <li><a href="/orders"><fmt:message key="librarian.menu.orders"/></a></li>
-            </ul>
-            <form action="/controller" class="navbar-form navbar-right">
-                <input type="hidden" name="command" value="signout">
-                <input type="submit" class="btn btn-default"  value="<fmt:message key="index.sign.out"/>">
-            </form>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+<%@include file="/jsp/common/nav.jsp" %>
+
 <div class="container-fluid main-content">
     <form method="post" action="/controller">
         <h2 class="sub-header"><fmt:message key="librarian.editbook.subtitle"/></h2>
