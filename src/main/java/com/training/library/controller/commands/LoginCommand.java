@@ -45,7 +45,7 @@ public class LoginCommand implements Command{
                     pageToGo = "/reader";
                 }
                 else if(role == User.Role.LIBRARIAN){
-                    pageToGo = new LibrarianHomePageCommand().execute(request, response);
+                    pageToGo = "/librarian";
                 }
             }
         }
