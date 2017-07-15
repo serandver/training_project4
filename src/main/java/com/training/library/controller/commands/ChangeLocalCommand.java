@@ -1,5 +1,7 @@
 package com.training.library.controller.commands;
 
+import com.training.library.config.PathManager;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,29 +15,9 @@ public class ChangeLocalCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String URL = request.getParameter("url");
-        String query = request.getParameter("query");
-        String fullURL = URL + "?" + query;
         String locale = request.getParameter("locale");
         setLocale(locale, request);
-        return fullURL;
-//        String requestURL = request.getRequestURL().toString();
-//        String requestURI = request.getRequestURI();
-//        String pathInfo = request.getPathInfo();
-//        String contextPath = request.getContextPath();
-//        String localName = request.getLocalName();
-//        String r = request.getServletContext().getContextPath();
-//        Object string = request.getSession().getAttribute("locale");
-//        String queryString = request.getQueryString();
-//        if (queryString != null) {
-//            requestURL = new StringBuilder()
-//                    .append(requestURL)
-//                    .append("?")
-//                    .append(queryString).toString();
-//        }
-//        String locale = request.getParameter("locale");
-//        setLocale(locale, request);
-//        return requestURL;
+        return PathManager.getInstance().getProperty(PathManager.START_PAGE);
     }
 
     private void setLocale(String locale, HttpServletRequest request){

@@ -44,27 +44,6 @@
                 <input type="hidden" name="command" value="signout">
                 <input type="submit" class="btn btn-default" value="<fmt:message key="index.sign.out"/>">
             </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><fmt:message key="header.language"/><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <form method="post" action="/controller">
-                                <input type="hidden" name="command" value="local">
-                                <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
-                                <input type="submit" class="btn btn-default" name="locale" value="en"/>
-                            </form>
-                        </li>
-                        <li>
-                            <form method="post" action="/controller">
-                                <input type="hidden" name="command" value="local">
-                                <input type="hidden" name="url" value="${pagecontext.request.requestURL}">
-                                <input type="submit" class="btn btn-default" name="locale" value="ru"/>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
         </div><!-- /.navbar-collapse -->
     </div>
 </nav>
