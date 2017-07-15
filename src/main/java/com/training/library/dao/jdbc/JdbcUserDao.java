@@ -2,7 +2,9 @@ package com.training.library.dao.jdbc;
 
 import com.training.library.dao.connection.QueryJDBC;
 import com.training.library.dao.UserDao;
+import com.training.library.exceptions.ServerException;
 import com.training.library.model.User;
+import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.training.library.controller.utils.LogMessage.*;
+
 public class JdbcUserDao implements UserDao{
+
+    private static final Logger LOGGER = Logger.getLogger(JdbcUserDao.class);
 
     private final String SELECT_ALL_USERS =
             "SELECT users.user_id, personal_data.first_name, personal_data.last_name, " +
@@ -61,7 +67,8 @@ public class JdbcUserDao implements UserDao{
             user.setId(generatedUserId);
             query.commitTransaction();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(USERDAO_CREATEUSER_ERROR, e);
+            throw new ServerException(e);
         }
         return generatedUserId;
     }
@@ -108,7 +115,8 @@ public class JdbcUserDao implements UserDao{
             ResultSet resultSet = query.executeQuery(SELECT_ALL_USERS);
             users = getAllUsersFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(USERDAO_GETALL_ERROR, e);
+            throw new ServerException(e);
         }
         return users;
     }
@@ -142,7 +150,8 @@ public class JdbcUserDao implements UserDao{
             ResultSet resultSet = query.executeQuery();
             result = getOptionalUserFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(USERDAO_FINDUSER_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }
@@ -167,7 +176,8 @@ public class JdbcUserDao implements UserDao{
             ResultSet resultSet = query.executeQuery();
             result = getOptionalUserFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(USERDAO_FINDBY_EMAIL_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }
@@ -185,7 +195,8 @@ public class JdbcUserDao implements UserDao{
             query.setInt(6, user.getId());
             result = query.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(USERDAO_UPDATEUSER_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }
@@ -198,7 +209,8 @@ public class JdbcUserDao implements UserDao{
             query.setInt(1, id);
             result = query.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(USERDAO_DELETEUSER_ERROR, e);
+            throw new ServerException(e);
         }
         return result;
     }

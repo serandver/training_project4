@@ -1,4 +1,9 @@
-<%@include file="/jsp/common/libs.jsp" %>
+<%@ page isErrorPage="true" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setLocale value="${empty sessionScope.locale ? 'en_US' : sessionScope.locale}"/>
+<fmt:setBundle basename="pagecontent"/>
 
 <!DOCTYPE html>
 
@@ -7,14 +12,24 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Error Page</title>
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
-<fieldset>
-    <h2><c:out value="${parametersMap.get('ErrorLogMessage')}"/></h2>
-    <form name="logoutForm" method="POST" action="controller">
-        <input type="hidden" name="command" value="logout">
-        <input type="submit" value="${parametersMap.get('MainPage')}" class="subo">
-    </form>
-</fieldset>
+<div class="container-fluid " align="center">
+    <div class="row-fluid ">
+
+        <div class=" error alert alert-danger ">
+            <strong> ${pageContext.errorData.statusCode}</strong><br /> <strong>
+            <fmt:message key="library.error.serverError" bundle="${rb}" />
+        </strong>
+        </div>
+
+    </div>
+    <div class="row-fluid ">
+        <a href="${pageContext.request.contextPath}/controller/">Back to
+            home page</a>
+    </div>
+
+</div>
 </body>
 </html>
