@@ -1,5 +1,7 @@
-package com.training.library.dao;
+package com.training.library.services.impl;
 
+import com.training.library.dao.DaoFactory;
+import com.training.library.dao.UserDao;
 import com.training.library.model.User;
 import com.training.library.services.UserService;
 import com.training.library.services.impl.UserServiceImpl;
@@ -8,6 +10,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +25,7 @@ public class UserServiceTest {
     private UserDao mockUserDao;
     private User testUser;
 
-    @Before
-    public void init() {
+    private void buildInitData() {
         mockDaoFactory = mock(DaoFactory.class);
         mockUserDao = mock(UserDao.class);
         userService = new UserServiceImpl(mockDaoFactory);
@@ -38,11 +40,10 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testFindAllUsers()  {
-        List<User> usersFromMockUserDao = new ArrayList<>();
-        for(int i = 0; i < 3; i++) {
-            usersFromMockUserDao.add(mock(User.class));
-        }
+    public void shouldGetListOfUsersFromDao()  {
+        buildInitData();
+
+        List<User> usersFromMockUserDao = Arrays.asList(mock(User.class), mock(User.class), mock(User.class));
 
         when(mockDaoFactory.createUserDao()).thenReturn(mockUserDao);
         when(mockUserDao.findAll()).thenReturn(usersFromMockUserDao);
@@ -50,12 +51,13 @@ public class UserServiceTest {
         List<User> users = userService.findAll();
         verify(mockDaoFactory).createUserDao();
         verify(mockUserDao).findAll();
-        assertNotNull(users);
         assertTrue(users.size() == 3);
     }
 
     @Test
-    public void testCreateUser() {
+    public void shouldReturnGeneratedIdAfterCreatingNewUser() {
+        buildInitData();
+
         User mockUser = mock(User.class);
         int expectedId = 1;
 
@@ -69,7 +71,9 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testFindUserById() {
+    public void shouldReturnOptinalUserById() {
+        buildInitData();
+
         int indexToFind = 1;
         User expectedUser = testUser;
         Optional<User> expectedResult = Optional.of(testUser);
@@ -91,6 +95,8 @@ public class UserServiceTest {
 
     @Test
     public void testFindUserByEmail() {
+        buildInitData();
+
         String email = "email";
         User expectedUser = testUser;
         Optional<User> expectedResult = Optional.of(testUser);
@@ -110,19 +116,25 @@ public class UserServiceTest {
         }
     }
 
-    @Ignore
     @Test
-    public void testUpdateUser() {
-        when(mockDaoFactory.createUserDao()).thenReturn(mockUserDao);
-        doNothing().when(mockUserDao).update(testUser);
+    public void shouldReturnNumberOfUpdatedRows() {
+        buildInitData();
 
-        userService.create(testUser);
+        int expectedNumberOfUpdatedRows = 1;
+
+        when(mockDaoFactory.createUserDao()).thenReturn(mockUserDao);
+        when(mockUserDao.update(testUser)).thenReturn(expectedNumberOfUpdatedRows);
+
+        int actualNumberOfUpdatedRows = userService.update(testUser);
         verify(mockDaoFactory).createUserDao();
         verify(mockUserDao).update(testUser);
+        assertEquals(expectedNumberOfUpdatedRows, actualNumberOfUpdatedRows);
     }
 
     @Test
-    public void testDeleteUser() {
+    public void shouldReturnNumberOfDeletedRows() {
+        buildInitData();
+
         int userIdForDeleting = 1;
         int expectedNumberOfDeletedRows = 1;
 
@@ -130,6 +142,9 @@ public class UserServiceTest {
         when(mockUserDao.delete(userIdForDeleting)).thenReturn(expectedNumberOfDeletedRows);
 
         int actualNumberOfDeletedRows = userService.delete(userIdForDeleting);
+
+        verify(mockDaoFactory).createUserDao();
+        verify(mockUserDao).delete(userIdForDeleting);
         assertEquals(expectedNumberOfDeletedRows, actualNumberOfDeletedRows);
     }
 }

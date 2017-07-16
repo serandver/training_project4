@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
+
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
+
     private DaoFactory daoFactory;
 
-    public UserServiceImpl(DaoFactory instance) {
+    UserServiceImpl(DaoFactory instance) {
         this.daoFactory = instance;
     }
 
@@ -27,42 +29,49 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
+        LOGGER.info("Get all users: ");
         UserDao userDao = daoFactory.createUserDao();
         return userDao.findAll();
     }
 
     @Override
     public int create(User user) {
+        LOGGER.info("Create new user");
         UserDao userDao = daoFactory.createUserDao();
         return userDao.create(user);
     }
 
     @Override
     public Optional<User> find(int id) {
+        LOGGER.info("Find user by id: ");
         UserDao userDao = daoFactory.createUserDao();
         return userDao.find(id);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
+        LOGGER.info("Find user by email: ");
         UserDao userDao = daoFactory.createUserDao();
         return userDao.findByEmail(email);
     }
 
     @Override
     public int update(User user) {
+        LOGGER.info("Update user: ");
         UserDao userDao = daoFactory.createUserDao();
         return userDao.update(user);
     }
 
     @Override
     public int delete(int id) {
+        LOGGER.info("Delete user: ");
         UserDao userDao = daoFactory.createUserDao();
         return userDao.delete(id);
     }
 
     @Override
     public Optional<User> login(String email, String password){
+        LOGGER.info("Login user: ");
         UserDao dao = daoFactory.createUserDao();
         return dao.findByEmail(email)
                 .filter( user-> password.equals(user.getPassword()));
