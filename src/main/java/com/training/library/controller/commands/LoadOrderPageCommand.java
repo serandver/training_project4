@@ -1,6 +1,7 @@
 package com.training.library.controller.commands;
 
 import com.training.library.config.PathManager;
+import com.training.library.exceptions.ServiceException;
 import com.training.library.model.Book;
 import com.training.library.model.BookOrder;
 import com.training.library.model.User;
@@ -10,11 +11,10 @@ import com.training.library.services.UserService;
 import com.training.library.services.impl.BookOrderServiceImpl;
 import com.training.library.services.impl.BookServiceImpl;
 import com.training.library.services.impl.UserServiceImpl;
+import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,13 +23,15 @@ import java.util.Locale;
 import java.util.Optional;
 
 public class LoadOrderPageCommand implements Command {
+    private static final Logger LOGGER = Logger.getLogger(LoadOrderPageCommand.class);
+
     private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
     private BookService bookService = BookServiceImpl.getInstance();
     private UserService userService = UserServiceImpl.getInstance();
 
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         String pageToGo = PathManager.getInstance().getProperty(PathManager.ERROR_PAGE);;
 
         String orderId = request.getParameter("orderId");
@@ -71,7 +73,7 @@ public class LoadOrderPageCommand implements Command {
                     .setDateOfReceive(dateOfReceiving)
                     .setDateOfReturn(dateOfReturning)
                     .setPlace(BookOrder.ReadingPlace.valueOf(place))
-                    .setStatus(BookOrder.Status.valueOf(orderStatus)).build();
+                    .setOrderStatus(BookOrder.OrderStatus.valueOf(orderStatus)).build();
             request.setAttribute("order", orderForUpdating);
             pageToGo = PathManager.getInstance().getProperty(PathManager.EDIT_ORDER_PAGE);
         }

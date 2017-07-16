@@ -1,6 +1,7 @@
 package com.training.library.controller;
 
 import com.training.library.controller.commands.Command;
+import com.training.library.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -33,7 +34,7 @@ public class CommandController extends HttpServlet {
         try {
             Command command = requestHelper.getCommand(request);
             page = command.execute(request, response);
-        } catch (ServletException | IOException e) {
+        } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
 

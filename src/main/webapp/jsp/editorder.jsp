@@ -48,8 +48,8 @@
                 <input type="date" class="form-control" name="dateReturn" id="dateReturn">
             </div>
         </c:if>
-        <c:set var="status" value="${order.status}"/>
-        <c:if test="${status eq 'OPEN' }">
+        <c:set var="orderStatus" value="${order.orderStatus}"/>
+        <c:if test="${orderStatus eq 'OPEN' }">
             <select name="orderStatus">
                 <p><fmt:message key="tables.column.order.setstatus"/></p>
                 <option value="closed">CLOSED</option>
@@ -59,7 +59,7 @@
         <br/>
 
         <input type="hidden" name="readPlace" value="${order.place}">
-        <input type="hidden" name="orderStatus" value="${order.status}">
+        <input type="hidden" name="orderStatus" value="${order.orderStatus}">
         <input type="hidden" name="command" value="editOrder">
         <input type="submit" class="btn btn-success btn-lg" value="<fmt:message key="form.save"/>"/>
     </form>

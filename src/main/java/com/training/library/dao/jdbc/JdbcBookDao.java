@@ -20,31 +20,22 @@ public class JdbcBookDao implements BookDao {
     private static final Logger LOGGER = Logger.getLogger(JdbcBookDao.class);
 
     private static final String INSERT_BOOK_NUMBER = "INSERT INTO book_numbers (book_number) VALUES(?)";
-    private static final String INSERT_BOOK = "INSERT INTO books (title, author, book_number_id) VALUES(?, ?, ?)";
+    private static final String INSERT_BOOK = "INSERT INTO books (title, author, book_number_id, book_status) VALUES(?, ?, ?, ?)";
     private static final String SELECT_ALL_BOOKS =
-            "SELECT books.book_id, books.title, books.author, book_numbers.book_number " +
+            "SELECT books.book_id, books.title, books.author, book_numbers.book_number, books.book_status " +
             "FROM books " +
             "JOIN book_numbers " +
             "USING (book_number_id)";
-    private static final String SELECT_ALL_AVAILABLE_BOOKS =
-            "SELECT books.book_id, books.title, books.author, book_numbers.book_number " +
-            "FROM books " +
-            "JOIN book_numbers " +
-            "USING (book_number_id) " +
-            "WHERE books.book_id NOT IN " +
-            "(SELECT book_id FROM orders " +
-            "WHERE date_return IS NULL) " +
-            "GROUP BY books.title, books.author " +
-            "ORDER BY books.book_id";
     private static final String SELECT_BOOK_BY_ID = SELECT_ALL_BOOKS + " WHERE book_id = ?";
     private static final String SELECT_BOOK_BY_TITLE = SELECT_ALL_BOOKS + " WHERE books.title LIKE CONCAT('%',?,'%') " +
             "GROUP BY books.title, books.author";
     private static final String SELECT_BOOK_BY_AUTHOR = SELECT_ALL_BOOKS + " WHERE books.author LIKE CONCAT('%',?,'%')" +
             "GROUP BY books.title, books.author";
+    private static final String SELECT_BOOK_BY_STATUS = SELECT_ALL_BOOKS + " WHERE books.book_status = ?";
     private static final String UPDATE_BOOK =
             "UPDATE books " +
             "JOIN book_numbers USING (book_number_id) " +
-            "SET books.title = ?, books.author = ?, book_numbers.book_number = ? " +
+            "SET books.title = ?, books.author = ?, book_numbers.book_number = ?, books.book_status = ? " +
             "WHERE books.book_id = ?";
     private static final String DELETE_BOOK =
             "DELETE FROM books, book_numbers " +
@@ -56,6 +47,7 @@ public class JdbcBookDao implements BookDao {
     private static final int COLUMN_TITLE = 2;
     private static final int COLUMN_AUTHOR = 3;
     private static final int COLUMN_BOOK_NUMBER = 4;
+    private static final int COLUMN_BOOK_STATUS = 5;
 
 
     @Override
@@ -91,6 +83,7 @@ public class JdbcBookDao implements BookDao {
         query.setString(1, book.getTitle());
         query.setString(2, book.getAuthor());
         query.setInt(3, bookNumberId);
+        query.setString(4, book.getBookStatus().name());
         query.executeUpdate();
         return getGeneratedId(query);
     }
@@ -137,12 +130,23 @@ public class JdbcBookDao implements BookDao {
                 .setId(resultSet.getInt(COLUMN_BOOK_ID))
                 .setTitle(resultSet.getString(COLUMN_TITLE))
                 .setAuthor(resultSet.getString(COLUMN_AUTHOR))
-                .setInventoryNumber(resultSet.getString(COLUMN_BOOK_NUMBER)).build();
+                .setInventoryNumber(resultSet.getString(COLUMN_BOOK_NUMBER))
+                .setBookStatus(Book.BookStatus.valueOf(resultSet.getString(COLUMN_BOOK_STATUS))).build();
     }
 
     @Override
-    public List<Book> findAllAvailableForOrderBooks() {
-        return getListBooksByQuery(SELECT_ALL_AVAILABLE_BOOKS);
+    public List<Book> findByStatus(Book.BookStatus status) {
+        List<Book> booksByStatus;
+        try (QueryJDBC query = new QueryJDBC()){
+            query.createPreparedStatement(SELECT_BOOK_BY_STATUS);
+            query.setString(1, status.name());
+            ResultSet resultSet = query.executeQuery();
+            booksByStatus = getAllBooksFromResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error(BOOKDAO_FINDBY_STATUS_ERROR, e);
+            throw new ServerException(e);
+        }
+        return booksByStatus;
     }
 
     @Override
@@ -184,7 +188,7 @@ public class JdbcBookDao implements BookDao {
             ResultSet resultSet = query.executeQuery();
             result = getAllBooksFromResultSet(resultSet);
         } catch (SQLException e) {
-            LOGGER.error(BOOKDAO_FINDBY_TITLE_ERROR, e);
+            LOGGER.error(BOOKDAO_FINDBY_STRING_ERROR, e);
             throw new ServerException(e);
         }
         return result;
@@ -203,7 +207,8 @@ public class JdbcBookDao implements BookDao {
             query.setString(1, book.getTitle());
             query.setString(2, book.getAuthor());
             query.setString(3, book.getInventoryNumber());
-            query.setInt(4, book.getId());
+            query.setString(4, book.getBookStatus().name());
+            query.setInt(5, book.getId());
             result = query.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(BOOKDAO_UPDATE_ERROR, e);

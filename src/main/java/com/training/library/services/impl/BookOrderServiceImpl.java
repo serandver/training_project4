@@ -4,6 +4,7 @@ import com.training.library.dao.BookOrderDao;
 import com.training.library.dao.DaoFactory;
 import com.training.library.model.BookOrder;
 import com.training.library.services.BookOrderService;
+import org.apache.log4j.Logger;
 
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 public class BookOrderServiceImpl implements BookOrderService {
 
+    private static final Logger LOGGER = Logger.getLogger(BookOrderServiceImpl.class);
     private DaoFactory daoFactory;
 
     public BookOrderServiceImpl(DaoFactory instance) {
@@ -86,8 +88,8 @@ public class BookOrderServiceImpl implements BookOrderService {
     }
 
     @Override
-    public List<BookOrder> findByStatus(BookOrder.Status status) {
+    public List<BookOrder> findByStatus(BookOrder.OrderStatus orderStatus) {
         BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
-        return bookOrderDao.findByStatus(status);
+        return bookOrderDao.findByOrderStatus(orderStatus);
     }
 }

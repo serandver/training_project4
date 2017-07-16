@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface BookDao extends GenericDao<Book> {
     List<Book> findByTitle(String title);
     List<Book> findByAuthor(String author);
-    List<Book> findAllAvailableForOrderBooks();
+    List<Book> findByStatus(Book.BookStatus status);
 }

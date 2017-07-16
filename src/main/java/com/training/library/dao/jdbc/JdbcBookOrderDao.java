@@ -77,7 +77,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
             query.setTimestamp(3, getTimeStampOfDate(bookOrder, bookOrder.getDateOfReceive()));
             query.setTimestamp(4, getTimeStampOfDate(bookOrder, bookOrder.getDateOfReturn()));
             query.setString(5, bookOrder.getPlace().name());
-            query.setString(6, bookOrder.getStatus().name());
+            query.setString(6, bookOrder.getOrderStatus().name());
             query.executeUpdate();
             generatedBookOrderId = getGeneratedId(query);
             bookOrder.setId(generatedBookOrderId);
@@ -139,7 +139,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
                 .setDateOfReceive(getDateFromResultSet(resultSet, COLUMN_DATE_RECEIVE))
                 .setDateOfReturn(getDateFromResultSet(resultSet, COLUMN_DATE_RETURN))
                 .setPlace(BookOrder.ReadingPlace.valueOf(resultSet.getString(COLUMN_READING_PLACE)))
-                .setStatus(BookOrder.Status.valueOf(resultSet.getString(COLUMN_ORDER_STATUS))).build();
+                .setOrderStatus(BookOrder.OrderStatus.valueOf(resultSet.getString(COLUMN_ORDER_STATUS))).build();
     }
 
     private Date getDateFromResultSet(ResultSet resultSet, int columnNumber) throws SQLException {
@@ -176,7 +176,7 @@ public class JdbcBookOrderDao implements BookOrderDao{
             query.setTimestamp(3, new Timestamp(bookOrder.getDateOfReceive().getTime()));
             query.setTimestamp(4, getTimeStampOfDate(bookOrder, bookOrder.getDateOfReturn()));
             query.setString(5, bookOrder.getPlace().name());
-            query.setString(6, bookOrder.getStatus().name());
+            query.setString(6, bookOrder.getOrderStatus().name());
             query.setInt(7, bookOrder.getId());
             result = query.executeUpdate();
         } catch (SQLException e) {
@@ -256,8 +256,8 @@ public class JdbcBookOrderDao implements BookOrderDao{
     }
 
     @Override
-    public List<BookOrder> findByStatus(BookOrder.Status status) {
-        return getBookOrderByEnumColumn(status, SELECT_ORDER_BY_STATUS);
+    public List<BookOrder> findByOrderStatus(BookOrder.OrderStatus orderStatus) {
+        return getBookOrderByEnumColumn(orderStatus, SELECT_ORDER_BY_STATUS);
     }
 
     @Override

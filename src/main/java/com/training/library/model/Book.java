@@ -5,12 +5,19 @@ public class Book {
     private String title;
     private String author;
     private String inventoryNumber;
+    private BookStatus bookStatus;
+
+    public static enum BookStatus {
+        AVAILABLE,
+        UNAVAILABLE
+    }
 
     public static class Builder{
         private int id;
         private String title;
         private String author;
         private String inventoryNumber;
+        private BookStatus bookStatus;
 
         public Builder setId(int id) {
             this.id = id;
@@ -28,12 +35,17 @@ public class Book {
             this.inventoryNumber = inventoryNumber;
             return this;
         }
+        public Builder setBookStatus(BookStatus bookStatus) {
+            this.bookStatus = bookStatus;
+            return this;
+        }
         public Book build(){
             Book book = new Book();
             book.setId(id);
             book.setTitle(title);
             book.setAuthor(author);
             book.setInventoryNumber(inventoryNumber);
+            book.setBookStatus(bookStatus);
             return book;
         }
     }
@@ -70,6 +82,14 @@ public class Book {
         this.author = author;
     }
 
+    public BookStatus getBookStatus() {
+        return bookStatus;
+    }
+
+    public void setBookStatus(BookStatus bookStatus) {
+        this.bookStatus = bookStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,7 +100,8 @@ public class Book {
         if (id != book.id) return false;
         if (!title.equals(book.title)) return false;
         if (!author.equals(book.author)) return false;
-        return inventoryNumber.equals(book.inventoryNumber);
+        if (!inventoryNumber.equals(book.inventoryNumber)) return false;
+        return bookStatus == book.bookStatus;
     }
 
     @Override
@@ -89,6 +110,7 @@ public class Book {
         result = 31 * result + title.hashCode();
         result = 31 * result + author.hashCode();
         result = 31 * result + inventoryNumber.hashCode();
+        result = 31 * result + bookStatus.hashCode();
         return result;
     }
 
@@ -99,6 +121,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", inventoryNumber='" + inventoryNumber + '\'' +
+                ", bookStatus=" + bookStatus +
                 '}';
     }
 }

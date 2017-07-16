@@ -3,7 +3,6 @@ package com.training.library.model;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class BookOrder {
     private int id;
@@ -12,7 +11,7 @@ public class BookOrder {
     private Date dateOfReceive = null;
     private Date dateOfReturn = null;
     private ReadingPlace place;
-    private Status status;
+    private OrderStatus orderStatus;
 
     public static class Builder{
         private int id;
@@ -21,7 +20,7 @@ public class BookOrder {
         private Date dateOfReceive = null;
         private Date dateOfReturn = null;
         private ReadingPlace place;
-        private Status status;
+        private OrderStatus orderStatus;
 
         public Builder setId(int id) {
             this.id = id;
@@ -53,8 +52,8 @@ public class BookOrder {
             return this;
         }
 
-        public Builder setStatus(Status status) {
-            this.status = status;
+        public Builder setOrderStatus(OrderStatus orderStatus) {
+            this.orderStatus = orderStatus;
             return this;
         }
 
@@ -66,7 +65,7 @@ public class BookOrder {
             bookOrder.setDateOfReceive(dateOfReceive);
             bookOrder.setDateOfReturn(dateOfReturn);
             bookOrder.setPlace(place);
-            bookOrder.setStatus(status);
+            bookOrder.setOrderStatus(orderStatus);
             return bookOrder;
         }
     }
@@ -77,7 +76,7 @@ public class BookOrder {
     }
 
 
-    public static enum Status {
+    public static enum OrderStatus {
         OPEN,
         CLOSED
     }
@@ -131,12 +130,12 @@ public class BookOrder {
         this.dateOfReturn = dateOfReturn;
     }
 
-    public Status getStatus() {
-        return status;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     @Override
@@ -153,7 +152,7 @@ public class BookOrder {
         if (dateOfReturn != null ? !dateOfReturn.equals(bookOrder.dateOfReturn) : bookOrder.dateOfReturn != null)
             return false;
         if (place != bookOrder.place) return false;
-        return status == bookOrder.status;
+        return orderStatus == bookOrder.orderStatus;
     }
 
     @Override
@@ -164,7 +163,7 @@ public class BookOrder {
         result = 31 * result + dateOfReceive.hashCode();
         result = 31 * result + (dateOfReturn != null ? dateOfReturn.hashCode() : 0);
         result = 31 * result + place.hashCode();
-        result = 31 * result + status.hashCode();
+        result = 31 * result + orderStatus.hashCode();
         return result;
     }
 
@@ -178,7 +177,7 @@ public class BookOrder {
                 ", dateOfReceive=" + df.format(dateOfReceive) +
                 ", dateOfReturn=" + df.format(dateOfReturn) +
                 ", place=" + place +
-                ", status=" + status +
+                ", orderStatus=" + orderStatus +
                 '}';
     }
 }

@@ -36,7 +36,7 @@
                         <th><fmt:message key="tables.column.order.receiveDate"/></th>
                         <th><fmt:message key="tables.column.order.returnDate"/></th>
                         <th><fmt:message key="tables.column.order.place"/></th>
-                        <th><fmt:message key="tables.column.order.status"/></th>
+                        <th><fmt:message key="tables.column.order.orderStatus"/></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -54,11 +54,11 @@
                         <td><fmt:formatDate value="${order.dateOfReceive}"/></td>
                         <td><fmt:formatDate value="${order.dateOfReturn}"/></td>
                         <td>${order.place}</td>
-                        <td>${order.status}</td>
+                        <td>${order.orderStatus}</td>
                         <td>
                             <c:set var="datereturn" value="${order.dateOfReturn}"/>
-                            <c:set var="status" value="${order.status}"/>
-                            <c:if test="${status eq 'OPEN' || empty datereturn}">
+                            <c:set var="orderStatus" value="${order.orderStatus}"/>
+                            <c:if test="${orderStatus eq 'OPEN' || empty datereturn}">
                                 <form action="/controller" class="navbar-form navbar-right">
                                     <input type="hidden" name="orderId" value="${order.id}">
                                     <input type="hidden" name="userId" value="${order.user.id}">
@@ -66,7 +66,7 @@
                                     <input type="hidden" name="dateReceive" value="${order.dateOfReceive}">
                                     <input type="hidden" name="dateReturn" value="${order.dateOfReturn}">
                                     <input type="hidden" name="readPlace" value="${order.place}">
-                                    <input type="hidden" name="orderStatus" value="${order.status}">
+                                    <input type="hidden" name="orderStatus" value="${order.orderStatus}">
                                     <input type="hidden" name="command" value="openOrder">
                                     <button type="submit" class="btn btn-success btn-lg">
                                         <fmt:message key="form.edit"/>

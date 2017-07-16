@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context>
-
+<Context antiJARLocking="true">
     <Resource
             name="jdbc/library"
             auth="Container"
@@ -11,7 +10,6 @@
             username="root"
             password="root"
             driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/library"
+            url="jdbc:mysql://localhost:3306/library?characterEncoding=UTF-8"
     />
-
 </Context>

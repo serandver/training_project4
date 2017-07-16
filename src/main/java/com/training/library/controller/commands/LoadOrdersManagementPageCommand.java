@@ -1,9 +1,11 @@
 package com.training.library.controller.commands;
 
 import com.training.library.config.PathManager;
+import com.training.library.exceptions.ServiceException;
 import com.training.library.model.BookOrder;
 import com.training.library.services.BookOrderService;
 import com.training.library.services.impl.BookOrderServiceImpl;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +17,11 @@ import java.util.List;
 
 public class LoadOrdersManagementPageCommand implements Command {
 
+    private static final Logger LOGGER = Logger.getLogger(LoadOrdersManagementPageCommand.class);
     private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         List<BookOrder> orders = bookOrderService.findAll();
         Collections.sort(orders, new Comparator<BookOrder>() {
             @Override

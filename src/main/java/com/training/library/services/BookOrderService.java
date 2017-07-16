@@ -17,6 +17,6 @@ public interface BookOrderService {
     List<BookOrder> findByReadingPlace(BookOrder.ReadingPlace place);
     List<BookOrder> findByDateOfReceive(Date date);
     List<BookOrder> findByDateOfReturn(Date date);
-    List<BookOrder> findByStatus(BookOrder.Status status);
+    List<BookOrder> findByStatus(BookOrder.OrderStatus orderStatus);
 
 }

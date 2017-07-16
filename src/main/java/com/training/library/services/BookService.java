@@ -10,7 +10,7 @@ public interface BookService {
     List<Book> findByTitle(String title);
     List<Book> findByAuthor(String author);
     List<Book> findAll();
-    List<Book> findAllAvailableForOrderBooks();
+    List<Book> findByStatus(Book.BookStatus status);
     int create(Book book);
     int update(Book book);
     int delete(int id);

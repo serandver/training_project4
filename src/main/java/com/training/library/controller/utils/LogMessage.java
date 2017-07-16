@@ -10,7 +10,8 @@ public final class LogMessage {
     public static final String BOOKDAO_CREATE_ERROR = "JdbcBookDao createBook SQL exception: ";
     public static final String BOOKDAO_FINDALL_ERROR = "JdbcBookDao findAll SQL exception: ";
     public static final String BOOKDAO_FINDBY_ID_ERROR = "JdbcBookDao findById SQL exception: ";
-    public static final String BOOKDAO_FINDBY_TITLE_ERROR = "JdbcBookDao findByTitle SQL exception: ";
+    public static final String BOOKDAO_FINDBY_STRING_ERROR = "JdbcBookDao findByTitle SQL exception: ";
+    public static final String BOOKDAO_FINDBY_STATUS_ERROR = "JdbcBookDao findByStatus SQL exception: ";
     public static final String BOOKDAO_UPDATE_ERROR = "JdbcBookDao updateBook SQL exception: ";
     public static final String BOOKDAO_DELETE_ERROR = "JdbcBookDao deleteBook SQL exception: ";
     public static final String ORDERDAO_CREATE_ERROR = "JdbcBookOrderDao create SQL exception: ";

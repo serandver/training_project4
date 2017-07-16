@@ -4,11 +4,13 @@ import com.training.library.dao.BookDao;
 import com.training.library.dao.DaoFactory;
 import com.training.library.model.Book;
 import com.training.library.services.BookService;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 public class BookServiceImpl implements BookService {
+    private static final Logger LOGGER = Logger.getLogger(BookServiceImpl.class);
     private DaoFactory daoFactory;
 
     public BookServiceImpl(DaoFactory instance) {
@@ -48,9 +50,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findAllAvailableForOrderBooks() {
+    public List<Book> findByStatus(Book.BookStatus status) {
         BookDao bookDao = daoFactory.createBookDao();
-        return bookDao.findAllAvailableForOrderBooks();
+        return bookDao.findByStatus(status);
     }
 
     @Override

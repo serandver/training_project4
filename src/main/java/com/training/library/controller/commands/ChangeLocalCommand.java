@@ -1,6 +1,8 @@
 package com.training.library.controller.commands;
 
 import com.training.library.config.PathManager;
+import com.training.library.exceptions.ServiceException;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -8,13 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ChangeLocalCommand implements Command {
+    private static final Logger LOGGER = Logger.getLogger(ChangeLocalCommand.class);
+
     private static final String EN = "en";
     private static final String RU = "ru";
     private static final String EN_LOCALE = "en_US";
     private static final String RU_LOCALE = "ru_RU";
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         String locale = request.getParameter("locale");
         setLocale(locale, request);
         return PathManager.getInstance().getProperty(PathManager.START_PAGE);

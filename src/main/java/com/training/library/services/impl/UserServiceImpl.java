@@ -4,11 +4,13 @@ import com.training.library.dao.DaoFactory;
 import com.training.library.dao.UserDao;
 import com.training.library.model.User;
 import com.training.library.services.UserService;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
+    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
     private DaoFactory daoFactory;
 
     public UserServiceImpl(DaoFactory instance) {

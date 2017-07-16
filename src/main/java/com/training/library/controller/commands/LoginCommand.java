@@ -1,6 +1,7 @@
 package com.training.library.controller.commands;
 
 import com.training.library.config.PathManager;
+import com.training.library.exceptions.ServiceException;
 import com.training.library.model.Book;
 import com.training.library.model.BookOrder;
 import com.training.library.model.User;
@@ -10,6 +11,7 @@ import com.training.library.services.UserService;
 import com.training.library.services.impl.BookOrderServiceImpl;
 import com.training.library.services.impl.BookServiceImpl;
 import com.training.library.services.impl.UserServiceImpl;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,14 +23,15 @@ import java.util.Optional;
 import static com.training.library.config.PathManager.*;
 
 public class LoginCommand implements Command{
-    public static final String PARAM_LOGIN = "login";
-    public static final String PARAM_PASSWORD ="password";
-
+    private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
     private UserService userService = UserServiceImpl.getInstance();
 
+    private static final String PARAM_LOGIN = "login";
+    private static final String PARAM_PASSWORD ="password";
+
+
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 
         String pageToGo = PathManager.getInstance().getProperty(ERROR_PAGE);
         String email = request.getParameter(PARAM_LOGIN);
