@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="order" items="${orders}">
+                <c:forEach var="order" items="${orderList}">
                     <tr>
                         <td>${order.id}</td>
                         <td>${order.user.id}</td>
@@ -65,7 +65,7 @@
                                     <input type="hidden" name="bookId" value="${order.book.id}">
                                     <input type="hidden" name="dateReceive" value="${order.dateOfReceive}">
                                     <input type="hidden" name="dateReturn" value="${order.dateOfReturn}">
-                                    <input type="hidden" name="readPlace" value="${order.place}">
+                                    <input type="hidden" name="orderPlace" value="${order.place}">
                                     <input type="hidden" name="orderStatus" value="${order.orderStatus}">
                                     <input type="hidden" name="command" value="openOrder">
                                     <button type="submit" class="btn btn-success btn-lg">

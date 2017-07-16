@@ -1,14 +1,14 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathManager;
+import com.training.library.controller.utils.PathManager;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.model.Book;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import static com.training.library.controller.utils.Attribute.*;
 
 public class LoadNewOrderPageCommand implements Command {
 
@@ -16,15 +16,15 @@ public class LoadNewOrderPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        String bookId = request.getParameter("bookId");
-        String bookTitle = request.getParameter("bookTitle");
-        String bookAuthor = request.getParameter("bookAuthor");
+        String bookId = request.getParameter(BOOK_ID);
+        String bookTitle = request.getParameter(BOOK_TITLE);
+        String bookAuthor = request.getParameter(BOOK_AUTHOR);
         Book book = new Book.Builder()
                 .setId(Integer.parseInt(bookId))
                 .setTitle(bookTitle)
                 .setAuthor(bookAuthor)
                 .build();
-        request.setAttribute("book", book);
+        request.setAttribute(BOOK, book);
 
         return PathManager.getInstance().getProperty(PathManager.ORDER_BOOK_PAGE);
     }

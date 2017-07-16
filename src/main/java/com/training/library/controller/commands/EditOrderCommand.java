@@ -1,6 +1,6 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathManager;
+import com.training.library.controller.utils.PathManager;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.model.Book;
 import com.training.library.model.BookOrder;
@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
 
+import static com.training.library.controller.utils.Attribute.*;
+
 public class EditOrderCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(EditOrderCommand.class);
@@ -34,13 +36,13 @@ public class EditOrderCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         String pageToGo = PathManager.getInstance().getProperty(PathManager.ERROR_PAGE);;
 
-        String orderId = request.getParameter("orderId");
-        String userId = request.getParameter("userId");
-        String bookId = request.getParameter("bookId");
-        String dateReceive = request.getParameter("dateReceive");
-        String dateReturn = request.getParameter("dateReturn");
-        String place = request.getParameter("readPlace");
-        String orderStatus = request.getParameter("orderStatus");
+        String orderId = request.getParameter(ORDER_ID);
+        String userId = request.getParameter(USER_ID);
+        String bookId = request.getParameter(BOOK_ID);
+        String dateReceive = request.getParameter(ORDER_DATE_RECEIVE);
+        String dateReturn = request.getParameter(ORDER_DATE_RETURN);
+        String place = request.getParameter(ORDER_PLACE);
+        String orderStatus = request.getParameter(ORDER_STATUS);
 
         Book book = null;
         Optional<Book> bookResult = bookService.find(Integer.parseInt(bookId));
@@ -78,7 +80,7 @@ public class EditOrderCommand implements Command {
 
             int result = bookOrderService.update(orderForUpdating);
             if (result == 1) {
-                pageToGo = new LoadOrdersManagementPageCommand().execute(request, response);
+                pageToGo = new LoadOrdersManagementPageCommand(BookOrderServiceImpl.getInstance()).execute(request, response);
             }
         }
         return pageToGo;

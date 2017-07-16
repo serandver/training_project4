@@ -1,4 +1,4 @@
-package com.training.library.config;
+package com.training.library.dao.connection;
 
 import java.util.ResourceBundle;
 
@@ -29,3 +29,4 @@ public class DatabaseConfig {
         return resourceBundle.getString(key);
     }
 }
+

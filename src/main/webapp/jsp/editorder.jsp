@@ -58,7 +58,7 @@
         </c:if>
         <br/>
 
-        <input type="hidden" name="readPlace" value="${order.place}">
+        <input type="hidden" name="orderPlace" value="${order.place}">
         <input type="hidden" name="orderStatus" value="${order.orderStatus}">
         <input type="hidden" name="command" value="editOrder">
         <input type="submit" class="btn btn-success btn-lg" value="<fmt:message key="form.save"/>"/>

@@ -1,6 +1,5 @@
 package com.training.library.dao.jdbc;
 
-import com.training.library.dao.connection.QueryJDBC;
 import com.training.library.exceptions.ServerException;
 import com.training.library.model.Book;
 import com.training.library.dao.BookDao;

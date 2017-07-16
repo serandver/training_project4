@@ -1,15 +1,15 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathManager;
+import com.training.library.controller.utils.PathManager;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.services.BookService;
 import com.training.library.services.impl.BookServiceImpl;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import static com.training.library.controller.utils.Attribute.BOOK_ID;
 
 public class DeleteBookCommand implements Command {
 
@@ -25,9 +25,9 @@ public class DeleteBookCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 
         String pageToGo = PathManager.getInstance().getProperty(PathManager.ERROR_PAGE);
-        int bookIdForDeleting = Integer.parseInt(request.getParameter("bookId"));
+        int bookIdForDeleting = Integer.parseInt(request.getParameter(BOOK_ID));
         bookService.delete(bookIdForDeleting);
-        pageToGo = new LoadBookCataloguePageCommand().execute(request, response);
+        pageToGo = new LoadBookCataloguePageCommand(BookServiceImpl.getInstance()).execute(request, response);
         return pageToGo;
     }
 }

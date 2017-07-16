@@ -1,19 +1,18 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathManager;
+import com.training.library.controller.utils.PathManager;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.model.BookOrder;
 import com.training.library.services.BookOrderService;
-import com.training.library.services.impl.BookOrderServiceImpl;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import static com.training.library.controller.utils.Attribute.ORDERS_LIST;
 
 public class LoadOrdersManagementPageCommand implements Command {
 
@@ -34,7 +33,7 @@ public class LoadOrdersManagementPageCommand implements Command {
                 return o1.getId() - o2.getId();
             }
         });
-        request.setAttribute("orders", orders);
+        request.setAttribute(ORDERS_LIST, orders);
         return PathManager.getInstance().getProperty(PathManager.ORDERS_PAGE);
     }
 }

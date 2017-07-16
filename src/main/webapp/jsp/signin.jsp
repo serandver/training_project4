@@ -27,7 +27,7 @@
       <form method="get" action="/controller" class="form-signin">
         <h2 class="form-signin-heading"><fmt:message key="signin.subtitle"/></h2>
         <input type="hidden" name="command" value="login">
-        <input type="email" name="login" class="form-control" placeholder="<fmt:message key="signin.email"/>" required="required" autofocus="autofocus"/>
+        <input type="email" name="email" class="form-control" placeholder="<fmt:message key="signin.email"/>" required="required" autofocus="autofocus"/>
         <input type="password" name="password" class="form-control" placeholder="<fmt:message key="signin.password"/>" required="required"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="signin.button"/></button>
       </form>

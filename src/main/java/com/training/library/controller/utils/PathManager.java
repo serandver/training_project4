@@ -1,4 +1,4 @@
-package com.training.library.config;
+package com.training.library.controller.utils;
 
 import java.util.ResourceBundle;
 

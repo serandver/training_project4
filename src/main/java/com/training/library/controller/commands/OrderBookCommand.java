@@ -1,6 +1,6 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathManager;
+import com.training.library.controller.utils.PathManager;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.model.Book;
 import com.training.library.model.BookOrder;
@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+import static com.training.library.controller.utils.Attribute.*;
+
 public class OrderBookCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(OrderBookCommand.class);
@@ -30,7 +32,7 @@ public class OrderBookCommand implements Command {
         String pageToGo = PathManager.getInstance().getProperty(PathManager.ERROR_PAGE);
 
         HttpSession session = request.getSession();
-        User currentUser = (User)session.getAttribute("user");
+        User currentUser = (User)session.getAttribute(USER);
         int currentUserId = currentUser.getId();
         Optional<User> userResult = userService.find(currentUserId);
         User user = null;
@@ -39,13 +41,13 @@ public class OrderBookCommand implements Command {
         }
 
         Book book = null;
-        int bookId = Integer.parseInt(request.getParameter("bookId"));
+        int bookId = Integer.parseInt(request.getParameter(BOOK_ID));
         Optional<Book> bookResult = bookService.find(bookId);
         if(bookResult.isPresent()) {
             book = bookResult.get();
         }
 
-        String placeString = request.getParameter("orderPlace");
+        String placeString = request.getParameter(ORDER_PLACE);
         BookOrder.ReadingPlace place = BookOrder.ReadingPlace.valueOf(placeString);
 
         BookOrder newOrder = null;
@@ -58,7 +60,7 @@ public class OrderBookCommand implements Command {
                     .build();
             int generatedOrderId = bookOrderService.create(newOrder);
             if (generatedOrderId != -1) {
-                pageToGo = new ReaderHomePageCommand().execute(request, response);
+                pageToGo = new ReaderHomePageCommand(BookServiceImpl.getInstance()).execute(request, response);
             }
         }
         return pageToGo;

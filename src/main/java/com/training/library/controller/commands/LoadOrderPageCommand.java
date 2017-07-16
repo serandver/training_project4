@@ -1,6 +1,6 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathManager;
+import com.training.library.controller.utils.PathManager;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.model.Book;
 import com.training.library.model.BookOrder;
@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
 
+import static com.training.library.controller.utils.Attribute.*;
+
 public class LoadOrderPageCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(LoadOrderPageCommand.class);
 
@@ -34,13 +36,13 @@ public class LoadOrderPageCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         String pageToGo = PathManager.getInstance().getProperty(PathManager.ERROR_PAGE);;
 
-        String orderId = request.getParameter("orderId");
-        String userId = request.getParameter("userId");
-        String bookId = request.getParameter("bookId");
-        String dateReceive = request.getParameter("dateReceive");
-        String dateReturn = request.getParameter("dateReturn");
-        String place = request.getParameter("readPlace");
-        String orderStatus = request.getParameter("orderStatus");
+        String orderId = request.getParameter(ORDER_ID);
+        String userId = request.getParameter(USER_ID);
+        String bookId = request.getParameter(BOOK_ID);
+        String dateReceive = request.getParameter(ORDER_DATE_RECEIVE);
+        String dateReturn = request.getParameter(ORDER_DATE_RETURN);
+        String place = request.getParameter(ORDER_PLACE);
+        String orderStatus = request.getParameter(ORDER_STATUS);
 
         Book book = null;
         Optional<Book> bookResult = bookService.find(Integer.parseInt(bookId));
@@ -59,8 +61,8 @@ public class LoadOrderPageCommand implements Command {
         Date dateOfReturning = null;
 
         try {
-            dateOfReceiving = (Date)formatter.parse(dateReceive);
-            dateOfReturning = (Date)formatter.parse(dateReturn);
+            dateOfReceiving = formatter.parse(dateReceive);
+            dateOfReturning = formatter.parse(dateReturn);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -74,7 +76,7 @@ public class LoadOrderPageCommand implements Command {
                     .setDateOfReturn(dateOfReturning)
                     .setPlace(BookOrder.ReadingPlace.valueOf(place))
                     .setOrderStatus(BookOrder.OrderStatus.valueOf(orderStatus)).build();
-            request.setAttribute("order", orderForUpdating);
+            request.setAttribute(ORDER, orderForUpdating);
             pageToGo = PathManager.getInstance().getProperty(PathManager.EDIT_ORDER_PAGE);
         }
         return pageToGo;

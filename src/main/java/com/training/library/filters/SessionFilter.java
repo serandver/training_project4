@@ -1,6 +1,6 @@
 package com.training.library.filters;
 
-import com.training.library.config.PathManager;
+import com.training.library.controller.utils.PathManager;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

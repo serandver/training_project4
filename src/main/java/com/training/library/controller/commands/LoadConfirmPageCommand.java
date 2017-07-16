@@ -1,6 +1,6 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathManager;
+import com.training.library.controller.utils.PathManager;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.model.Book;
 import com.training.library.model.BookOrder;
@@ -17,9 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
+import static com.training.library.controller.utils.Attribute.*;
+
 public class LoadConfirmPageCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(LoadConfirmPageCommand.class);
+
     private UserService userService = UserServiceImpl.getInstance();
     private BookService bookService = BookServiceImpl.getInstance();
     private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
@@ -28,10 +31,10 @@ public class LoadConfirmPageCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         String pageToGo = PathManager.getInstance().getProperty(PathManager.ERROR_PAGE);
 
-        String orderId = request.getParameter("orderId");
-        String bookId = request.getParameter("bookId");
-        String userId = request.getParameter("userId");
-        String readingPlaceString = request.getParameter("orderPlace");
+        String orderId = request.getParameter(ORDER_ID);
+        String bookId = request.getParameter(BOOK_ID);
+        String userId = request.getParameter(USER_ID);
+        String orderPlaceString = request.getParameter(ORDER_PLACE);
 
         Book book = null;
         Optional<Book> bookResult = bookService.find(Integer.parseInt(bookId));
@@ -45,8 +48,7 @@ public class LoadConfirmPageCommand implements Command {
             user = userResult.get();
         }
 
-        String placeString = request.getParameter("orderPlace");
-        BookOrder.ReadingPlace place = BookOrder.ReadingPlace.valueOf(placeString);
+        BookOrder.ReadingPlace place = BookOrder.ReadingPlace.valueOf(orderPlaceString);
 
         BookOrder bookOrder = null;
         if (user != null && book != null) {
@@ -58,7 +60,7 @@ public class LoadConfirmPageCommand implements Command {
                     .setOrderStatus(BookOrder.OrderStatus.CLOSED)
                     .build();
             if (bookResult != null) {
-                request.setAttribute("order", bookOrder);
+                request.setAttribute(ORDER, bookOrder);
                 pageToGo = PathManager.getInstance().getProperty(PathManager.CONFIRM_ORDER_PAGE);
             }
         }

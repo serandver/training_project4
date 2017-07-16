@@ -5,8 +5,8 @@ import java.sql.Connection;
 public final class ConnectionManager {
 
 	private static volatile ConnectionManager connectionManagerInstance;
-	private static CustomConnectionPool connectionPool = CustomConnectionPool.getInstance();
-	private static JndiConnectionPool poolContext;
+	private static CustomConnectionPool customConnectionPool = CustomConnectionPool.getInstance();
+	private static JndiConnectionPool jndiConnectionPool;
 	private ConnectionManager() {
 	}
 			
@@ -22,11 +22,11 @@ public final class ConnectionManager {
 	}
 	
 	public Connection getConnection() {
-		return connectionPool.getConnection();
+		return customConnectionPool.getConnection();
 	}
 	
 	public void releaseConnection(Connection connection) {
-		connectionPool.releaseConnection(connection);
+		customConnectionPool.releaseConnection(connection);
 	}
 
 }

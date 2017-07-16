@@ -1,6 +1,5 @@
 package com.training.library.dao.connection;
 
-import com.training.library.config.DatabaseConfig;
 import com.training.library.exceptions.ServerException;
 import org.apache.log4j.Logger;
 

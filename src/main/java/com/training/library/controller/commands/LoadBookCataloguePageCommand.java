@@ -1,17 +1,16 @@
 package com.training.library.controller.commands;
 
-import com.training.library.config.PathManager;
+import com.training.library.controller.utils.PathManager;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.model.Book;
 import com.training.library.services.BookService;
-import com.training.library.services.impl.BookServiceImpl;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
+
+import static com.training.library.controller.utils.Attribute.BOOKS_LIST;
 
 public class LoadBookCataloguePageCommand implements Command {
 
@@ -27,7 +26,7 @@ public class LoadBookCataloguePageCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 
         List<Book> orders = bookService.findAll();
-        request.setAttribute("bookList", orders);
+        request.setAttribute(BOOKS_LIST, orders);
 
         return PathManager.getInstance().getProperty(PathManager.CATALOGUE_PAGE);
     }

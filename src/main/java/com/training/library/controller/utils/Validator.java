@@ -21,6 +21,4 @@ public class Validator {
     public static Validator getInstance(){
         return Holder.INSTANCE;
     }
-
-
 }
