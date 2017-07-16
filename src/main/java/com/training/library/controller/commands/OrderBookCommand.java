@@ -23,6 +23,7 @@ import static com.training.library.controller.utils.Attribute.*;
 public class OrderBookCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(OrderBookCommand.class);
+
     private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
     private UserService userService = UserServiceImpl.getInstance();
     private BookService bookService = BookServiceImpl.getInstance();
@@ -34,25 +35,15 @@ public class OrderBookCommand implements Command {
         HttpSession session = request.getSession();
         User currentUser = (User)session.getAttribute(USER);
         int currentUserId = currentUser.getId();
-        Optional<User> userResult = userService.find(currentUserId);
-        User user = null;
-        if(userResult.isPresent()) {
-            user = userResult.get();
-        }
 
-        Book book = null;
-        int bookId = Integer.parseInt(request.getParameter(BOOK_ID));
-        Optional<Book> bookResult = bookService.find(bookId);
-        if(bookResult.isPresent()) {
-            book = bookResult.get();
-        }
+        User user = getUserById(currentUserId);
+        Book book = getBookById(request);
 
         String placeString = request.getParameter(ORDER_PLACE);
         BookOrder.ReadingPlace place = BookOrder.ReadingPlace.valueOf(placeString);
 
-        BookOrder newOrder = null;
         if (user != null && book != null) {
-            newOrder = new BookOrder.Builder()
+            BookOrder newOrder = new BookOrder.Builder()
                     .setUser(user)
                     .setBook(book)
                     .setPlace(place)
@@ -64,5 +55,24 @@ public class OrderBookCommand implements Command {
             }
         }
         return pageToGo;
+    }
+
+    private Book getBookById(HttpServletRequest request) {
+        Book book = null;
+        int bookId = Integer.parseInt(request.getParameter(BOOK_ID));
+        Optional<Book> bookResult = bookService.find(bookId);
+        if(bookResult.isPresent()) {
+            book = bookResult.get();
+        }
+        return book;
+    }
+
+    private User getUserById(int currentUserId) {
+        User user = null;
+        Optional<User> userResult = userService.find(currentUserId);
+        if(userResult.isPresent()) {
+            user = userResult.get();
+        }
+        return user;
     }
 }

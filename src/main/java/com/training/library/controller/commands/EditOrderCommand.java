@@ -44,29 +44,11 @@ public class EditOrderCommand implements Command {
         String place = request.getParameter(ORDER_PLACE);
         String orderStatus = request.getParameter(ORDER_STATUS);
 
-        Book book = null;
-        Optional<Book> bookResult = bookService.find(Integer.parseInt(bookId));
-        if(bookResult.isPresent()) {
-            book = bookResult.get();
-        }
+        Book book = getBookById(bookId);
+        User user = getUserById(userId);
 
-        User user = null;
-        Optional<User> userResult = userService.find(Integer.parseInt(userId));
-        if(userResult.isPresent()) {
-            user = userResult.get();
-        }
-
-        DateFormat formatter1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
-        DateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateOfReceiving = null;
-        Date dateOfReturning = null;
-
-        try {
-            dateOfReceiving = formatter1.parse(dateReceive);
-            dateOfReturning = formatter2.parse(dateReturn);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date dateOfReceiving = getDateFromString(dateReceive, new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US));
+        Date dateOfReturning = getDateFromString(dateReturn, new SimpleDateFormat("yyyy-MM-dd"));
 
         if (user != null && book != null) {
             BookOrder orderForUpdating = new BookOrder.Builder()
@@ -84,5 +66,33 @@ public class EditOrderCommand implements Command {
             }
         }
         return pageToGo;
+    }
+
+    private Book getBookById(String bookId) {
+        Book book = null;
+        Optional<Book> bookResult = bookService.find(Integer.parseInt(bookId));
+        if(bookResult.isPresent()) {
+            book = bookResult.get();
+        }
+        return book;
+    }
+
+    private User getUserById(String userId) {
+        User user = null;
+        Optional<User> userResult = userService.find(Integer.parseInt(userId));
+        if(userResult.isPresent()) {
+            user = userResult.get();
+        }
+        return user;
+    }
+
+    private Date getDateFromString(String date, DateFormat formatter) {
+        Date dateOfReceiving = null;
+        try {
+            dateOfReceiving = formatter.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateOfReceiving;
     }
 }

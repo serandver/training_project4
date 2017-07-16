@@ -25,12 +25,11 @@ import java.util.Optional;
 import static com.training.library.controller.utils.Attribute.*;
 
 public class LoadOrderPageCommand implements Command {
+
     private static final Logger LOGGER = Logger.getLogger(LoadOrderPageCommand.class);
 
-    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
     private BookService bookService = BookServiceImpl.getInstance();
     private UserService userService = UserServiceImpl.getInstance();
-
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
@@ -44,28 +43,13 @@ public class LoadOrderPageCommand implements Command {
         String place = request.getParameter(ORDER_PLACE);
         String orderStatus = request.getParameter(ORDER_STATUS);
 
-        Book book = null;
-        Optional<Book> bookResult = bookService.find(Integer.parseInt(bookId));
-        if(bookResult.isPresent()) {
-            book = bookResult.get();
-        }
+        Book book = getBookById(bookId);
 
-        User user = null;
-        Optional<User> userResult = userService.find(Integer.parseInt(userId));
-        if(userResult.isPresent()) {
-            user = userResult.get();
-        }
+        User user = getUserById(userId);
 
         DateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
-        Date dateOfReceiving = null;
-        Date dateOfReturning = null;
-
-        try {
-            dateOfReceiving = formatter.parse(dateReceive);
-            dateOfReturning = formatter.parse(dateReturn);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date dateOfReceiving = getDateFromString(dateReceive, formatter);
+        Date dateOfReturning = getDateFromString(dateReturn, formatter);
 
         if (user != null && book != null) {
             BookOrder orderForUpdating = new BookOrder.Builder()
@@ -80,5 +64,33 @@ public class LoadOrderPageCommand implements Command {
             pageToGo = PathManager.getInstance().getProperty(PathManager.EDIT_ORDER_PAGE);
         }
         return pageToGo;
+    }
+
+    private Book getBookById(String bookId) {
+        Book book = null;
+        Optional<Book> bookResult = bookService.find(Integer.parseInt(bookId));
+        if(bookResult.isPresent()) {
+            book = bookResult.get();
+        }
+        return book;
+    }
+
+    private User getUserById(String userId) {
+        User user = null;
+        Optional<User> userResult = userService.find(Integer.parseInt(userId));
+        if(userResult.isPresent()) {
+            user = userResult.get();
+        }
+        return user;
+    }
+
+    private Date getDateFromString(String dateReceive, DateFormat formatter) {
+        Date dateOfReceiving = null;
+        try {
+            dateOfReceiving = formatter.parse(dateReceive);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateOfReceiving;
     }
 }

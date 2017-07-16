@@ -19,13 +19,18 @@ public class LoadNewOrderPageCommand implements Command {
         String bookId = request.getParameter(BOOK_ID);
         String bookTitle = request.getParameter(BOOK_TITLE);
         String bookAuthor = request.getParameter(BOOK_AUTHOR);
-        Book book = new Book.Builder()
-                .setId(Integer.parseInt(bookId))
-                .setTitle(bookTitle)
-                .setAuthor(bookAuthor)
-                .build();
+
+        Book book = getBook(bookId, bookTitle, bookAuthor);
         request.setAttribute(BOOK, book);
 
         return PathManager.getInstance().getProperty(PathManager.ORDER_BOOK_PAGE);
+    }
+
+    private Book getBook(String bookId, String bookTitle, String bookAuthor) {
+        return new Book.Builder()
+                    .setId(Integer.parseInt(bookId))
+                    .setTitle(bookTitle)
+                    .setAuthor(bookAuthor)
+                    .build();
     }
 }

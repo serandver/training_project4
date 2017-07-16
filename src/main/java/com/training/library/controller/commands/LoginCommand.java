@@ -33,8 +33,7 @@ public class LoginCommand implements Command{
         String password = request.getParameter(PASSWORD);
 
         if( email != null && password != null ){
-            Optional<User> result;
-            result = userService.login(email, password);
+            Optional<User> result = userService.login(email, password);
             if(result.isPresent()){
                 User user = result.get();
                 User.Role role = user.getRole();

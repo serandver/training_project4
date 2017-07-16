@@ -28,8 +28,8 @@ public class ConfirmBookOrderCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        int bookOrderForIdConfirming = Integer.parseInt(request.getParameter(ORDER_ID));
-        Optional<BookOrder> orderFromDB = bookOrderService.find(bookOrderForIdConfirming);
+        int bookOrderIdForConfirming = Integer.parseInt(request.getParameter(ORDER_ID));
+        Optional<BookOrder> orderFromDB = bookOrderService.find(bookOrderIdForConfirming);
         if (orderFromDB.isPresent()) {
             BookOrder order = orderFromDB.get();
             order.setOrderStatus(BookOrder.OrderStatus.CLOSED);
