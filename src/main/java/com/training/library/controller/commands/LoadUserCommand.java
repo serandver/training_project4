@@ -16,7 +16,12 @@ import java.util.Optional;
 public class LoadUserCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(LoadUserCommand.class);
-    private UserService userService = UserServiceImpl.getInstance();
+
+    private UserService userService;
+
+    public LoadUserCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

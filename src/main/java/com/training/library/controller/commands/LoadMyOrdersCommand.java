@@ -18,7 +18,12 @@ import java.util.List;
 public class LoadMyOrdersCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(LoadMyOrdersCommand.class);
-    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
+
+    private BookOrderService bookOrderService;
+
+    public LoadMyOrdersCommand(BookOrderService bookOrderService) {
+        this.bookOrderService = bookOrderService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

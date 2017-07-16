@@ -18,7 +18,12 @@ import static com.training.library.config.PathManager.READER_HOME_PAGE;
 public class ReaderHomePageCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(ReaderHomePageCommand.class);
-    private BookService bookService = BookServiceImpl.getInstance();
+
+    private BookService bookService;
+
+    public ReaderHomePageCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

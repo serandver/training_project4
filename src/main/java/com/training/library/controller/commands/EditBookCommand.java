@@ -15,7 +15,12 @@ import java.io.IOException;
 public class EditBookCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(EditBookCommand.class);
-    private BookService bookService = BookServiceImpl.getInstance();
+
+    private BookService bookService;
+
+    public EditBookCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

@@ -14,7 +14,12 @@ import java.io.IOException;
 public class DeleteBookCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(DeleteBookCommand.class);
-    BookService bookService = BookServiceImpl.getInstance();
+
+    BookService bookService;
+
+    public DeleteBookCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

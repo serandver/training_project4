@@ -1,4 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
+<fmt:setLocale value="${empty sessionScope.locale ? 'en_US' : sessionScope.locale}"/>
+<fmt:setBundle basename="pagecontent"/>
 
 <!DOCTYPE HTML>
 <html>
@@ -13,10 +18,10 @@
     <title><fmt:message key="signup.title"/></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../resources/css/bootstrap.min.css" th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link href="../resources/css/signin.css" th:href="@{/css/signin.css}" rel="stylesheet"/>
+    <link href="../resources/css/signin.css"  rel="stylesheet"/>
   </head>
 
   <body>

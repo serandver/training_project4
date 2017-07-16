@@ -16,7 +16,12 @@ import static com.training.library.config.PathManager.LIBRARIAN_HOME_PAGE;
 public class LibrarianHomePageCommand implements Command{
 
     private static final Logger LOGGER = Logger.getLogger(LibrarianHomePageCommand.class);
-    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
+
+    private BookOrderService bookOrderService;
+
+    public LibrarianHomePageCommand(BookOrderService bookOrderService) {
+        this.bookOrderService = bookOrderService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

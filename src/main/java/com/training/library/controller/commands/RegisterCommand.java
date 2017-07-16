@@ -18,12 +18,20 @@ import static com.training.library.config.PathManager.ERROR_PAGE;
 import static com.training.library.config.PathManager.LOGIN_PAGE;
 
 public class RegisterCommand implements Command {
+
     private static final Logger LOGGER = Logger.getLogger(RegisterCommand.class);
+
     private static final String FIRSTNAME = "firstName";
     private static final String LASTNAME = "lastName";
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
     private static final String CONFIRM_PASSWORD = "confirmPassword";
+
+    private UserService userService;
+
+    public RegisterCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
@@ -44,7 +52,6 @@ public class RegisterCommand implements Command {
         }
 
         if (confirm(password, confirmPassword)) {
-            UserService userService = UserServiceImpl.getInstance();
             User user = new User.Builder()
                     .setFirstName(firstname)
                     .setLastName(lastname)

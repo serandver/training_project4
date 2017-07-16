@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoadBookPageCommand implements Command {
+
     private static final Logger LOGGER = Logger.getLogger(LoadBookPageCommand.class);
 
     @Override

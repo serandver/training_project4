@@ -43,7 +43,7 @@
                         </li>
                         <li>
                             <form action="/controller" class="navbar-form navbar-left">
-                                <input type="hidden" name="command" value="seachPage">
+                                <input type="hidden" name="command" value="searchPage">
                                 <input type="submit" class="btn btn-default" value="<fmt:message key="reader.menu.search"/>">
                             </form>
                         </li>

@@ -16,7 +16,12 @@ import java.util.List;
 public class FindByTitleCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(FindByTitleCommand.class);
-    private BookService bookService = BookServiceImpl.getInstance();
+
+    private BookService bookService;
+
+    public FindByTitleCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

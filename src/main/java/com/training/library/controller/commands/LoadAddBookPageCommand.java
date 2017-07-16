@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoadAddBookPageCommand implements Command {
+
     private static final Logger LOGGER = Logger.getLogger(LoadAddBookPageCommand.class);
 
     @Override

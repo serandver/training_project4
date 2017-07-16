@@ -25,6 +25,7 @@ import java.util.Optional;
 public class EditOrderCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(EditOrderCommand.class);
+
     private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
     private BookService bookService = BookServiceImpl.getInstance();
     private UserService userService = UserServiceImpl.getInstance();

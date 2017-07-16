@@ -19,7 +19,12 @@ import static com.training.library.config.PathManager.LIBRARIAN_HOME_PAGE;
 public class ConfirmBookOrderCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(ConfirmBookOrderCommand.class);
-    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
+
+    private BookOrderService bookOrderService;
+
+    public ConfirmBookOrderCommand(BookOrderService bookOrderService) {
+        this.bookOrderService = bookOrderService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

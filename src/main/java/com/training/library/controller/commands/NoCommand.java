@@ -1,6 +1,7 @@
 package com.training.library.controller.commands;
 
 
+import com.training.library.config.PathManager;
 import com.training.library.controller.commands.Command;
 import com.training.library.exceptions.ServiceException;
 import org.apache.log4j.Logger;
@@ -14,10 +15,8 @@ public class NoCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(NoCommand.class);
 
-    private static final String START_PAGE ="/index.jsp";
-
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        return START_PAGE;
+        return PathManager.getInstance().getProperty(PathManager.START_PAGE);
     }
 }

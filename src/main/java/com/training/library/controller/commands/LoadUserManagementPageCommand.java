@@ -15,7 +15,12 @@ import java.util.List;
 public class LoadUserManagementPageCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(LoadUserManagementPageCommand.class);
-    private UserService userService = UserServiceImpl.getInstance();
+
+    private UserService userService;
+
+    public LoadUserManagementPageCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
