@@ -1,6 +1,7 @@
 package com.training.library.controller.commands;
 
 import com.training.library.controller.utils.PathManager;
+import com.training.library.controller.utils.Validator;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.model.User;
 import com.training.library.services.UserService;
@@ -18,6 +19,7 @@ public class RegisterCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(RegisterCommand.class);
 
     private UserService userService;
+    private Validator validator = Validator.getInstance();
 
     public RegisterCommand(UserService userService) {
         this.userService = userService;

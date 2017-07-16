@@ -4,21 +4,23 @@ import java.sql.Connection;
 
 public final class ConnectionManager {
 
-	private static volatile ConnectionManager connectionManagerInstance;
-	private static CustomConnectionPool customConnectionPool = CustomConnectionPool.getInstance();
+	private static volatile ConnectionManager instance;
+	private static CustomConnectionPool customConnectionPool;
 	private static JndiConnectionPool jndiConnectionPool;
+
 	private ConnectionManager() {
-	}
+        customConnectionPool = CustomConnectionPool.getInstance();
+    }
 			
-	public static ConnectionManager getConnectionManagerInstance() {
-		if (connectionManagerInstance == null) {
+	public static ConnectionManager getInstance() {
+		if (instance == null) {
 			synchronized (ConnectionManager.class) {
-				if (connectionManagerInstance == null) {
-					connectionManagerInstance = new ConnectionManager();
+				if (instance == null) {
+					instance = new ConnectionManager();
 				}
 			}
 		}
-		return connectionManagerInstance;
+		return instance;
 	}
 	
 	public Connection getConnection() {

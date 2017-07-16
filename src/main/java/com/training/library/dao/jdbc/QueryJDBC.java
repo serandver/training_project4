@@ -16,7 +16,7 @@ public class QueryJDBC implements AutoCloseable{
 	private PreparedStatement preparedStatement = null;
     private Statement statement = null;
 
-    private static ConnectionManager connectionManager = ConnectionManager.getConnectionManagerInstance();
+    private static ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     public QueryJDBC() {
         this.connection = connectionManager.getConnection();

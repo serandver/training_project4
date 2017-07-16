@@ -12,5 +12,4 @@ public interface BookOrderDao extends GenericDao<BookOrder> {
     List<BookOrder> findByDateOfReceive(Date date);
     List<BookOrder> findByDateOfReturn(Date date);
     List<BookOrder> findByOrderStatus(BookOrder.OrderStatus orderStatus);
-
 }

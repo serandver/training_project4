@@ -37,8 +37,8 @@
                                 <td>${order.id}</td>
                                 <td>${order.book.title}</td>
                                 <td>${order.book.author}</td>
-                                <td>${order.dateOfReceive}</td>
-                                <td>${order.dateOfReturn}</td>
+                                <td><fmt:formatDate value="${order.dateOfReceive}"/></td>
+                                <td><fmt:formatDate value="${order.dateOfReturn}"/></td>
                                 <td>${order.place}</td>
                             </tr>
                         </c:forEach>
