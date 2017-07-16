@@ -97,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `library`.`books` (
   `title` VARCHAR(255) NOT NULL,
   `author` VARCHAR(255) NOT NULL,
   `book_number_id` INT NOT NULL,
+  `book_status` ENUM('AVAILABLE', 'UNAVAILABLE') NOT NULL DEFAULT 'AVAILABLE',
   PRIMARY KEY (`book_id`),
   CONSTRAINT `fk_books_book_numbers1`
   FOREIGN KEY (`book_number_id`)
@@ -222,26 +223,26 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `library`;
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Преступление и наказание', 'Достоевский Ф.М.', 1);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Преступление и наказание', 'Достоевский Ф.М.', 2);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Униженные и оскорбленные', 'Достоевский Ф.М.', 3);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Бесы', 'Достоевский Ф.М.', 4);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Идиот', 'Достоевский Ф.М.', 5);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Идиот', 'Достоевский Ф.М.', 6);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Братья Карамазовы', 'Достоевский Ф.М.', 7);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Война и мир', 'Толстой Л.Н.', 8);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Анна Каренина', 'Толстой Л.Н.', 9);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Петр І', 'Толстой А.Н.', 10);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Кобзар', 'Шевченко Т.Г.', 11);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Кобзар', 'Шевченко Т.Г.', 12);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Кобзар', 'Шевченко Т.Г.', 13);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Властелин колец', 'Толкин Д.', 14);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Хоббит', 'Толкин Д.', 15);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Сильмариллион', 'Толкин Д.', 16);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Три товарища', 'Ремарк Э.М.', 17);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'На западном фронте без перемен', 'Ремарк Э.М.', 18);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Триумфальная арка', 'Ремарк Э.М.', 19);
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`) VALUES (DEFAULT, 'Черный обелиск', 'Ремарк Э.М.', 20);
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Преступление и наказание', 'Достоевский Ф.М.', 1, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Преступление и наказание', 'Достоевский Ф.М.', 2, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Униженные и оскорбленные', 'Достоевский Ф.М.', 3, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Бесы', 'Достоевский Ф.М.', 4, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Идиот', 'Достоевский Ф.М.', 5, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Идиот', 'Достоевский Ф.М.', 6, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Братья Карамазовы', 'Достоевский Ф.М.', 7, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Война и мир', 'Толстой Л.Н.', 8, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Анна Каренина', 'Толстой Л.Н.', 9, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Петр І', 'Толстой А.Н.', 10, 'UNAVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Кобзар', 'Шевченко Т.Г.', 11, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Кобзар', 'Шевченко Т.Г.', 12, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Кобзар', 'Шевченко Т.Г.', 13, 'UNAVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Властелин колец', 'Толкин Д.', 14, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Хоббит', 'Толкин Д.', 15, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Сильмариллион', 'Толкин Д.', 16, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Три товарища', 'Ремарк Э.М.', 17, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'На западном фронте без перемен', 'Ремарк Э.М.', 18, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Триумфальная арка', 'Ремарк Э.М.', 19, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Черный обелиск', 'Ремарк Э.М.', 20, 'AVAILABLE');
 
 COMMIT;
 
@@ -264,4 +265,3 @@ INSERT INTO `library`.`orders` (`order_id`, `user_id`, `book_id`, `date_receive`
 INSERT INTO `library`.`orders` (`order_id`, `user_id`, `book_id`, `date_receive`, `date_return`, `reading_place`, `order_status`) VALUES (DEFAULT, 2, 18, NULL, NULL, 'SUBSCRIPTION', 'OPEN');
 
 COMMIT;
-
