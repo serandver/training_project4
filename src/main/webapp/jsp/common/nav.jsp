@@ -40,17 +40,25 @@
                                 <input type="hidden" name="command" value="readerHome">
                                 <input type="submit" class="btn btn-default" value="<fmt:message key="librarian.menu.home"/>">
                             </form>
-                        <li><a href="/jsp/search.jsp"><fmt:message key="reader.menu.search"/></a></li>
+                        </li>
+                        <li>
+                            <form action="/controller" class="navbar-form navbar-left">
+                                <input type="hidden" name="command" value="seachPage">
+                                <input type="submit" class="btn btn-default" value="<fmt:message key="reader.menu.search"/>">
+                            </form>
+                        </li>
+                        <li>
+                            <form action="/controller" class="navbar-form navbar-left">
+                                <input type="hidden" name="command" value="myorders">
+                                <input type="submit" class="btn btn-default" value="<fmt:message key="reader.menu.myorders"/>">
+                            </form>
+                        </li>
                         <li>
                             <a href="#" class="btn btn-default disabled" role="button">
                                 <ctg:hello-tag role="${sessionScope.user.role}" userName="${sessionScope.user.firstName}"/>
                             </a>
                         </li>
                     </ul>
-                    <form action="/controller" class="navbar-form navbar-right">
-                        <input type="hidden" name="command" value="myorders">
-                        <input type="submit" class="btn btn-default" value="<fmt:message key="reader.menu.myorders"/>">
-                    </form>
                 </c:when>
             </c:choose>
             <form action="/controller" class="navbar-form navbar-right">

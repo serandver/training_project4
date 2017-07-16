@@ -27,25 +27,14 @@ public class ConfirmBookOrderCommand implements Command {
         Optional<BookOrder> orderFromDB = bookOrderService.find(bookOrderForIdConfirming);
         if (orderFromDB.isPresent()) {
             BookOrder order = orderFromDB.get();
-            Book book = order.getBook();
-            if (isBookInstanceAvailable(book)) {
-                order.setOrderStatus(BookOrder.OrderStatus.CLOSED);
-                order.setDateOfReceive(new Date());
-                bookOrderService.update(order);
-            }
-            else {
-                throw new ServiceException("This book is unavailable");
-            }
-
-
+            order.setOrderStatus(BookOrder.OrderStatus.CLOSED);
+            order.setDateOfReceive(new Date());
+            order.getBook().setBookStatus(Book.BookStatus.UNAVAILABLE);
+            bookOrderService.update(order);
         }
         String pageToGo = PathManager.getInstance().getProperty(LIBRARIAN_HOME_PAGE);
         setUnconfirmedBookOrdersList(request);
         return pageToGo;
-    }
-
-    private boolean isBookInstanceAvailable(Book book) {
-        return false;
     }
 
     private void setUnconfirmedBookOrdersList(HttpServletRequest request) {

@@ -35,6 +35,7 @@ public class RequestHelper {
         commands.put("readerHome", new ReaderHomePageCommand());
         commands.put("users", new LoadUserManagementPageCommand());
         commands.put("orders", new LoadOrdersManagementPageCommand());
+        commands.put("seachPage", new LoadSearchPageCommand());
 
     }
 

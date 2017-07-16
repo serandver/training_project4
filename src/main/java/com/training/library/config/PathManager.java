@@ -18,6 +18,7 @@ public class PathManager {
     public static final String ORDER_BOOK_PAGE = "ORDER_BOOK_PAGE";
     public static final String CONFIRM_ORDER_PAGE = "CONFIRM_ORDER_PAGE";
     public static final String EDIT_USER_PAGE = "EDIT_USER_PAGE";
+    public static final String SEARCH_PAGE = "SEARCH_PAGE";
 
     private static final String CONFIGURATION = "path";
 
