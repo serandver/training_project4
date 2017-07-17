@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `library`.`login_data` (
   `password` VARCHAR(255) NOT NULL,
   `role_name` ENUM('READER', 'LIBRARIAN') NOT NULL,
   PRIMARY KEY (`login_data_id`))
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `login_UNIQUE` ON `library`.`login_data` (`email` ASC);
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `library`.`personal_data` (
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`personal_data_id`))
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 CREATE INDEX `last_name` ON `library`.`personal_data` (`last_name` ASC);
 
@@ -57,16 +57,16 @@ CREATE TABLE IF NOT EXISTS `library`.`users` (
   `personal_data_id` INT NOT NULL,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_users_login_data1`
-  FOREIGN KEY (`login_data_id`)
-  REFERENCES `library`.`login_data` (`login_data_id`)
+    FOREIGN KEY (`login_data_id`)
+    REFERENCES `library`.`login_data` (`login_data_id`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT `fk_users_personal_data1`
-  FOREIGN KEY (`personal_data_id`)
-  REFERENCES `library`.`personal_data` (`personal_data_id`)
+    FOREIGN KEY (`personal_data_id`)
+    REFERENCES `library`.`personal_data` (`personal_data_id`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 CREATE INDEX `fk_login_data` ON `library`.`users` (`login_data_id` ASC);
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `library`.`book_numbers` (
   `book_number_id` INT NOT NULL AUTO_INCREMENT,
   `book_number` INT NOT NULL,
   PRIMARY KEY (`book_number_id`))
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `book_number_UNIQUE` ON `library`.`book_numbers` (`book_number` ASC);
 
@@ -100,11 +100,11 @@ CREATE TABLE IF NOT EXISTS `library`.`books` (
   `book_status` ENUM('AVAILABLE', 'UNAVAILABLE') NOT NULL DEFAULT 'AVAILABLE',
   PRIMARY KEY (`book_id`),
   CONSTRAINT `fk_books_book_numbers1`
-  FOREIGN KEY (`book_number_id`)
-  REFERENCES `library`.`book_numbers` (`book_number_id`)
+    FOREIGN KEY (`book_number_id`)
+    REFERENCES `library`.`book_numbers` (`book_number_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 CREATE INDEX `title` ON `library`.`books` (`title` ASC);
 
@@ -128,16 +128,16 @@ CREATE TABLE IF NOT EXISTS `library`.`orders` (
   `order_status` ENUM('OPEN', 'CLOSED') NOT NULL,
   PRIMARY KEY (`order_id`),
   CONSTRAINT `fk_orders_users1`
-  FOREIGN KEY (`user_id`)
-  REFERENCES `library`.`users` (`user_id`)
+    FOREIGN KEY (`user_id`)
+    REFERENCES `library`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT `fk_orders_books1`
-  FOREIGN KEY (`book_id`)
-  REFERENCES `library`.`books` (`book_id`)
+    FOREIGN KEY (`book_id`)
+    REFERENCES `library`.`books` (`book_id`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 CREATE INDEX `fk_user_id` ON `library`.`orders` (`user_id` ASC);
 
@@ -168,10 +168,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `library`;
-INSERT INTO `library`.`personal_data` (`personal_data_id`, `first_name`, `last_name`) VALUES (DEFAULT, 'РРІР°РЅ', 'РРІР°РЅРѕРІ');
-INSERT INTO `library`.`personal_data` (`personal_data_id`, `first_name`, `last_name`) VALUES (DEFAULT, 'РџРµС‚СЂ', 'РџРµС‚СЂРѕРІ');
-INSERT INTO `library`.`personal_data` (`personal_data_id`, `first_name`, `last_name`) VALUES (DEFAULT, 'РЎРёРґРѕСЂ', 'РЎРёРґРѕСЂРѕРІ');
-INSERT INTO `library`.`personal_data` (`personal_data_id`, `first_name`, `last_name`) VALUES (DEFAULT, 'РњР°СЂРёСЏ', 'РЎС‚СЂРѕРіР°СЏ');
+INSERT INTO `library`.`personal_data` (`personal_data_id`, `first_name`, `last_name`) VALUES (DEFAULT, 'Иван', 'Иванов');
+INSERT INTO `library`.`personal_data` (`personal_data_id`, `first_name`, `last_name`) VALUES (DEFAULT, 'Петр', 'Петров');
+INSERT INTO `library`.`personal_data` (`personal_data_id`, `first_name`, `last_name`) VALUES (DEFAULT, 'Сидор', 'Сидоров');
+INSERT INTO `library`.`personal_data` (`personal_data_id`, `first_name`, `last_name`) VALUES (DEFAULT, 'Мария', 'Строгая');
 
 COMMIT;
 
@@ -223,26 +223,26 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `library`;
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РџСЂРµСЃС‚СѓРїР»РµРЅРёРµ Рё РЅР°РєР°Р·Р°РЅРёРµ', 'Р”РѕСЃС‚РѕРµРІСЃРєРёР№ Р¤.Рњ.', 1, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РџСЂРµСЃС‚СѓРїР»РµРЅРёРµ Рё РЅР°РєР°Р·Р°РЅРёРµ', 'Р”РѕСЃС‚РѕРµРІСЃРєРёР№ Р¤.Рњ.', 2, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РЈРЅРёР¶РµРЅРЅС‹Рµ Рё РѕСЃРєРѕСЂР±Р»РµРЅРЅС‹Рµ', 'Р”РѕСЃС‚РѕРµРІСЃРєРёР№ Р¤.Рњ.', 3, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Р‘РµСЃС‹', 'Р”РѕСЃС‚РѕРµРІСЃРєРёР№ Р¤.Рњ.', 4, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РРґРёРѕС‚', 'Р”РѕСЃС‚РѕРµРІСЃРєРёР№ Р¤.Рњ.', 5, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РРґРёРѕС‚', 'Р”РѕСЃС‚РѕРµРІСЃРєРёР№ Р¤.Рњ.', 6, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Р‘СЂР°С‚СЊСЏ РљР°СЂР°РјР°Р·РѕРІС‹', 'Р”РѕСЃС‚РѕРµРІСЃРєРёР№ Р¤.Рњ.', 7, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Р’РѕР№РЅР° Рё РјРёСЂ', 'РўРѕР»СЃС‚РѕР№ Р›.Рќ.', 8, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РђРЅРЅР° РљР°СЂРµРЅРёРЅР°', 'РўРѕР»СЃС‚РѕР№ Р›.Рќ.', 9, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РџРµС‚СЂ Р†', 'РўРѕР»СЃС‚РѕР№ Рђ.Рќ.', 10, 'UNAVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РљРѕР±Р·Р°СЂ', 'РЁРµРІС‡РµРЅРєРѕ Рў.Р“.', 11, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РљРѕР±Р·Р°СЂ', 'РЁРµРІС‡РµРЅРєРѕ Рў.Р“.', 12, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РљРѕР±Р·Р°СЂ', 'РЁРµРІС‡РµРЅРєРѕ Рў.Р“.', 13, 'UNAVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Р’Р»Р°СЃС‚РµР»РёРЅ РєРѕР»РµС†', 'РўРѕР»РєРёРЅ Р”.', 14, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РҐРѕР±Р±РёС‚', 'РўРѕР»РєРёРЅ Р”.', 15, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РЎРёР»СЊРјР°СЂРёР»Р»РёРѕРЅ', 'РўРѕР»РєРёРЅ Р”.', 16, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РўСЂРё С‚РѕРІР°СЂРёС‰Р°', 'Р РµРјР°СЂРє Р­.Рњ.', 17, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РќР° Р·Р°РїР°РґРЅРѕРј С„СЂРѕРЅС‚Рµ Р±РµР· РїРµСЂРµРјРµРЅ', 'Р РµРјР°СЂРє Р­.Рњ.', 18, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'РўСЂРёСѓРјС„Р°Р»СЊРЅР°СЏ Р°СЂРєР°', 'Р РµРјР°СЂРє Р­.Рњ.', 19, 'AVAILABLE');
-INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Р§РµСЂРЅС‹Р№ РѕР±РµР»РёСЃРє', 'Р РµРјР°СЂРє Р­.Рњ.', 20, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Преступление и наказание', 'Достоевский Ф.М.', 1, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Преступление и наказание', 'Достоевский Ф.М.', 2, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Униженные и оскорбленные', 'Достоевский Ф.М.', 3, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Бесы', 'Достоевский Ф.М.', 4, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Идиот', 'Достоевский Ф.М.', 5, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Идиот', 'Достоевский Ф.М.', 6, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Братья Карамазовы', 'Достоевский Ф.М.', 7, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Война и мир', 'Толстой Л.Н.', 8, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Анна Каренина', 'Толстой Л.Н.', 9, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Петр І', 'Толстой А.Н.', 10, 'UNAVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Кобзар', 'Шевченко Т.Г.', 11, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Кобзар', 'Шевченко Т.Г.', 12, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Кобзар', 'Шевченко Т.Г.', 13, 'UNAVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Властелин колец', 'Толкин Д.', 14, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Хоббит', 'Толкин Д.', 15, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Сильмариллион', 'Толкин Д.', 16, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Три товарища', 'Ремарк Э.М.', 17, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'На западном фронте без перемен', 'Ремарк Э.М.', 18, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Триумфальная арка', 'Ремарк Э.М.', 19, 'AVAILABLE');
+INSERT INTO `library`.`books` (`book_id`, `title`, `author`, `book_number_id`, `book_status`) VALUES (DEFAULT, 'Черный обелиск', 'Ремарк Э.М.', 20, 'AVAILABLE');
 
 COMMIT;
 
