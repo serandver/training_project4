@@ -26,4 +26,5 @@ public final class LogMessage {
     public static final String DRIVER_FOUND = "Driver found";
     public static final String CONNECTION_ESTABLISHED = "Connection %d established";
     public static final String BOOK_ALREADY_ORDERED = "Book is already ordered. You should delete this order";
+    public static final String RB_READ_ERROR = "Can't read resource bundle file: ";
 }

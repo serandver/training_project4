@@ -43,6 +43,17 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
+    AppExceptionHandler
+    <servlet>
+        <servlet-name>AppExceptionHandler</servlet-name>
+        <servlet-class>com.training.library.controller.ExceptionHandler</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AppExceptionHandler</servlet-name>
+        <url-pattern>/AppExceptionHandler</url-pattern>
+    </servlet-mapping>
+
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
@@ -53,4 +64,21 @@
             <taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
         </taglib>
     </jsp-config>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/AppExceptionHandler</location >
+    </error-page>
+
+    <error-page>
+        <exception-type>javax.servlet.ServletException</exception-type>
+        <location>/AppExceptionHandler</location >
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/AppExceptionHandler </location>
+    </error-page>
+
+
 </web-app>

@@ -28,5 +28,5 @@ public final class Attribute {
     public static final String SEARCH_TITLE = "title";
     public static final String LOCALE = "locale";
     public static final String MESSAGE_ERROR = "messageError";
-
+    public static final String LIST_ERROR = "errorList";
 }

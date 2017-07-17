@@ -1,6 +1,7 @@
 package com.training.library.controller.commands;
 
 import com.training.library.controller.utils.Attribute;
+import com.training.library.controller.utils.ErrorMessage;
 import com.training.library.controller.utils.PathManager;
 import com.training.library.exceptions.ServiceException;
 import com.training.library.model.Book;
@@ -46,8 +47,8 @@ public class ConfirmBookOrderCommand implements Command {
             }
             else {
                 LOGGER.error(BOOK_ALREADY_ORDERED);
-                StringBuilder errorMessage = getErrorMessage(order, book);
-                request.setAttribute(Attribute.MESSAGE_ERROR, errorMessage.toString());
+                ErrorMessage errorMessage = getErrorMessage(order, book);
+                request.setAttribute(Attribute.MESSAGE_ERROR, errorMessage);
             }
             pageToGo = new LibrarianHomePageCommand(BookOrderServiceImpl.getInstance()).execute(request, response);
         }
@@ -81,12 +82,13 @@ public class ConfirmBookOrderCommand implements Command {
         request.setAttribute(ORDERS_LIST, bookOrders);
     }
 
-    private StringBuilder getErrorMessage(BookOrder order, Book book) {
-        StringBuilder errorMessage = new StringBuilder();
-        errorMessage.append("Book ");
-        errorMessage.append(book.getId());
-        errorMessage.append(" is already ordered. You should delete order ");
-        errorMessage.append(order.getId());
+    private ErrorMessage getErrorMessage(BookOrder order, Book book) {
+        ErrorMessage errorMessage = new ErrorMessage.Builder()
+                .addMessage("Book ")
+                .addMessage(String.valueOf(book.getId()))
+                .addMessage(" is already ordered. You should delete order ")
+                .addMessage(String.valueOf(order.getId()))
+                .build();
         return errorMessage;
     }
 }

@@ -44,6 +44,10 @@ public class RequestHelper {
         commands.put("orders", new LoadOrdersManagementPageCommand(BookOrderServiceImpl.getInstance()));
         commands.put("searchPage", new LoadSearchPageCommand());
         commands.put("deleteOrder", new DeleteOrderCommand(BookOrderServiceImpl.getInstance()));
+        commands.put("signuppage", new LoadSignUpPageCommand());
+        commands.put("signinpage", new LoadSignInPageCommand());
+
+
     }
 
     public Command getCommand(HttpServletRequest request) {

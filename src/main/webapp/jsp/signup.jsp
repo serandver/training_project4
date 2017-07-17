@@ -29,6 +29,7 @@
     <div class="container">
 
       <form method="post" action="/controller" class="form-signin">
+        <%@include file = "/jsp/common/listerrors.jsp"%>
         <h2 class="form-signin-heading"><fmt:message key="signup.subtitle"/></h2>
           <input type="hidden" name="command" value="register">
           <div class="form-group">

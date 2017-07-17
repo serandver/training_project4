@@ -19,6 +19,8 @@ public class PathManager {
     public static final String CONFIRM_ORDER_PAGE = "CONFIRM_ORDER_PAGE";
     public static final String EDIT_USER_PAGE = "EDIT_USER_PAGE";
     public static final String SEARCH_PAGE = "SEARCH_PAGE";
+    public static final String SIGN_UP_PAGE = "SIGN_UP_PAGE";
+    public static final String SIGN_IN_PAGE = "SIGN_IN_PAGE";
 
     private static final String CONFIGURATION = "path";
 

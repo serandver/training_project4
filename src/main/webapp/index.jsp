@@ -47,8 +47,17 @@
                         </li>
                     </ul>
                 </li>
-                <li role="presentation" class="active"><a href="jsp/signin.jsp"><fmt:message key="index.sign.in"/></a></li>
-                <li role="presentation"><a href="jsp/signup.jsp"><fmt:message key="index.signup"/></a></li>
+                <li role="presentation" class="active">
+                    <form action="/controller">
+                        <input type="hidden" name="command" value="signinpage">
+                        <input type="submit" class="btn btn-default" name="locale" value="<fmt:message key="index.sign.in"/>"/>
+                    </form>
+                <li role="presentation">
+                    <form action="/controller">
+                        <input type="hidden" name="command" value="signuppage">
+                        <input type="submit" class="btn btn-default" name="locale" value="<fmt:message key="index.signup"/>"/>
+                    </form>
+                </li>
             </ul>
         </nav>
         <h3 class="text-muted"><fmt:message key="index.description"/></h3>
