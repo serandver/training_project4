@@ -15,7 +15,7 @@ public class DeleteBookCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(DeleteBookCommand.class);
 
-    BookService bookService;
+    private BookService bookService;
 
     public DeleteBookCommand(BookService bookService) {
         this.bookService = bookService;

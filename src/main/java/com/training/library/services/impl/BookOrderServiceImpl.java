@@ -1,7 +1,9 @@
 package com.training.library.services.impl;
 
+import com.training.library.dao.BookDao;
 import com.training.library.dao.BookOrderDao;
 import com.training.library.dao.DaoFactory;
+import com.training.library.model.Book;
 import com.training.library.model.BookOrder;
 import com.training.library.services.BookOrderService;
 import org.apache.log4j.Logger;
@@ -52,6 +54,9 @@ public class BookOrderServiceImpl implements BookOrderService {
     public int update(BookOrder bookOrder) {
         LOGGER.info("Update order");
         BookOrderDao bookOrderDao = daoFactory.createBookOrderDao();
+        BookDao bookDao = daoFactory.createBookDao();
+        Book bookFromOrder = bookOrder.getBook();
+        bookDao.update(bookFromOrder);
         return bookOrderDao.update(bookOrder);
     }
 

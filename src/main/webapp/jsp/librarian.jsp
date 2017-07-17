@@ -23,6 +23,7 @@
 <div class="container-fluid padd">
     <div class="row">
         <h2 class="sub-header"><fmt:message key="librarian.home.content.title"/></h2>
+        <%@include file = "/jsp/common/errormessage.jsp"%>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>

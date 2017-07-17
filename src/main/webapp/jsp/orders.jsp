@@ -38,6 +38,7 @@
                         <th><fmt:message key="tables.column.order.place"/></th>
                         <th><fmt:message key="tables.column.order.orderStatus"/></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,6 +71,19 @@
                                     <input type="hidden" name="command" value="openOrder">
                                     <button type="submit" class="btn btn-success btn-lg">
                                         <fmt:message key="form.edit"/>
+                                    </button>
+                                </form>
+                            </c:if>
+                        </td>
+                        <td>
+                            <c:set var="datereturn" value="${order.dateOfReturn}"/>
+                            <c:set var="datereceive" value="${order.dateOfReceive}"/>
+                            <c:if test="${empty datereceive && empty datereturn}">
+                                <form action="/controller" class="navbar-form navbar-right">
+                                    <input type="hidden" name="orderId" value="${order.id}">
+                                    <input type="hidden" name="command" value="deleteOrder">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <fmt:message key="form.delete"/>
                                     </button>
                                 </form>
                             </c:if>

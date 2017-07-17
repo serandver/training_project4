@@ -28,9 +28,15 @@ public class EditOrderCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(EditOrderCommand.class);
 
-    private BookOrderService bookOrderService = BookOrderServiceImpl.getInstance();
-    private BookService bookService = BookServiceImpl.getInstance();
-    private UserService userService = UserServiceImpl.getInstance();
+    private BookOrderService bookOrderService;
+    private BookService bookService;
+    private UserService userService;
+
+    public EditOrderCommand(BookOrderService bookOrderService, BookService bookService, UserService userService) {
+        this.bookOrderService = bookOrderService;
+        this.bookService = bookService;
+        this.userService = userService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

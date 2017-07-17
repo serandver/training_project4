@@ -15,7 +15,7 @@ public class CommandController extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(CommandController.class);
 
-    private RequestHelper requestHelper = RequestHelper.getRequestHelperInstance();
+    private RequestHelper requestHelper = RequestHelper.getInstance();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);

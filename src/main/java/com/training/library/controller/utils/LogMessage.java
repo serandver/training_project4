@@ -25,4 +25,5 @@ public final class LogMessage {
     public static final String CLOSE_STATEMENT_FAILED = "Failed to close statement";
     public static final String DRIVER_FOUND = "Driver found";
     public static final String CONNECTION_ESTABLISHED = "Connection %d established";
+    public static final String BOOK_ALREADY_ORDERED = "Book is already ordered. You should delete this order";
 }

@@ -28,8 +28,13 @@ public class LoadOrderPageCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(LoadOrderPageCommand.class);
 
-    private BookService bookService = BookServiceImpl.getInstance();
-    private UserService userService = UserServiceImpl.getInstance();
+    private BookService bookService;
+    private UserService userService;
+
+    public LoadOrderPageCommand(BookService bookService, UserService userService) {
+        this.bookService = bookService;
+        this.userService = userService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
@@ -44,7 +49,6 @@ public class LoadOrderPageCommand implements Command {
         String orderStatus = request.getParameter(ORDER_STATUS);
 
         Book book = getBookById(bookId);
-
         User user = getUserById(userId);
 
         DateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);

@@ -13,7 +13,7 @@ public class RequestHelper {
 
     private static final Logger LOGGER = Logger.getLogger(RequestHelper.class);
 
-    private static RequestHelper requestHelperInstance = null;
+    private static RequestHelper instance = null;
     private HashMap<String,Command> commands = new HashMap<String,Command>();
 
     private RequestHelper() {
@@ -22,16 +22,16 @@ public class RequestHelper {
         commands.put("register", new RegisterCommand(UserServiceImpl.getInstance()));
         commands.put("myorders", new LoadMyOrdersCommand(BookOrderServiceImpl.getInstance()));
         commands.put("catalogue", new LoadBookCataloguePageCommand(BookServiceImpl.getInstance()));
-        commands.put("confirmOrder", new ConfirmBookOrderCommand(BookOrderServiceImpl.getInstance()));
+        commands.put("confirmOrder", new ConfirmBookOrderCommand(BookOrderServiceImpl.getInstance(), BookServiceImpl.getInstance()));
         commands.put("editBook", new EditBookCommand(BookServiceImpl.getInstance()));
         commands.put("openBook", new LoadBookPageCommand());
         commands.put("addBook", new AddBookCommand(BookServiceImpl.getInstance()));
         commands.put("goToAddBook", new LoadAddBookPageCommand());
         commands.put("deleteBook", new DeleteBookCommand(BookServiceImpl.getInstance()));
-        commands.put("editOrder", new EditOrderCommand());
-        commands.put("openOrder", new LoadOrderPageCommand());
+        commands.put("editOrder", new EditOrderCommand(BookOrderServiceImpl.getInstance(), BookServiceImpl.getInstance(), UserServiceImpl.getInstance()));
+        commands.put("openOrder", new LoadOrderPageCommand(BookServiceImpl.getInstance(), UserServiceImpl.getInstance()));
         commands.put("newOrder", new LoadNewOrderPageCommand());
-        commands.put("orderBook", new OrderBookCommand());
+        commands.put("orderBook", new OrderBookCommand(BookOrderServiceImpl.getInstance(), UserServiceImpl.getInstance(), BookServiceImpl.getInstance()));
         commands.put("confirmPage", new LoadConfirmPageCommand());
         commands.put("findByTitle", new FindByTitleCommand(BookServiceImpl.getInstance()));
         commands.put("findByAuthor", new FindByAuthorCommand(BookServiceImpl.getInstance()));
@@ -43,6 +43,7 @@ public class RequestHelper {
         commands.put("users", new LoadUserManagementPageCommand(UserServiceImpl.getInstance()));
         commands.put("orders", new LoadOrdersManagementPageCommand(BookOrderServiceImpl.getInstance()));
         commands.put("searchPage", new LoadSearchPageCommand());
+        commands.put("deleteOrder", new DeleteOrderCommand(BookOrderServiceImpl.getInstance()));
     }
 
     public Command getCommand(HttpServletRequest request) {
@@ -54,14 +55,14 @@ public class RequestHelper {
         return command;
     }
 
-    public static RequestHelper getRequestHelperInstance(){
-        if (requestHelperInstance == null) {
+    public static RequestHelper getInstance(){
+        if (instance == null) {
             synchronized (RequestHelper.class) {
-                if (requestHelperInstance == null) {
-                    requestHelperInstance = new RequestHelper();
+                if (instance == null) {
+                    instance = new RequestHelper();
                 }
             }
         }
-        return requestHelperInstance;
+        return instance;
     }
 }
