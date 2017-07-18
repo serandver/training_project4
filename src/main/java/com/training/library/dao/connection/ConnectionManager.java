@@ -10,6 +10,7 @@ public final class ConnectionManager {
 
 	private ConnectionManager() {
         customConnectionPool = CustomConnectionPool.getInstance();
+		jndiConnectionPool = new JndiConnectionPool();
     }
 			
 	public static ConnectionManager getInstance() {

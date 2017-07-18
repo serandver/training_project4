@@ -30,11 +30,13 @@ public class EditBookCommand implements Command {
         String bookTitle = request.getParameter(BOOK_TITLE);
         String bookAuthor = request.getParameter(BOOK_AUTHOR);
         String bookNumber = request.getParameter(BOOK_NUMBER);
+        Book.BookStatus status = bookService.find(Integer.parseInt(bookId)).get().getBookStatus();
         Book bookForUpdating = new Book.Builder()
                 .setId(Integer.parseInt(bookId))
                 .setTitle(bookTitle)
                 .setAuthor(bookAuthor)
-                .setInventoryNumber(bookNumber).build();
+                .setInventoryNumber(bookNumber)
+                .setBookStatus(status).build();
         int result = bookService.update(bookForUpdating);
         if (result == 1) {
             pageToGo = new LoadBookCataloguePageCommand(BookServiceImpl.getInstance()).execute(request, response);
